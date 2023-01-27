@@ -9,52 +9,41 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-//import { getSuggestions } from "../../api";
+import API from "../../api";
 
-function createData(id, topic, type, speaker, time, date, votes) {
-  return { id, topic, type, speaker, time, date, votes };
+async function getData() {
+  const object = await API.getAPI().getSuggestions();
+  return object;
 }
-
-const data = [
-  createData(1, "React", "45min Session", "Hans", "11:00", "01.10.2023", 4),
-  createData(2, "JavaScript", "Pecha Kucha", "Anna", "14:30", "01.10.2023", 8),
-  createData(3, "SQL", "Workshop", "Otto", "16:00", "01.10.2023", 6.0, 9),
-  createData(4, "TypeScript", "Workshop", "Martin", "13:00", "01.10.2023", 4),
-  createData(5, "Python", "Workshop", "Sebastian", "17:00", "01.10.2023", 3),
-];
 
 export default function VoteForm() {
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    //mock data
-    setRows(data);
-    //fetch data from api
-    //setRows(getSuggestions());
-    //sort the array rows by votes descendent
-    rows.sort((a, b) => {
-      return b.votes - a.votes;
-    });
-    console.log(rows);
-  });
+    let mounted = true;
+    if (mounted) {
+      getData().then((rows) => setRows(rows));
+    }
+    return () => (mounted = false);
+  }, []);
 
   const sortAndMap = (rows) => {
     rows.sort((a, b) => {
-      return b.votes - a.votes;
+      return b[6] - a[6];
     });
     return rows.map((row) => (
       <TableRow
-        key={row.id}
+        key={row[0]}
         sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
       >
         <TableCell component="th" scope="row" align="left">
-          {row.topic}
+          {row[1]}
         </TableCell>
-        <TableCell align="left">{row.type}</TableCell>
-        <TableCell align="left">{row.speaker}</TableCell>
-        <TableCell align="left">{row.time}</TableCell>
-        <TableCell align="left">{row.date}</TableCell>
-        <TableCell align="left">{row.votes}</TableCell>
+        <TableCell align="left">{row[2]}</TableCell>
+        <TableCell align="left">{row[3]}</TableCell>
+        <TableCell align="left">{row[4]}</TableCell>
+        <TableCell align="left">{row[5]}</TableCell>
+        <TableCell align="left">{row[6]}</TableCell>
       </TableRow>
     ));
   };

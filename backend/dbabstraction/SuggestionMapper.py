@@ -11,6 +11,7 @@ class SuggestionMapper(Mapper):
         :return: all suggestion objects.
         """
         result = []
+        
         cursor = self._connection.cursor()
         cursor.execute("SELECT * FROM suggestions")
         tuples = cursor.fetchall()

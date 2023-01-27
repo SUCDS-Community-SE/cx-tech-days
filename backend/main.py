@@ -11,7 +11,7 @@ CORS(app, resources=r'*')
 
 api = Api(app, version='1.0', title='API of the CX Tech Days', description='An API for the CX Tech Days Website.')
 
-cxtechdays = api.namespace('CXTechDays', description='function of the Website')
+cxtechdays = api.namespace('cxtechdays', description='function of the Website')
 
 #######################################################################################################################
 # Model declaration for serialization
@@ -41,8 +41,10 @@ class SuggestionsListOps(Resource):
         Gets all suggestions objects.
         :return: suggestions objects, if there are no suggestion objects, an empty sequence will be returned
         """
-        suggestion_list = logic.get_all_suggestions()
-
+        #suggestion_list = logic.get_all_suggestions()
+        suggestion_list = [{'id': 1, 'topic': 'React', 'type': 'Speach', 'speaker': 'Sebastian', 'time': '12:00', 'date': '10-01-202', 'votes': 4},
+        {'id': 2, 'topic': 'JavaScript', 'type': 'Speach', 'speaker': 'Anna', 'time': '13:00', 'date': '10-01-202', 'votes': 2}]
+        print(suggestion_list)
         return suggestion_list
 
 #######################################################################################################################
