@@ -1,10 +1,10 @@
 import React from "react";
-import ProductCategories from "./modules/views/ProductCategories";
+import Hero from "./modules/views/Hero";
 import AppFooter from "./modules/views/AppFooter";
-import ProductHero from "./modules/views/ProductHero";
-import ProductValues from "./modules/views/ProductValues";
+import Overview from "./modules/views/Overview";
+import SignUp from "./modules/views/SignUp";
 import InputForm from "./modules/views/InputForm";
-import ProductHowItWorks from "./modules/views/ProductHowItWorks";
+import HowItWorks from "./modules/views/HowItWorks";
 import AppAppBar from "./modules/views/AppAppBar";
 import VoteForm from "./modules/views/VoteForm";
 import withRoot from "./modules/withRoot";
@@ -13,12 +13,12 @@ function App() {
   return (
     <React.Fragment>
       <AppAppBar />
-      <ProductHero />
-      <ProductValues />
+      <Hero />
+      <Overview />
       <InputForm />
       <VoteForm />
-      <ProductCategories />
-      <ProductHowItWorks />
+      <SignUp />
+      <HowItWorks />
       <AppFooter />
     </React.Fragment>
   );
