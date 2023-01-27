@@ -1,11 +1,4 @@
-const app = require("express")();
-const port = 8080;
-
-app.listen(port, () => {
-  console.log(`app listening at http://localhost:${port}`);
-});
-
-export function getSuggestions() {
+/* export function getSuggestions() {
   app.get("/suggestions", (req, res) => {
     res.status(200).send({
       id: 1,
@@ -19,4 +12,4 @@ export function getSuggestions() {
   });
 }
 
-export function postSuggestion() {}
+export function postSuggestion() {} */
