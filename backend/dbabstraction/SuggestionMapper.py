@@ -20,3 +20,21 @@ class SuggestionMapper(Mapper):
         cursor.close()
 
         return result
+
+    def insert(self, suggestion):
+        """
+        Inserts new suggestion object into database.
+        :param suggestion: suggestion object, which is to be added to the database.
+        :return: suggestion object, which is to be added.
+        """
+        cursor = self._connection.cursor()
+        query = "INSERT INTO suggestions (id, topic, type, speaker, time, date, votes ) " \
+                "VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        data = (
+                str(suggestion[0],suggestion[1],suggestion[2],suggestion[3],suggestion[4],suggestion[5],suggestion[6])
+                )
+        cursor.execute(query, data)
+
+        self._connection.commit()
+        cursor.close()
+        return suggestion

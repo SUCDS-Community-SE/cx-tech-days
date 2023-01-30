@@ -6,13 +6,43 @@ import Typography from "../components/Typography";
 import TextField from "../components/TextField";
 import Snackbar from "../components/Snackbar";
 import Button from "../components/Button";
+import API from "../../api";
+import uuid from "react-uuid";
 
-function CTA() {
+function signUpEmail(emailaddress) {
+  let email = {
+    id: uuid(),
+    email: emailaddress,
+  };
+  API.getAPI().addEmail(email);
+  console.log(emailaddress);
+}
+
+function validateEmail(emailaddress) {
+  const validEmail = new RegExp("^[a-zA-Z0-9._:$!%-]+@mhp.com$");
+  if (validEmail.test(emailaddress)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+export default function SignUp() {
   const [open, setOpen] = React.useState(false);
+  const [emailaddress, setEmailaddress] = React.useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setOpen(true);
+    // validate email
+    if (!validateEmail(emailaddress)) {
+      alert("Please enter a valid email address");
+    } else {
+      // adds email to the list
+      signUpEmail(emailaddress);
+      setOpen(true);
+      // clears the input fields
+      setEmailaddress("");
+    }
   };
 
   const handleClose = () => {
@@ -50,11 +80,15 @@ function CTA() {
                 /* noBorder */
                 placeholder="Deine email"
                 variant="standard"
+                autoComplete="off"
                 sx={{
                   width: "100%",
                   mt: 3,
                   mb: 2,
                   borderRadius: "12px",
+                }}
+                onChange={(e) => {
+                  setEmailaddress(e.target.value);
                 }}
               />
               <Button
@@ -112,5 +146,3 @@ function CTA() {
     </Container>
   );
 }
-
-export default CTA;

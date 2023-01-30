@@ -27,6 +27,11 @@ suggestion = api.model('Suggestion', {
     'votes': fields.Integer(required=True, description='The votes of the suggestion'),
 })
 
+email = api.model('Email', {
+    'id': fields.Integer(readOnly=True, description='The unique identifier of a email'),
+    'email': fields.String(required=True, description='The email of the user'),
+})
+
 #######################################################################################################################
 # SUGGESTIONS API
 #######################################################################################################################
@@ -54,17 +59,35 @@ class SuggestionsListOps(Resource):
         :param id: identifies the data set of the suggestion
         :return: the new suggestion object
         """
-        suggestion = get_suggestion_by_id(id)
+        suggestion = logic.get_suggestion_by_id(id)
 
         if suggestion is not None:
-            result = insert_suggestion(suggestion)
+            result = logic.insert_suggestion(suggestion)
             return result
         else:
-            return "Unknown person", 500
+            return "Unknown suggestion", 500
 
 #######################################################################################################################
 # REGISTRATIONS API
 #######################################################################################################################
+@cxtechdays.route('/api/emails')
+@cxtechdays.response(500, 'If there is an error from the server.')
+
+class EmailsListOps(Resource):
+    @cxtechdays.marshal_list_with(email, code=201)
+    def post(self, id):
+        """
+        Creates and inserts a new suggestion into the database.
+        :param id: identifies the data set of the suggestion
+        :return: the new suggestion object
+        """
+        email = logic.get_email_by_id(id)
+
+        if email is not None:
+            result = logic.insert_email(email)
+            return result
+        else:
+            return "Unknown email", 500
 
 # The two following lines are only executed in local environment. They have no effect in the cloud.
 if __name__ == '__main__':

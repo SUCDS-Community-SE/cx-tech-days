@@ -18,6 +18,7 @@ function addNewSuggestion(topic, type, speaker) {
     type: type,
     speaker: speaker,
     time: "00:00",
+    date: "1900-01-01",
     votes: 0,
   };
   console.log(suggestion);

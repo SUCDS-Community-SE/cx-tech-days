@@ -16,6 +16,7 @@ export default class API {
 
   #getSuggestionsURL = () => `${this.#ServerBaseURL}/suggestions`;
   #addSuggestionURL = () => `${this.#ServerBaseURL}/suggestions`;
+  #addEmailURL = () => `${this.#ServerBaseURL}/email`;
 
   static getAPI() {
     if (this.#api == null) {
@@ -41,6 +42,8 @@ export default class API {
       return res.json();
     });
   }
+
+  // Suggestions related
 
   getSuggestions() {
     return this.#fetchAdvanced(this.#getSuggestionsURL()).then(
@@ -69,6 +72,24 @@ export default class API {
       let responseSuggestion = fromJSON(responseJSON)[0];
       return new Promise(function (resolve) {
         resolve(responseSuggestion);
+      });
+    });
+  }
+
+  // Email related
+
+  addEmail(email) {
+    return this.#fetchAdvanced(this.#addEmailURL(), {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain",
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(email),
+    }).then((responseJSON) => {
+      let responseEmail = fromJSON(responseJSON)[0];
+      return new Promise(function (resolve) {
+        resolve(responseEmail);
       });
     });
   }
