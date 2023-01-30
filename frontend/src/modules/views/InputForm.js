@@ -48,7 +48,7 @@ export default function InputForm() {
         display: "flex",
         justifyContent: "center",
         overflow: "hidden",
-        bgcolor: "primary",
+        bgcolor: "white",
         mt: -20,
       }}
     >
