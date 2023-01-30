@@ -15,6 +15,7 @@ export default class API {
   #ServerBaseURL = "http://127.0.0.1:5000/cxtechdays/api";
 
   #getSuggestionsURL = () => `${this.#ServerBaseURL}/suggestions`;
+  #addSuggestionURL = () => `${this.#ServerBaseURL}/suggestions`;
 
   static getAPI() {
     if (this.#api == null) {
@@ -54,5 +55,21 @@ export default class API {
         });
       }
     );
+  }
+
+  addSuggestion(suggestion) {
+    return this.#fetchAdvanced(this.#addSuggestionURL(), {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain",
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(suggestion),
+    }).then((responseJSON) => {
+      let responseSuggestion = fromJSON(responseJSON)[0];
+      return new Promise(function (resolve) {
+        resolve(responseSuggestion);
+      });
+    });
   }
 }

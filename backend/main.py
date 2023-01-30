@@ -47,6 +47,21 @@ class SuggestionsListOps(Resource):
         print(suggestion_list)
         return suggestion_list
 
+    @cxtechdays.marshal_list_with(suggestion, code=201)
+    def post(self, id):
+        """
+        Creates and inserts a new suggestion into the database.
+        :param id: identifies the data set of the suggestion
+        :return: the new suggestion object
+        """
+        suggestion = get_suggestion_by_id(id)
+
+        if suggestion is not None:
+            result = insert_suggestion(suggestion)
+            return result
+        else:
+            return "Unknown person", 500
+
 #######################################################################################################################
 # REGISTRATIONS API
 #######################################################################################################################
