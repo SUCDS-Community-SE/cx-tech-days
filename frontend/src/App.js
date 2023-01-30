@@ -6,6 +6,7 @@ import SignUp from "./modules/views/SignUp";
 import InputForm from "./modules/views/InputForm";
 import HowItWorks from "./modules/views/HowItWorks";
 import AppAppBar from "./modules/views/AppAppBar";
+import Timetable from "./modules/views/Timetable";
 import VoteForm from "./modules/views/VoteForm";
 import withRoot from "./modules/withRoot";
 
@@ -17,6 +18,7 @@ function App() {
       <Overview />
       <InputForm />
       <VoteForm />
+      <Timetable />
       <SignUp />
       <HowItWorks />
       <AppFooter />

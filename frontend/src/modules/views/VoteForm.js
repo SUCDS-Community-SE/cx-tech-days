@@ -29,7 +29,7 @@ export default function VoteForm() {
 
   const sortAndMap = (rows) => {
     rows.sort((a, b) => {
-      return b[6] - a[6];
+      return b[4] - a[4];
     });
     return rows.map((row) => (
       <TableRow
@@ -42,8 +42,6 @@ export default function VoteForm() {
         <TableCell align="left">{row[2]}</TableCell>
         <TableCell align="left">{row[3]}</TableCell>
         <TableCell align="left">{row[4]}</TableCell>
-        <TableCell align="left">{row[5]}</TableCell>
-        <TableCell align="left">{row[6]}</TableCell>
       </TableRow>
     ));
   };
@@ -75,8 +73,6 @@ export default function VoteForm() {
                 <TableCell align="left">Topic</TableCell>
                 <TableCell align="left">Type</TableCell>
                 <TableCell align="left">Speaker</TableCell>
-                <TableCell align="left">Time</TableCell>
-                <TableCell align="left">Date</TableCell>
                 <TableCell align="left">Votes</TableCell>
               </TableRow>
             </TableHead>

@@ -28,10 +28,10 @@ class SuggestionMapper(Mapper):
         :return: suggestion object, which is to be added.
         """
         cursor = self._connection.cursor()
-        query = "INSERT INTO suggestions (id, topic, type, speaker, time, date, votes ) " \
-                "VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        query = "INSERT INTO suggestions (id, topic, type, speaker, votes ) " \
+                "VALUES (%s, %s, %s, %s, %s)"
         data = (
-                str(suggestion[0],suggestion[1],suggestion[2],suggestion[3],suggestion[4],suggestion[5],suggestion[6])
+                str(suggestion[0],suggestion[1],suggestion[2],suggestion[3],suggestion[4])
                 )
         cursor.execute(query, data)
 
