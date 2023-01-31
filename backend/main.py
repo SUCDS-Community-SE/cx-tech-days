@@ -49,7 +49,8 @@ class SuggestionsListOps(Resource):
         {'id': 2, 'topic': 'JavaScript', 'type': 'Speach', 'speaker': 'Anna', 'votes': 2}]
         print(suggestion_list)
         return suggestion_list
-
+class SuggestionOps(Resource):
+    @cxtechdays.marshal_with(suggestion)
     @cxtechdays.marshal_list_with(suggestion, code=201)
     def post(self, id):
         """
@@ -64,6 +65,20 @@ class SuggestionsListOps(Resource):
             return result
         else:
             return "Unknown suggestion", 500
+
+    def put(self, id):
+        """
+        Updates a suggestion in the database.
+        :param id: identifies the data set of the suggestion
+        :return: the updated suggestion object
+        """
+        suggestion = logic.from_dict(api.payload, set_id=True)
+
+        if suggestion is not None:
+            logic.update_suggestion(suggestion)
+            return '', 200
+        else:
+            return '', 500
 
 #######################################################################################################################
 # REGISTRATIONS API

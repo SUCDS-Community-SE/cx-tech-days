@@ -38,3 +38,19 @@ class SuggestionMapper(Mapper):
         self._connection.commit()
         cursor.close()
         return suggestion
+
+    def update(self, suggestion):
+        """
+        Updates a suggestion object in the database.
+        :param suggestion: suggestion object, which is to be updated.
+        :return: suggestion object, which is to be updated.
+        """
+        cursor = self._connection.cursor()
+        query = "UPDATE suggestions SET id=%s, topic=%s, type=%s, speaker=%s, votes=%s WHERE id=%s"
+        data = (
+                str(suggestion[0],suggestion[1],suggestion[2],suggestion[3],suggestion[4])
+                )
+        cursor.execute(query, data)
+
+        self._connection.commit()
+        cursor.close()

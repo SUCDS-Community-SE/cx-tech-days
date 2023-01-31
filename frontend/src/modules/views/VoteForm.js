@@ -31,8 +31,14 @@ export default function VoteForm() {
     return () => (mounted = false);
   }, []);
 
-  const handleChange = (key) => {
-    setSelectedButton(key);
+  const handleChange = (key, suggestion) => {
+    if (selectedButton === key) {
+      setSelectedButton(null);
+    } else {
+      setSelectedButton(key);
+    }
+    console.log(suggestion);
+    //updateSuggestions(suggestion);
   };
 
   const selectedVote = (key) => {
@@ -62,7 +68,7 @@ export default function VoteForm() {
           <IconButton
             key={row[0]}
             onClick={() => {
-              handleChange(row[0]);
+              handleChange(row[0], row);
             }}
           >
             {selectedVote(row[0])}

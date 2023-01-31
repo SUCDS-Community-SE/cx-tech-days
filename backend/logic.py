@@ -1,6 +1,7 @@
 from dbabstraction import SuggestionMapper
 from dbabstraction import EmailMapper
 
+# Suggestion Mapper
 def get_all_suggestions():
     """
     Requests the suggestions-mapper to return all the suggestions from the DB.
@@ -27,6 +28,16 @@ def insert_suggestion(suggestion):
     with SuggestionMapper() as mapper:
         return mapper.insert(suggestion)
 
+def update_suggestion(suggestion):
+    """
+    Requests the suggestions-mapper to update a suggestion in the DB.
+    :param suggestion: the suggestion object to be updated in the DB.
+    :return: the suggestion object with the given id.
+    """
+    with SuggestionMapper() as mapper:
+        return mapper.update(suggestion)
+
+# Email Mapper
 def get_all_emails():
     """
     Requests the email-mapper to return all the emails from the DB.
