@@ -9,6 +9,9 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import IconButton from "@mui/material/IconButton";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import API from "../../api";
 
 async function getData() {
@@ -18,6 +21,7 @@ async function getData() {
 
 export default function VoteForm() {
   const [rows, setRows] = useState([]);
+  const [selectedButton, setSelectedButton] = useState();
 
   useEffect(() => {
     let mounted = true;
@@ -26,6 +30,18 @@ export default function VoteForm() {
     }
     return () => (mounted = false);
   }, []);
+
+  const handleChange = (key) => {
+    setSelectedButton(key);
+  };
+
+  const selectedVote = (key) => {
+    if (selectedButton === key) {
+      return <FavoriteIcon />;
+    } else {
+      return <FavoriteBorderIcon />;
+    }
+  };
 
   const sortAndMap = (rows) => {
     rows.sort((a, b) => {
@@ -40,8 +56,18 @@ export default function VoteForm() {
           {row[1]}
         </TableCell>
         <TableCell align="left">{row[2]}</TableCell>
-        <TableCell align="left">{row[3]}</TableCell>
-        <TableCell align="left">{row[4]}</TableCell>
+        <TableCell align="center">{row[3]}</TableCell>
+        <TableCell align="right">{row[4]}</TableCell>
+        <TableCell align="right">
+          <IconButton
+            key={row[0]}
+            onClick={() => {
+              handleChange(row[0]);
+            }}
+          >
+            {selectedVote(row[0])}
+          </IconButton>
+        </TableCell>
       </TableRow>
     ));
   };
@@ -72,8 +98,9 @@ export default function VoteForm() {
               <TableRow>
                 <TableCell align="left">Topic</TableCell>
                 <TableCell align="left">Type</TableCell>
-                <TableCell align="left">Speaker</TableCell>
-                <TableCell align="left">Votes</TableCell>
+                <TableCell align="center">Speaker</TableCell>
+                <TableCell align="right">Votes</TableCell>
+                <TableCell align="right">Vote</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>{sortAndMap(rows)}</TableBody>

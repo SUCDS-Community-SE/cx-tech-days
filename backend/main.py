@@ -44,9 +44,9 @@ class SuggestionsListOps(Resource):
         Gets all suggestions objects.
         :return: suggestions objects, if there are no suggestion objects, an empty sequence will be returned
         """
-        suggestion_list = logic.get_all_suggestions()
-        #suggestion_list = [{'id': 1, 'topic': 'React', 'type': 'Speach', 'speaker': 'Sebastian', 'time': '12:00', 'date': '10-01-202', 'votes': 4},
-        #{'id': 2, 'topic': 'JavaScript', 'type': 'Speach', 'speaker': 'Anna', 'time': '13:00', 'date': '10-01-202', 'votes': 2}]
+       #suggestion_list = logic.get_all_suggestions()
+        suggestion_list = [{'id': 1, 'topic': 'React', 'type': 'Speach', 'speaker': 'Sebastian', 'votes': 4},
+        {'id': 2, 'topic': 'JavaScript', 'type': 'Speach', 'speaker': 'Anna', 'votes': 2}]
         print(suggestion_list)
         return suggestion_list
 

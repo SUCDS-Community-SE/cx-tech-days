@@ -16,6 +16,7 @@ export default class API {
 
   #getSuggestionsURL = () => `${this.#ServerBaseURL}/suggestions`;
   #addSuggestionURL = () => `${this.#ServerBaseURL}/suggestions`;
+  #updateSuggestionURL = () => `${this.#ServerBaseURL}/suggestions`;
   #addEmailURL = () => `${this.#ServerBaseURL}/email`;
 
   static getAPI() {
@@ -72,6 +73,20 @@ export default class API {
       let responseSuggestion = fromJSON(responseJSON)[0];
       return new Promise(function (resolve) {
         resolve(responseSuggestion);
+      });
+    });
+  }
+
+  updateSuggestion(suggestion) {
+    return this.#fetchAdvanced(this.#updateSuggestionURL(suggestion[0]), {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(suggestion),
+    }).then(() => {
+      return new Promise(function (resolve) {
+        resolve();
       });
     });
   }
