@@ -22,8 +22,6 @@ suggestion = api.model('Suggestion', {
     'topic': fields.String(required=True, description='The topic of the suggestion'),
     'type': fields.String(required=True, description='The type of the suggestion'),
     'speaker': fields.String(required=True, description='The speaker of the suggestion'),
-    'time': fields.String(required=True, description='The time of the suggestion'),
-    'date': fields.String(required=True, description='The date of the suggestion'),
     'votes': fields.Integer(required=True, description='The votes of the suggestion'),
 })
 
