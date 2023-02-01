@@ -15,8 +15,20 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import API from "../../api";
 
 async function getData() {
-  const object = await API.getAPI().getSuggestions();
-  return object;
+  const data = await API.getAPI().getSuggestions();
+  return data;
+}
+
+function addVote(suggestionObject) {
+  suggestionObject.votes++;
+  API.getAPI().updateSuggestion(suggestionObject);
+  return suggestionObject;
+}
+
+function removeVote(suggestionObject) {
+  suggestionObject.votes--;
+  API.getAPI().updateSuggestion(suggestionObject);
+  return suggestionObject;
 }
 
 export default function VoteForm() {
@@ -31,18 +43,20 @@ export default function VoteForm() {
     return () => (mounted = false);
   }, []);
 
-  const handleChange = (key, suggestion) => {
-    if (selectedButton === key) {
+  const handleChange = (suggestionObject) => {
+    if (selectedButton === suggestionObject.id) {
       setSelectedButton(null);
+      removeVote(suggestionObject);
     } else {
-      setSelectedButton(key);
+      setSelectedButton(suggestionObject.id);
+      addVote(suggestionObject);
     }
-    console.log(suggestion);
+    console.log(selectedButton);
     //updateSuggestions(suggestion);
   };
 
-  const selectedVote = (key) => {
-    if (selectedButton === key) {
+  const selectedVote = (suggestionObject) => {
+    if (selectedButton === suggestionObject.id) {
       return <FavoriteIcon />;
     } else {
       return <FavoriteBorderIcon />;
@@ -51,27 +65,27 @@ export default function VoteForm() {
 
   const sortAndMap = (rows) => {
     rows.sort((a, b) => {
-      return b[4] - a[4];
+      return b.votes - a.votes;
     });
     return rows.map((row) => (
       <TableRow
-        key={row[0]}
+        key={row.id}
         sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
       >
         <TableCell component="th" scope="row" align="left">
-          {row[1]}
+          {row.topic}
         </TableCell>
-        <TableCell align="left">{row[2]}</TableCell>
-        <TableCell align="center">{row[3]}</TableCell>
-        <TableCell align="right">{row[4]}</TableCell>
+        <TableCell align="left">{row.type}</TableCell>
+        <TableCell align="center">{row.speaker}</TableCell>
+        <TableCell align="right">{row.votes}</TableCell>
         <TableCell align="right">
           <IconButton
-            key={row[0]}
+            key={row.id}
             onClick={() => {
-              handleChange(row[0], row);
+              handleChange(row);
             }}
           >
-            {selectedVote(row[0])}
+            {selectedVote(row)}
           </IconButton>
         </TableCell>
       </TableRow>

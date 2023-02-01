@@ -1,13 +1,5 @@
-function fromJSON(json) {
-  let result = [];
-
-  json.forEach((f) => {
-    const data = Object.values(f);
-    result.push(data);
-  });
-  //console.log(typeof result);
-  return result;
-}
+import SuggestionObject from "./modules/objects/suggestionObject";
+import EmailObject from "./modules/objects/emailObject";
 
 export default class API {
   static #api = null;
@@ -51,40 +43,44 @@ export default class API {
       (responseJSON) => {
         //console.log(typeof responseJSON);
         //console.log(responseJSON);
-        let suggestions = fromJSON(responseJSON);
+        let suggestionObjects = SuggestionObject.fromJSON(responseJSON);
+        //console.log(suggestions);
         return new Promise(function (resolve) {
-          resolve(suggestions);
-          //console.log(suggestions);
-          //console.log(typeof suggestions);
+          resolve(suggestionObjects);
+          //console.log(suggestionObjects);
+          //console.log(typeof suggestionObjects);
         });
       }
     );
   }
 
-  addSuggestion(suggestion) {
+  addSuggestion(suggestionObject) {
     return this.#fetchAdvanced(this.#addSuggestionURL(), {
       method: "POST",
       headers: {
         Accept: "application/json, text/plain",
         "Content-type": "application/json",
       },
-      body: JSON.stringify(suggestion),
+      body: JSON.stringify(suggestionObject),
     }).then((responseJSON) => {
-      let responseSuggestion = fromJSON(responseJSON)[0];
+      let responseSuggestionObject = SuggestionObject.fromJSON(responseJSON)[0];
       return new Promise(function (resolve) {
-        resolve(responseSuggestion);
+        resolve(responseSuggestionObject);
       });
     });
   }
 
-  updateSuggestion(suggestion) {
-    return this.#fetchAdvanced(this.#updateSuggestionURL(suggestion[0]), {
-      method: "PUT",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(suggestion),
-    }).then(() => {
+  updateSuggestion(suggestionObject) {
+    return this.#fetchAdvanced(
+      this.#updateSuggestionURL(suggestionObject.getId()),
+      {
+        method: "PUT",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(suggestionObject),
+      }
+    ).then(() => {
       return new Promise(function (resolve) {
         resolve();
       });
@@ -93,16 +89,16 @@ export default class API {
 
   // Email related
 
-  addEmail(email) {
+  addEmail(emailObject) {
     return this.#fetchAdvanced(this.#addEmailURL(), {
       method: "POST",
       headers: {
         Accept: "application/json, text/plain",
         "Content-type": "application/json",
       },
-      body: JSON.stringify(email),
+      body: JSON.stringify(emailObject),
     }).then((responseJSON) => {
-      let responseEmail = fromJSON(responseJSON)[0];
+      let responseEmail = EmailObject.fromJSON(responseJSON)[0];
       return new Promise(function (resolve) {
         resolve(responseEmail);
       });
