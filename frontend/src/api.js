@@ -8,7 +8,7 @@ export default class API {
 
   #getSuggestionsURL = () => `${this.#ServerBaseURL}/suggestions`;
   #addSuggestionURL = () => `${this.#ServerBaseURL}/suggestions`;
-  #updateSuggestionURL = () => `${this.#ServerBaseURL}/suggestions`;
+  #updateSuggestionURL = (id) => `${this.#ServerBaseURL}/suggestions/${id}`;
   #addEmailURL = () => `${this.#ServerBaseURL}/email`;
 
   static getAPI() {
@@ -80,7 +80,8 @@ export default class API {
         },
         body: JSON.stringify(suggestionObject),
       }
-    ).then(() => {
+    ).then((body) => {
+      console.log(body);
       return new Promise(function (resolve) {
         resolve();
       });

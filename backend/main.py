@@ -3,6 +3,7 @@ from flask_restx import Resource, Api, fields
 from flask_cors import CORS
 from flask import request
 import logic as logic
+from objects.suggestionObject import SuggestionObject
 
 app = Flask("CXTechDays")
 
@@ -17,14 +18,14 @@ cxtechdays = api.namespace('cxtechdays', description='function of the Website')
 # Model declaration for serialization
 #######################################################################################################################
 object = api.model('Object', {
-    'id': fields.String(attribute='id', description='unique identifier for a object'),
+    'id': fields.String(attribute='_id', description='unique identifier for a object'),
 })
 
-suggestion = api.inherit('Suggestions', object, {
-    'topic': fields.String(attribute='topic', description='The topic of the suggestion'),
-    'type': fields.String(attribute='type', description='The type of the suggestion'),
-    'speaker': fields.String(attribute='speaker', description='The speaker of the suggestion'),
-    'votes': fields.String(attribute='votes', description='The votes of the suggestion'),
+suggestion = api.inherit('Suggestion', object, {
+    'topic': fields.String(attribute='_topic', description='The topic of the suggestion'),
+    'type': fields.String(attribute='_type', description='The type of the suggestion'),
+    'speaker': fields.String(attribute='_speaker', description='The speaker of the suggestion'),
+    'votes': fields.String(attribute='_votes', description='The votes of the suggestion'),
 })
 
 email = api.inherit('Email', object, {
@@ -48,36 +49,56 @@ class SuggestionsListOps(Resource):
 
         print(suggestion_list)
         return suggestion_list
-class SuggestionOps(Resource):
-    @cxtechdays.marshal_with(suggestion)
-    @cxtechdays.marshal_list_with(suggestion, code=201)
-    def post(self, id):
+
+    @cxtechdays.marshal_with(suggestion, code=201)
+    @cxtechdays.expect(suggestion, validate=True)
+    def post(self):
         """
         Creates and inserts a new suggestion into the database.
         :param id: identifies the data set of the suggestion
         :return: the new suggestion object
         """
-        suggestion = logic.get_suggestion_by_id(id)
+        suggestion = SuggestionObject.from_dict(api.payload)
 
         if suggestion is not None:
-            result = logic.insert_suggestion(suggestion)
-            return result
+            logic.create_suggestion(suggestion.get_id(), suggestion.get_topic(), suggestion.get_type(), suggestion.get_speaker(), suggestion.get_votes())
+            return suggestion, 200
         else:
-            return "Unknown suggestion", 500
+            return "", 500
+    
+@cxtechdays.route('/api/suggestions/<id>')
+@cxtechdays.response(500, 'If there is an error from the server.')
+@cxtechdays.param('id', 'ID of the person object')
+class SuggestionOps(Resource):
+    @cxtechdays.marshal_with(suggestion)
+    def get(self, id):
+        """
+        Gets a suggestion object by its ID.
+        :param id: identifies the data set of the suggestion
+        :return: the suggestion object
+        """
+        suggestion = logic.get_suggestion_by_id(id)
 
+        return suggestion
+
+    @cxtechdays.marshal_with(suggestion)
+    @cxtechdays.expect(suggestion, validate=True)
     def put(self, id):
         """
         Updates a suggestion in the database.
         :param id: identifies the data set of the suggestion
         :return: the updated suggestion object
         """
-        suggestion = logic.from_dict(api.payload, set_id=True)
+        suggestion = api.payload
+        #suggestion['id'] = id
+        print(id, suggestion)
 
         if suggestion is not None:
             logic.update_suggestion(suggestion)
             return '', 200
         else:
             return '', 500
+
 
 #######################################################################################################################
 # REGISTRATIONS API

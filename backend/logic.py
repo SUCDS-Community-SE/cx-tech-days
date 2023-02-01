@@ -1,7 +1,19 @@
 from dbabstraction.SuggestionMapper import SuggestionMapper
 from dbabstraction.EmailMapper import EmailMapper
+from objects.suggestionObject import SuggestionObject
 
 # Suggestion Mapper
+
+def create_suggestion(id, topic, type, speaker, votes):
+    """
+    Creates a new person object.
+    :return: the new person object
+    """
+    suggestion = SuggestionObject(id, topic, type, speaker, votes)
+
+    with SuggestionMapper() as mapper:
+        return mapper.insert(suggestion)
+
 def get_all_suggestions():
     """
     Requests the suggestions-mapper to return all the suggestions from the DB.

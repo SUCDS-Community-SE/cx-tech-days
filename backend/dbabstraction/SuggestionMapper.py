@@ -1,4 +1,5 @@
 from dbabstraction.Mapper import Mapper
+from objects.suggestionObject import SuggestionObject
 
 class SuggestionMapper(Mapper):
 
@@ -9,14 +10,17 @@ class SuggestionMapper(Mapper):
         """
         Get all datasets and return them as objects.
         """
-        
+        result = [] 
         cursor = self._connection.cursor(dictionary=True)
         cursor.execute("SELECT * FROM suggestions")
         tuples = cursor.fetchall()
+        for (tuple) in tuples:
+            suggestion = SuggestionObject(tuple['id'], tuple['topic'], tuple['type'], tuple['speaker'], tuple['votes'])
+            result.append(suggestion.__dict__)
         self._connection.commit()
         cursor.close()
-
-        return tuples
+        print(result)
+        return result
 
     def find_by_key(self, key):
         """
@@ -24,16 +28,22 @@ class SuggestionMapper(Mapper):
         :param key: key of the suggestion object, which is to be found.
         :return: suggestion object, which is to be found.
         """
-
+        result = None
         cursor = self._connection.cursor()
-        command = "SELECT * FROM suggestions WHERE id LIKE '{}'".format(key)
+        command = "SELECT * FROM suggestions WHERE id='{}'".format(key)
         cursor.execute(command)
         tuples = cursor.fetchall()
-
+        try:
+            (id, topic, type, speaker, votes) = tuples[0]
+            suggestion = SuggestionObject(id, topic, type, speaker, votes)
+            result = suggestion
+        except IndexError:
+            result = None
+        
         self._connection.commit()
         cursor.close()
-
-        return tuples
+        print(result)
+        return result
 
     def delete(self, key):
         """
@@ -42,7 +52,7 @@ class SuggestionMapper(Mapper):
         :return: suggestion object, which is to be deleted.
         """
         cursor = self._connection.cursor()
-        command = "DELETE FROM suggestions WHERE id LIKE '{}'".format(key)
+        command = "DELETE FROM suggestions WHERE id='{}'".format(key)
         cursor.execute(command)
 
         self._connection.commit()

@@ -51,7 +51,7 @@ export default function VoteForm() {
       setSelectedButton(suggestionObject.id);
       addVote(suggestionObject);
     }
-    console.log(selectedButton);
+    //console.log(selectedButton);
     //updateSuggestions(suggestion);
   };
 
