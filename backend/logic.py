@@ -1,5 +1,5 @@
-from dbabstraction import SuggestionMapper
-from dbabstraction import EmailMapper
+from dbabstraction.SuggestionMapper import SuggestionMapper
+from dbabstraction.EmailMapper import EmailMapper
 
 # Suggestion Mapper
 def get_all_suggestions():

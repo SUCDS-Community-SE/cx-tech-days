@@ -7,18 +7,18 @@ class EmailMapper(Mapper):
     def find_all(self):
         """
         Get all datasets and return them as objects.
-        :return: all email objects.
         """
-        result = []
         
         cursor = self._connection.cursor()
         cursor.execute("SELECT * FROM email")
         tuples = cursor.fetchall()
-        result.append(tuples)
         self._connection.commit()
         cursor.close()
 
-        return result
+        return tuples
+
+    def find_by_key(self, key):
+        pass
     
     def insert(self, email):
         """
@@ -37,3 +37,9 @@ class EmailMapper(Mapper):
         self._connection.commit()
         cursor.close()
         return email
+
+    def update(self, email):
+        pass
+
+    def delete(self, key):
+        pass

@@ -12,13 +12,14 @@ class Mapper(ABC):
     def __enter__(self):
         """Checks if we run in the cloud or local and uses corresponding credentials to connect"""
         if os.getenv('GAE_ENV', '').startswith('standard'):
-            self._connection = mysql.connector.connect(user='root', password='root',
+            self._connection = mysql.connector.connect(user='root', password='a9FeYtYZEpmZahuLfvqG',
                                                        unix_socket='/cloudsql/cxtechdays:europe-west3:cxtechdays',
-                                                       database='cxtechdays-db')
+                                                       database='cx-tech-days')
         else:
-            self._connection = mysql.connector.connect(user='mhp', password='12345',
-                                                       host='127.0.0.1',
-                                                       database='cxtechdays')
+            self._connection = mysql.connector.connect(user='root', password='a9FeYtYZEpmZahuLfvqG',
+                                                       #host='127.0.0.1:3306',
+                                                       host='localhost',
+                                                       database='cx-tech-days')
 
         return self
 

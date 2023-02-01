@@ -16,18 +16,19 @@ cxtechdays = api.namespace('cxtechdays', description='function of the Website')
 #######################################################################################################################
 # Model declaration for serialization
 #######################################################################################################################
-
-suggestion = api.model('Suggestion', {
-    'id': fields.Integer(readOnly=True, description='The unique identifier of a suggestion'),
-    'topic': fields.String(required=True, description='The topic of the suggestion'),
-    'type': fields.String(required=True, description='The type of the suggestion'),
-    'speaker': fields.String(required=True, description='The speaker of the suggestion'),
-    'votes': fields.Integer(required=True, description='The votes of the suggestion'),
+object = api.model('Object', {
+    'id': fields.String(attribute='id', description='unique identifier for a object'),
 })
 
-email = api.model('Email', {
-    'id': fields.Integer(readOnly=True, description='The unique identifier of a email'),
-    'email': fields.String(required=True, description='The email of the user'),
+suggestion = api.inherit('Suggestions', object, {
+    'topic': fields.String(attribute='topic', description='The topic of the suggestion'),
+    'type': fields.String(attribute='type', description='The type of the suggestion'),
+    'speaker': fields.String(attribute='speaker', description='The speaker of the suggestion'),
+    'votes': fields.String(attribute='votes', description='The votes of the suggestion'),
+})
+
+email = api.inherit('Email', object, {
+    'email': fields.String(attribute='_email', description='The email of the user'),
 })
 
 #######################################################################################################################
@@ -36,7 +37,6 @@ email = api.model('Email', {
 
 @cxtechdays.route('/api/suggestions')
 @cxtechdays.response(500, 'If there is an error from the server.')
-
 class SuggestionsListOps(Resource):
     @cxtechdays.marshal_list_with(suggestion)
     def get(self):
@@ -44,9 +44,8 @@ class SuggestionsListOps(Resource):
         Gets all suggestions objects.
         :return: suggestions objects, if there are no suggestion objects, an empty sequence will be returned
         """
-       #suggestion_list = logic.get_all_suggestions()
-        suggestion_list = [{'id': 1, 'topic': 'React', 'type': 'Speach', 'speaker': 'Sebastian', 'votes': 4},
-        {'id': 2, 'topic': 'JavaScript', 'type': 'Speach', 'speaker': 'Anna', 'votes': 2}]
+        suggestion_list = logic.get_all_suggestions()
+
         print(suggestion_list)
         return suggestion_list
 class SuggestionOps(Resource):

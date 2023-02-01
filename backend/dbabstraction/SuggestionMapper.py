@@ -8,18 +8,45 @@ class SuggestionMapper(Mapper):
     def find_all(self):
         """
         Get all datasets and return them as objects.
-        :return: all suggestion objects.
         """
-        result = []
         
-        cursor = self._connection.cursor()
+        cursor = self._connection.cursor(dictionary=True)
         cursor.execute("SELECT * FROM suggestions")
         tuples = cursor.fetchall()
-        result.append(tuples)
         self._connection.commit()
         cursor.close()
 
-        return result
+        return tuples
+
+    def find_by_key(self, key):
+        """
+        Finds a suggestion object by its key.
+        :param key: key of the suggestion object, which is to be found.
+        :return: suggestion object, which is to be found.
+        """
+
+        cursor = self._connection.cursor()
+        command = "SELECT * FROM suggestions WHERE id LIKE '{}'".format(key)
+        cursor.execute(command)
+        tuples = cursor.fetchall()
+
+        self._connection.commit()
+        cursor.close()
+
+        return tuples
+
+    def delete(self, key):
+        """
+        Deletes a suggestion object by its key.
+        :param key: key of the suggestion object, which is to be deleted.
+        :return: suggestion object, which is to be deleted.
+        """
+        cursor = self._connection.cursor()
+        command = "DELETE FROM suggestions WHERE id LIKE '{}'".format(key)
+        cursor.execute(command)
+
+        self._connection.commit()
+        cursor.close()
 
     def insert(self, suggestion):
         """
