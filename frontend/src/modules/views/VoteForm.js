@@ -13,20 +13,37 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import IconButton from "@mui/material/IconButton";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import API from "../../api";
+import SuggestionObject from "../objects/suggestionObject";
 
 async function getData() {
   const data = await API.getAPI().getSuggestions();
   return data;
 }
 
-function addVote(suggestionObject) {
-  suggestionObject.votes++;
+function addVote(suggestion) {
+  suggestion.votes++;
+  const votes = suggestion.votes.toString();
+  let suggestionObject = new SuggestionObject(
+    suggestion.id,
+    suggestion.topic,
+    suggestion.type,
+    suggestion.speaker,
+    votes
+  );
   API.getAPI().updateSuggestion(suggestionObject);
   return suggestionObject;
 }
 
-function removeVote(suggestionObject) {
-  suggestionObject.votes--;
+function removeVote(suggestion) {
+  suggestion.votes--;
+  const votes = suggestion.votes.toString();
+  let suggestionObject = new SuggestionObject(
+    suggestion.id,
+    suggestion.topic,
+    suggestion.type,
+    suggestion.speaker,
+    votes
+  );
   API.getAPI().updateSuggestion(suggestionObject);
   return suggestionObject;
 }
@@ -43,20 +60,20 @@ export default function VoteForm() {
     return () => (mounted = false);
   }, []);
 
-  const handleChange = (suggestionObject) => {
-    if (selectedButton === suggestionObject.id) {
+  const handleChange = (suggestion) => {
+    if (selectedButton === suggestion.id) {
       setSelectedButton(null);
-      removeVote(suggestionObject);
+      removeVote(suggestion);
     } else {
-      setSelectedButton(suggestionObject.id);
-      addVote(suggestionObject);
+      setSelectedButton(suggestion.id);
+      addVote(suggestion);
     }
     //console.log(selectedButton);
     //updateSuggestions(suggestion);
   };
 
-  const selectedVote = (suggestionObject) => {
-    if (selectedButton === suggestionObject.id) {
+  const selectedVote = (suggestion) => {
+    if (selectedButton === suggestion.id) {
       return <FavoriteIcon />;
     } else {
       return <FavoriteBorderIcon />;

@@ -40,7 +40,4 @@ class SuggestionObject:
     def from_dict(dictionary=dict(), set_id=False):
     
         suggestion = SuggestionObject(dictionary["id"], dictionary["topic"], dictionary["type"], dictionary["speaker"], dictionary["votes"])
-
-        if set_id == True:
-            suggestion.set_id(dictionary["id"])
         return suggestion

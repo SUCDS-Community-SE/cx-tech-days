@@ -17,18 +17,17 @@ cxtechdays = api.namespace('cxtechdays', description='function of the Website')
 #######################################################################################################################
 # Model declaration for serialization
 #######################################################################################################################
-object = api.model('Object', {
-    'id': fields.String(attribute='_id', description='unique identifier for a object'),
-})
 
-suggestion = api.inherit('Suggestion', object, {
+suggestion = api.model('Suggestion', {
+    'id': fields.Integer(attribute='_id', description='unique identifier for a object'),
     'topic': fields.String(attribute='_topic', description='The topic of the suggestion'),
     'type': fields.String(attribute='_type', description='The type of the suggestion'),
     'speaker': fields.String(attribute='_speaker', description='The speaker of the suggestion'),
-    'votes': fields.String(attribute='_votes', description='The votes of the suggestion'),
+    'votes': fields.Integer(attribute='_votes', description='The votes of the suggestion'),
 })
 
-email = api.inherit('Email', object, {
+email = api.model('Email', {
+    'id': fields.Integer(attribute='_id', description='unique identifier for a object'),
     'email': fields.String(attribute='_email', description='The email of the user'),
 })
 
@@ -47,7 +46,7 @@ class SuggestionsListOps(Resource):
         """
         suggestion_list = logic.get_all_suggestions()
 
-        print(suggestion_list)
+        #print(suggestion_list)
         return suggestion_list
 
     @cxtechdays.marshal_with(suggestion, code=201)
@@ -89,13 +88,13 @@ class SuggestionOps(Resource):
         :param id: identifies the data set of the suggestion
         :return: the updated suggestion object
         """
-        suggestion = api.payload
+        suggestion = SuggestionObject.from_dict(api.payload)
         #suggestion['id'] = id
-        print(id, suggestion)
+        #print(id, suggestion)
 
         if suggestion is not None:
             logic.update_suggestion(suggestion)
-            return '', 200
+            return suggestion, 200
         else:
             return '', 500
 

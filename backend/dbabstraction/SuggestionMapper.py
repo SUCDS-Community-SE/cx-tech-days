@@ -35,7 +35,7 @@ class SuggestionMapper(Mapper):
         tuples = cursor.fetchall()
         try:
             (id, topic, type, speaker, votes) = tuples[0]
-            suggestion = SuggestionObject(id, topic, type, speaker, votes)
+            suggestion = SuggestionObject(tuple['id'], tuple['topic'], tuple['type'], tuple['speaker'], tuple['votes'])
             result = suggestion
         except IndexError:
             result = None
@@ -67,9 +67,7 @@ class SuggestionMapper(Mapper):
         cursor = self._connection.cursor()
         query = "INSERT INTO suggestions (id, topic, type, speaker, votes ) " \
                 "VALUES (%s, %s, %s, %s, %s)"
-        data = (
-                str(suggestion[0],suggestion[1],suggestion[2],suggestion[3],suggestion[4])
-                )
+        data = (str(suggestion.get_id()), suggestion.get_topic(), suggestion.get_type(), suggestion.get_speaker(), str(suggestion.get_votes()))
         cursor.execute(query, data)
 
         self._connection.commit()
@@ -83,11 +81,10 @@ class SuggestionMapper(Mapper):
         :return: suggestion object, which is to be updated.
         """
         cursor = self._connection.cursor()
-        query = "UPDATE suggestions SET id=%s, topic=%s, type=%s, speaker=%s, votes=%s WHERE id=%s"
-        data = (
-                str(suggestion[0],suggestion[1],suggestion[2],suggestion[3],suggestion[4])
-                )
+        query = "UPDATE suggestions SET topic=%s, type=%s, speaker=%s, votes=%s WHERE id=%s"
+        data = (suggestion.get_topic(), suggestion.get_type(), suggestion.get_speaker(), str(suggestion.get_votes()), str(suggestion.get_id()))
         cursor.execute(query, data)
 
         self._connection.commit()
         cursor.close()
+        return suggestion
