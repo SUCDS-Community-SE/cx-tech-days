@@ -3,20 +3,8 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import Typography from "../components/Typography";
-import TextField from "../components/TextField";
-import Snackbar from "../components/Snackbar";
 import Button from "../components/Button";
-import API from "../../api";
-import uuid from "react-uuid";
-
-function signUpEmail(emailaddress) {
-  let email = {
-    id: uuid(),
-    email: emailaddress,
-  };
-  API.getAPI().addEmail(email);
-  console.log(emailaddress);
-}
+import Anmelden from "../form/Anmelden";
 
 function validateEmail(emailaddress) {
   const validEmail = new RegExp("^[a-zA-Z0-9._:$!%-]+@mhp.com$");
@@ -27,26 +15,23 @@ function validateEmail(emailaddress) {
   }
 }
 
-export default function SignUp() {
+export default function SignUp(props) {
+  const { userChange } = props;
   const [open, setOpen] = React.useState(false);
-  const [emailaddress, setEmailaddress] = React.useState("");
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // validate email
-    if (!validateEmail(emailaddress)) {
-      alert("Please enter a valid email address");
-    } else {
-      // adds email to the list
-      signUpEmail(emailaddress);
-      setOpen(true);
-      // clears the input fields
-      setEmailaddress("");
-    }
+  const handleAnmeldenClickOpen = (e) => {
+    e.preventDefault();
+    setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleUserChange = () => {
     setOpen(false);
+    userChange();
+  };
+
+  const handleRegestrierenClickOpen = (e) => {
+    e.preventDefault();
+    setOpen(true);
   };
 
   return (
@@ -64,11 +49,7 @@ export default function SignUp() {
               borderRadius: "12px",
             }}
           >
-            <Box
-              component="form"
-              onSubmit={handleSubmit}
-              sx={{ maxWidth: 400 }}
-            >
+            <Box component="form" sx={{ maxWidth: 400 }}>
               <Typography variant="h2" component="h2" gutterBottom>
                 Anmeldung
               </Typography>
@@ -76,30 +57,35 @@ export default function SignUp() {
                 Werde Teil eines neuen Formats, um den Austausch untereinander
                 zu fördern und nutze die Chance dein Wissen weiterzugeben.
               </Typography>
-              <TextField
-                /* noBorder */
-                placeholder="Deine email"
-                variant="standard"
-                autoComplete="off"
+              <Box
                 sx={{
-                  width: "100%",
-                  mt: 3,
-                  mb: 2,
-                  borderRadius: "12px",
+                  display: "flex",
+                  justifyContent: "space-between",
                 }}
-                onChange={(e) => {
-                  setEmailaddress(e.target.value);
-                }}
-              />
-              <Button
-                type="submit"
-                color="secondary"
-                variant="contained"
-                align="center"
-                sx={{ width: "50%", borderRadius: "12px" }}
               >
-                Keep me updated
-              </Button>
+                <Button
+                  type="submit"
+                  color="secondary"
+                  variant="contained"
+                  align="center"
+                  sx={{ width: "40%", borderRadius: "12px", mt: 3 }}
+                  onClick={handleAnmeldenClickOpen}
+                >
+                  Anmelden
+                </Button>
+                <Button
+                  type="submit"
+                  color="secondary"
+                  variant="contained"
+                  align="center"
+                  sx={{ width: "40%", borderRadius: "12px", mt: 3 }}
+                  onClick={handleRegestrierenClickOpen}
+                >
+                  Registrieren
+                </Button>
+              </Box>
+              <Anmelden open={open} onClose={handleUserChange} />
+              {/* <Registrieren open={open} close={handleUserChange} /> */}
             </Box>
           </Box>
         </Grid>
@@ -138,11 +124,6 @@ export default function SignUp() {
           />
         </Grid>
       </Grid>
-      <Snackbar
-        open={open}
-        closeFunc={handleClose}
-        message="We will keep you up to date."
-      />
     </Container>
   );
 }
