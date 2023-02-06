@@ -5,6 +5,7 @@ import Container from "@mui/material/Container";
 import Typography from "../components/Typography";
 import Button from "../components/Button";
 import Anmelden from "../form/Anmelden";
+import Registrieren from "../form/Registrieren";
 
 function validateEmail(emailaddress) {
   const validEmail = new RegExp("^[a-zA-Z0-9._:$!%-]+@mhp.com$");
@@ -17,21 +18,23 @@ function validateEmail(emailaddress) {
 
 export default function SignUp(props) {
   const { userChange } = props;
-  const [open, setOpen] = React.useState(false);
+  const [si_open, setSignInOpen] = React.useState(false);
+  const [su_open, setSignUpOpen] = React.useState(false);
 
   const handleAnmeldenClickOpen = (e) => {
     e.preventDefault();
-    setOpen(true);
+    setSignInOpen(true);
   };
 
   const handleUserChange = () => {
-    setOpen(false);
+    setSignInOpen(false);
+    setSignUpOpen(false);
     userChange();
   };
 
   const handleRegestrierenClickOpen = (e) => {
     e.preventDefault();
-    setOpen(true);
+    setSignUpOpen(true);
   };
 
   return (
@@ -84,8 +87,8 @@ export default function SignUp(props) {
                   Registrieren
                 </Button>
               </Box>
-              <Anmelden open={open} onClose={handleUserChange} />
-              {/* <Registrieren open={open} close={handleUserChange} /> */}
+              <Anmelden open={si_open} onClose={handleUserChange} />
+              <Registrieren open={su_open} close={handleUserChange} />
             </Box>
           </Box>
         </Grid>
