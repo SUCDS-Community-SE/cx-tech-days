@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import AppBar from "../components/AppBar";
 import Toolbar from "../components/Toolbar";
+import { PUBLIC_URL } from "../../FirebaseConfig";
 
 function AppAppBar() {
   return (
@@ -10,7 +11,12 @@ function AppAppBar() {
       <AppBar position="fixed" sx={{ bgcolor: "white", boxShadow: 1 }}>
         <Toolbar sx={{ justifyContent: "space-between" }}>
           <Box sx={{ flex: 1 }} />
-          <Link variant="h6" underline="none" href="" sx={{ fontSize: 24 }}>
+          <Link
+            variant="h6"
+            underline="none"
+            href={PUBLIC_URL}
+            sx={{ fontSize: 24 }}
+          >
             {"MHP"}
           </Link>
           <Box

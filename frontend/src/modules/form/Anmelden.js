@@ -6,11 +6,14 @@ import Button from "@mui/material/Button";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../FirebaseConfig";
 import Box from "@mui/material/Box";
+import { useNavigate } from "react-router-dom";
 
 export default function Anmelden(props) {
   const { onClose, open } = props;
   const [email, setEmail] = React.useState();
   const [password, setPassword] = React.useState();
+
+  const navigate = useNavigate();
 
   const handleSignIn = (e) => {
     e.preventDefault();
@@ -18,10 +21,21 @@ export default function Anmelden(props) {
       .then((userCredential) => {
         // Signed in
         onClose(userCredential.user);
+        navigate("/main");
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        switch ((errorCode, errorMessage)) {
+          case "auth/invalid-email":
+            alert(errorMessage);
+            break;
+          case "auth/wrong-password":
+            alert(errorMessage);
+            break;
+          default:
+          // do nothing
+        }
       });
   };
 
@@ -81,7 +95,7 @@ export default function Anmelden(props) {
           variant="contained"
           align="center"
           // sx={{ width: "40%", borderRadius: "12px", mt: 3 }}
-          onSubmit={handleSignIn}
+          onClick={handleSignIn}
         >
           Anmelden
         </Button>

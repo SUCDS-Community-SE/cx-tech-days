@@ -6,8 +6,8 @@ import HowItWorks from "../views/HowItWorks";
 function Home(props) {
   const { userChange } = props;
 
-  const handleUserChange = () => {
-    userChange();
+  const handleUserChange = (user) => {
+    userChange(user);
   };
 
   return (

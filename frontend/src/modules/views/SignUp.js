@@ -7,15 +7,6 @@ import Button from "../components/Button";
 import Anmelden from "../form/Anmelden";
 import Registrieren from "../form/Registrieren";
 
-function validateEmail(emailaddress) {
-  const validEmail = new RegExp("^[a-zA-Z0-9._:$!%-]+@mhp.com$");
-  if (validEmail.test(emailaddress)) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
 export default function SignUp(props) {
   const { userChange } = props;
   const [si_open, setSignInOpen] = React.useState(false);
@@ -26,10 +17,10 @@ export default function SignUp(props) {
     setSignInOpen(true);
   };
 
-  const handleUserChange = () => {
+  const handleUserChange = (user) => {
     setSignInOpen(false);
     setSignUpOpen(false);
-    userChange();
+    userChange(user);
   };
 
   const handleRegestrierenClickOpen = (e) => {
@@ -88,7 +79,7 @@ export default function SignUp(props) {
                 </Button>
               </Box>
               <Anmelden open={si_open} onClose={handleUserChange} />
-              <Registrieren open={su_open} close={handleUserChange} />
+              <Registrieren open={su_open} onClose={handleUserChange} />
             </Box>
           </Box>
         </Grid>

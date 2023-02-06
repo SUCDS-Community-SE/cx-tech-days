@@ -8,18 +8,17 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  useLocation,
-  Navigate,
+  redirect,
 } from "react-router-dom";
 import Home from "./modules/pages/Home";
 import Main from "./modules/pages/Main";
 
-function App(props) {
-  const { userChange } = props;
+function App() {
   const [user, setUser] = React.useState();
 
-  const handleUserChange = () => {
-    setUser(userChange);
+  const handleUserChange = (user) => {
+    console.log(user);
+    setUser(user);
   };
 
   return (
@@ -28,10 +27,7 @@ function App(props) {
         <AppAppBar />
         <Hero />
         <Routes>
-          <Route
-            path={PUBLIC_URL}
-            element={<Home userChange={handleUserChange} />}
-          >
+          <Route path={PUBLIC_URL}>
             <Route
               path={PUBLIC_URL + "/"}
               element={<Home userChange={handleUserChange} />}
@@ -41,7 +37,7 @@ function App(props) {
               element={<Home userChange={handleUserChange} />}
             />
             <Route
-              path={PUBLIC_URL + "/main*"}
+              path={PUBLIC_URL + "/main"}
               element={
                 <Secured user={user}>
                   <Main user={user} />
@@ -59,14 +55,14 @@ function App(props) {
 export default withRoot(App);
 
 function Secured(props) {
-  let location = useLocation();
+  const { user } = props;
 
-  if (!props.user) {
+  if (!user) {
     // Redirect them to the /homepage, but save the current location they were
     // trying to go to when they were redirected. This allows us to send them
     // along to that page after they login, which is a nicer user experience
     // than dropping them off on the home page.
-    return <Navigate to={PUBLIC_URL} state={{ from: location }} replace />;
+    return redirect({ PUBLIC_URL });
   }
 
   return props.children;

@@ -6,60 +6,61 @@ import Button from "@mui/material/Button";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../FirebaseConfig";
 import Box from "@mui/material/Box";
+import { useNavigate } from "react-router-dom";
+
+const validEmail = new RegExp("^[a-zA-Z0-9._:$!%-]+@mhp.com$");
 
 export default function Registrieren(props) {
   const { onClose, open } = props;
   const [email, setEmail] = React.useState();
   const [password, setPassword] = React.useState();
+  const [confPassword, setConfPassword] = React.useState();
+  const navigate = useNavigate();
 
   const handleSignUp = (e) => {
     e.preventDefault();
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        onClose(userCredential.user);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-      });
+    if (validEmail.test(email)) {
+      if (confPassword === password) {
+        createUserWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            // Signed in
+            onClose(userCredential.user);
+            navigate("/main");
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            switch ((errorCode, errorMessage)) {
+              case "auth/email-already-in-use":
+                alert(errorMessage);
+                break;
+              case "auth/invalid-email":
+                alert(errorMessage);
+                break;
+              case "auth/weak-password":
+                alert(errorMessage);
+                break;
+              default:
+              // do nothing
+            }
+          });
+      } else {
+        alert("Passwörter stimmen nicht überein");
+      }
+    } else {
+      alert("Bitte geben Sie eine gültige MHP-Emailadresse ein.");
+    }
   };
 
   const handleBackdropClick = () => {
     onClose();
   };
 
-  // function checkEmail(emailaddress) {
-  //   auth
-  //     .createUserWithEmailAndPassword(emailaddress, "")
-  //     .then((userCredential) => {})
-  //     .catch((error) => {
-  //       switch (error.code) {
-  //         case "auth/email-already-in-use":
-  //           signInEmail(emailaddress);
-  //       }
-  //     });
-  // }
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   // validate email
-  //   if (!validateEmail(emailaddress)) {
-  //     alert("Please enter a valid email address");
-  //   } else {
-  //     // adds email to the list
-  //     signUpEmail(emailaddress);
-  //     setOpen(true);
-  //     // clears the input fields
-  //     setEmailaddress("");
-  //   }
-  // };
-
   return (
     <Dialog
       onBackdropClick={handleBackdropClick}
       open={open}
-      PaperProps={{ sx: { width: "40%", height: "20%" } }}
+      PaperProps={{ sx: { width: "40%", height: "30%" } }}
     >
       <Box
         sx={{
@@ -101,13 +102,30 @@ export default function Registrieren(props) {
             setPassword(e.target.value);
           }}
         />
+        <TextField
+          required
+          placeholder="Confirm Passwort"
+          variant="standard"
+          type="password"
+          autoComplete="current-password"
+          sx={{
+            width: "70%",
+            mt: 3,
+            mb: 2,
+            borderRadius: "12px",
+            marginBottom: "45px",
+          }}
+          onChange={(e) => {
+            setConfPassword(e.target.value);
+          }}
+        />
         <Button
           type="submit"
           color="secondary"
           variant="contained"
           align="center"
           // sx={{ width: "40%", borderRadius: "12px", mt: 3 }}
-          onSubmit={handleSignUp}
+          onClick={handleSignUp}
         >
           Registrieren
         </Button>
