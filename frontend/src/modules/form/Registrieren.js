@@ -2,7 +2,7 @@ import React from "react";
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+import Button from "../components/Button";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../FirebaseConfig";
 import Box from "@mui/material/Box";
@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 const validEmail = new RegExp("^[a-zA-Z0-9._:$!%-]+@mhp.com$");
 
 export default function Registrieren(props) {
-  const { onClose, open } = props;
+  const { onClose, open, handleError } = props;
   const [email, setEmail] = React.useState();
   const [password, setPassword] = React.useState();
   const [confPassword, setConfPassword] = React.useState();
@@ -30,25 +30,15 @@ export default function Registrieren(props) {
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            switch ((errorCode, errorMessage)) {
-              case "auth/email-already-in-use":
-                alert(errorMessage);
-                break;
-              case "auth/invalid-email":
-                alert(errorMessage);
-                break;
-              case "auth/weak-password":
-                alert(errorMessage);
-                break;
-              default:
-              // do nothing
-            }
+            handleError(errorMessage);
           });
       } else {
-        alert("Passwörter stimmen nicht überein");
+        let errorMessage = "Passwörter stimmen nicht überein";
+        handleError(errorMessage);
       }
     } else {
-      alert("Bitte geben Sie eine gültige MHP-Emailadresse ein.");
+      let errorMessage = "Bitte geben Sie eine gültige MHP-Emailadresse ein.";
+      handleError(errorMessage);
     }
   };
 
@@ -60,7 +50,7 @@ export default function Registrieren(props) {
     <Dialog
       onBackdropClick={handleBackdropClick}
       open={open}
-      PaperProps={{ sx: { width: "40%", height: "30%" } }}
+      PaperProps={{ sx: { width: "45%", height: "30%" } }}
     >
       <Box
         sx={{
@@ -77,10 +67,9 @@ export default function Registrieren(props) {
           variant="standard"
           autoComplete="off"
           sx={{
-            width: "70%",
+            width: "80%",
             mt: 3,
             mb: 2,
-            borderRadius: "12px",
           }}
           onChange={(e) => {
             setEmail(e.target.value);
@@ -93,10 +82,9 @@ export default function Registrieren(props) {
           type="password"
           autoComplete="current-password"
           sx={{
-            width: "70%",
+            width: "80%",
             mt: 3,
             mb: 2,
-            borderRadius: "12px",
           }}
           onChange={(e) => {
             setPassword(e.target.value);
@@ -109,10 +97,9 @@ export default function Registrieren(props) {
           type="password"
           autoComplete="current-password"
           sx={{
-            width: "70%",
+            width: "80%",
             mt: 3,
             mb: 2,
-            borderRadius: "12px",
             marginBottom: "45px",
           }}
           onChange={(e) => {

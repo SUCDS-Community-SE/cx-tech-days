@@ -9,6 +9,7 @@ import Registrieren from "../form/Registrieren";
 
 export default function SignUp(props) {
   const { userChange } = props;
+  const { handleError } = props;
   const [si_open, setSignInOpen] = React.useState(false);
   const [su_open, setSignUpOpen] = React.useState(false);
 
@@ -26,6 +27,10 @@ export default function SignUp(props) {
   const handleRegestrierenClickOpen = (e) => {
     e.preventDefault();
     setSignUpOpen(true);
+  };
+
+  const handle_Error = (errorMessage) => {
+    handleError(errorMessage);
   };
 
   return (
@@ -78,8 +83,16 @@ export default function SignUp(props) {
                   Registrieren
                 </Button>
               </Box>
-              <Anmelden open={si_open} onClose={handleUserChange} />
-              <Registrieren open={su_open} onClose={handleUserChange} />
+              <Anmelden
+                open={si_open}
+                onClose={handleUserChange}
+                handleError={handle_Error}
+              />
+              <Registrieren
+                open={su_open}
+                onClose={handleUserChange}
+                handleError={handle_Error}
+              />
             </Box>
           </Box>
         </Grid>

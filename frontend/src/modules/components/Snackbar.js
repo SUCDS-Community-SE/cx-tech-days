@@ -1,19 +1,19 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import { styled } from '@mui/material/styles';
-import MuiSnackbar from '@mui/material/Snackbar';
-import { snackbarContentClasses } from '@mui/material/SnackbarContent';
-import Slide from '@mui/material/Slide';
-import CloseIcon from '@mui/icons-material/Close';
-import InfoIcon from '@mui/icons-material/Info';
-import IconButton from '@mui/material/IconButton';
+import * as React from "react";
+import PropTypes from "prop-types";
+import { styled } from "@mui/material/styles";
+import MuiSnackbar from "@mui/material/Snackbar";
+import { snackbarContentClasses } from "@mui/material/SnackbarContent";
+import Slide from "@mui/material/Slide";
+import CloseIcon from "@mui/icons-material/Close";
+import InfoIcon from "@mui/icons-material/Info";
+import IconButton from "@mui/material/IconButton";
 
 const styles = ({ theme }) => ({
   [`& .${snackbarContentClasses.root}`]: {
     backgroundColor: theme.palette.secondary.light,
     color: theme.palette.text.primary,
-    flexWrap: 'inherit',
-    [theme.breakpoints.up('md')]: {
+    flexWrap: "inherit",
+    [theme.breakpoints.up("md")]: {
       borderTopLeftRadius: 0,
       borderTopRightRadius: 0,
       borderBottomRightRadius: 4,
@@ -22,17 +22,17 @@ const styles = ({ theme }) => ({
   },
   [`& .${snackbarContentClasses.message}`]: {
     fontSize: 16,
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
   },
   [`& .${snackbarContentClasses.action}`]: {
     paddingLeft: theme.spacing(2),
   },
-  '& .MuiSnackbarContent-info': {
+  "& .MuiSnackbarContent-info": {
     flexShrink: 0,
     marginRight: theme.spacing(2),
   },
-  '& .MuiSnackbarContent-close': {
+  "& .MuiSnackbarContent-close": {
     padding: theme.spacing(1),
   },
 });
@@ -44,14 +44,14 @@ function Transition(props) {
 function Snackbar(props) {
   const { message, closeFunc, ...other } = props;
   const classes = {
-    info: 'MuiSnackbarContent-info',
-    close: 'MuiSnackbarContent-close',
+    info: "MuiSnackbarContent-info",
+    close: "MuiSnackbarContent-close",
   };
 
   return (
     <MuiSnackbar
-      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-      autoHideDuration={6000}
+      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      autoHideDuration={3000}
       TransitionComponent={Transition}
       message={
         <React.Fragment>

@@ -5,6 +5,7 @@ import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import Button from "../components/Button";
 import Typography from "../components/Typography";
+import { useNavigate } from "react-router";
 
 const item = {
   display: "flex",
@@ -25,7 +26,9 @@ const image = {
   my: 4,
 };
 
-function HowItWorks() {
+export default function HowItWorks() {
+  const navigate = useNavigate();
+
   return (
     <Box
       component="section"
@@ -107,7 +110,7 @@ function HowItWorks() {
           variant="contained"
           component="a"
           onClick={() => {
-            window.scrollTo(0, 1100);
+            navigate();
           }}
           sx={{ mt: 8, boxShadow: 3, borderRadius: "12px" }}
         >
@@ -117,5 +120,3 @@ function HowItWorks() {
     </Box>
   );
 }
-
-export default HowItWorks;

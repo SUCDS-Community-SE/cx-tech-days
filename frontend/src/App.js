@@ -2,6 +2,12 @@ import React from "react";
 import Hero from "./modules/views/Hero";
 import AppFooter from "./modules/views/AppFooter";
 import AppAppBar from "./modules/views/AppAppBar";
+//import Snackbar from "./modules/components/Snackbar";
+import Snackbar from "@mui/material/Snackbar";
+import Button from "@mui/material/Button";
+import MuiAlert from "@mui/material/Alert";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 import withRoot from "./modules/withRoot";
 import { PUBLIC_URL } from "./FirebaseConfig";
 import {
@@ -13,13 +19,45 @@ import {
 import Home from "./modules/pages/Home";
 import Main from "./modules/pages/Main";
 
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 function App() {
   const [user, setUser] = React.useState();
+  const [errorMessage, setErrorMessage] = React.useState("");
+  const [open, setOpen] = React.useState(false);
 
   const handleUserChange = (user) => {
     console.log(user);
     setUser(user);
   };
+
+  const handle_Error = (errorMessage) => {
+    setErrorMessage(errorMessage);
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const action = (
+    <React.Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
 
   return (
     <Router>
@@ -27,25 +65,30 @@ function App() {
         <AppAppBar />
         <Hero />
         <Routes>
-          <Route path={PUBLIC_URL}>
-            <Route
-              path={PUBLIC_URL + "/"}
-              element={<Home userChange={handleUserChange} />}
-            />
-            <Route
-              path={PUBLIC_URL + "/*"}
-              element={<Home userChange={handleUserChange} />}
-            />
-            <Route
-              path={PUBLIC_URL + "/main"}
-              element={
-                <Secured user={user}>
-                  <Main user={user} />
-                </Secured>
-              }
-            />
-          </Route>
+          <Route
+            path={PUBLIC_URL}
+            element={
+              <Home userChange={handleUserChange} handleError={handle_Error} />
+            }
+          />
+          <Route
+            path={PUBLIC_URL + "/main"}
+            element={
+              <Secured user={user}>
+                <Main user={user} />
+              </Secured>
+            }
+          />
         </Routes>
+        <Snackbar
+          onClose={handleClose}
+          open={open}
+          action={action}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          autoHideDuration={3000}
+        >
+          <Alert severity="error">{errorMessage}</Alert>
+        </Snackbar>
         <AppFooter />
       </React.Fragment>
     </Router>
@@ -62,7 +105,7 @@ function Secured(props) {
     // trying to go to when they were redirected. This allows us to send them
     // along to that page after they login, which is a nicer user experience
     // than dropping them off on the home page.
-    return redirect({ PUBLIC_URL });
+    redirect({ PUBLIC_URL });
   }
 
   return props.children;

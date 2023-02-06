@@ -2,14 +2,18 @@ import React from "react";
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import Button from "../components/Button";
+import {
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+} from "firebase/auth";
 import { auth } from "../../FirebaseConfig";
 import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
 import { useNavigate } from "react-router-dom";
 
 export default function Anmelden(props) {
-  const { onClose, open } = props;
+  const { onClose, open, handleError } = props;
   const [email, setEmail] = React.useState();
   const [password, setPassword] = React.useState();
 
@@ -26,13 +30,25 @@ export default function Anmelden(props) {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        handleError(errorMessage);
+      });
+  };
+
+  const handlePasswordReset = (e) => {
+    e.preventDefault();
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        let Message = "Email wurde gesendet";
+        handleError(Message);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
         switch ((errorCode, errorMessage)) {
           case "auth/invalid-email":
-            alert(errorMessage);
-            break;
-          case "auth/wrong-password":
-            alert(errorMessage);
-            break;
+            return handleError(errorMessage);
+          case "auth/user-not-found":
+            return handleError(errorMessage);
           default:
           // do nothing
         }
@@ -47,9 +63,9 @@ export default function Anmelden(props) {
     <Dialog
       onBackdropClick={handleBackdropClick}
       open={open}
-      PaperProps={{ sx: { width: "40%", height: "20%" } }}
+      PaperProps={{ sx: { width: "45%", height: "23%" } }}
     >
-      <Box
+      <Container
         sx={{
           display: "flex",
           justifyContent: "space-evenly",
@@ -64,10 +80,9 @@ export default function Anmelden(props) {
           variant="standard"
           autoComplete="off"
           sx={{
-            width: "70%",
+            width: "80%",
             mt: 3,
             mb: 2,
-            borderRadius: "12px",
           }}
           onChange={(e) => {
             setEmail(e.target.value);
@@ -80,26 +95,44 @@ export default function Anmelden(props) {
           type="password"
           autoComplete="current-password"
           sx={{
-            width: "70%",
+            width: "80%",
             mt: 3,
-            mb: 2,
-            borderRadius: "12px",
+            mb: 5,
           }}
           onChange={(e) => {
             setPassword(e.target.value);
           }}
         />
-        <Button
-          type="submit"
-          color="secondary"
-          variant="contained"
-          align="center"
-          // sx={{ width: "40%", borderRadius: "12px", mt: 3 }}
-          onClick={handleSignIn}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
         >
-          Anmelden
-        </Button>
-      </Box>
+          <Button
+            type="submit"
+            color="secondary"
+            variant="contained"
+            align="center"
+            sx={{ mr: 2 }}
+            onClick={handleSignIn}
+          >
+            Anmelden
+          </Button>
+          <Button
+            type="submit"
+            color="secondary"
+            variant="contained"
+            align="center"
+            sx={{ ml: 2 }}
+            onClick={handlePasswordReset}
+          >
+            Passwort vergessen
+          </Button>
+        </Box>
+      </Container>
     </Dialog>
   );
 }

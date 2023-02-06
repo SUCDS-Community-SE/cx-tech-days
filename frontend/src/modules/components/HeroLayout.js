@@ -60,7 +60,7 @@ function HeroLayout(props) {
         <IconButton
           alt="arrow down"
           onClick={() => {
-            window.scrollTo(0, 1100);
+            window.scrollTo(0, 1045);
           }}
           sx={{ position: "absolute", bottom: 32 }}
         >

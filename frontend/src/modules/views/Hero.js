@@ -38,7 +38,9 @@ export default function Hero() {
         variant="contained"
         size="large"
         component="a"
-        href=""
+        onClick={() => {
+          window.scrollTo(0, 1600);
+        }}
         sx={{ minWidth: 200, borderRadius: "12px", boxShadow: 3 }}
       >
         Registrieren

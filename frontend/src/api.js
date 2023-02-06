@@ -81,7 +81,7 @@ export default class API {
         body: JSON.stringify(suggestionObject),
       }
     ).then((body) => {
-      console.log(body);
+      //console.log(body);
       return new Promise(function (resolve) {
         resolve();
       });
