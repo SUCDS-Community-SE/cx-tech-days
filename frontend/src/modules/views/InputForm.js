@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import uuid from "react-uuid";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+import Button from "../components/Button";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
@@ -11,12 +11,22 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import API from "../../api";
 
-function addNewSuggestion(topic, type, speaker) {
+function addNewSuggestion(
+  title,
+  topic,
+  type,
+  speaker,
+  abstract,
+  speakerShortInfo
+) {
   const suggestion = {
     id: uuid(),
+    title: title,
     topic: topic,
     type: type,
     speaker: speaker,
+    abstract: abstract,
+    speakerShortInfo: speakerShortInfo,
     votes: 0,
   };
   console.log(suggestion);
@@ -24,19 +34,24 @@ function addNewSuggestion(topic, type, speaker) {
 }
 
 export default function InputForm() {
+  const [title, setTitle] = useState("");
   const [topic, setTopic] = useState("");
   const [type, setType] = useState("");
   const [speaker, setSpeaker] = useState("");
+  const [abstract, setAbstract] = useState("");
+  const [speakerShortInfo, setSpeakerShortInfo] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(topic, type, speaker);
     //adds new suggestion to the list
-    addNewSuggestion(topic, type, speaker);
+    addNewSuggestion(title, topic, type, speaker, abstract, speakerShortInfo);
     // clears the input fields
+    setTitle("");
     setTopic("");
     setType("");
     setSpeaker("");
+    setAbstract("");
+    setSpeakerShortInfo("");
   };
 
   return (
@@ -59,7 +74,7 @@ export default function InputForm() {
           margin: 3,
           boxShadow: 3,
           borderRadius: "12px",
-          width: "43%",
+          width: "70%",
         }}
       >
         <Box
@@ -76,19 +91,30 @@ export default function InputForm() {
           </Typography>
           <TextField
             autoComplete="off"
-            label="Topic"
+            label="Titel"
+            name="title"
+            value={title}
+            sx={{
+              paddingBottom: 2,
+            }}
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
+          />
+          <TextField
+            autoComplete="off"
+            label="Thema"
             name="topic"
             value={topic}
             sx={{
               paddingBottom: 2,
-              width: "43%",
             }}
             onChange={(e) => {
               setTopic(e.target.value);
             }}
           />
           <FormControl sx={{ paddingBottom: 2 }}>
-            <InputLabel id="Type">Type</InputLabel>
+            <InputLabel id="Type">Format</InputLabel>
             <Select
               labelId="Type-label"
               id="Type-select-helper"
@@ -98,7 +124,7 @@ export default function InputForm() {
                 setType(e.target.value);
               }}
             >
-              <MenuItem value={"45min Session"}>45min Session</MenuItem>
+              <MenuItem value={"Session"}>Session</MenuItem>
               <MenuItem value={"Pecha Kucha"}>Pecha Kucha</MenuItem>
               <MenuItem value={"Workshop"}>Workshop</MenuItem>
             </Select>
@@ -111,6 +137,27 @@ export default function InputForm() {
             sx={{ paddingBottom: 2 }}
             onChange={(e) => {
               setSpeaker(e.target.value);
+            }}
+          />
+          <TextField
+            autoComplete="off"
+            label="Abstract"
+            name="abstract"
+            value={abstract}
+            sx={{ paddingBottom: 2 }}
+            onChange={(e) => {
+              setAbstract(e.target.value);
+            }}
+          />
+          <TextField
+            id="speakerShortInfo"
+            label="Speaker Short Info"
+            multiline
+            maxRows={4}
+            value={speakerShortInfo}
+            sx={{ paddingBottom: 2 }}
+            onChange={(e) => {
+              setSpeakerShortInfo(e.target.value);
             }}
           />
           <Button

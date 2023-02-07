@@ -2,6 +2,7 @@ import React from "react";
 import Overview from "../views/Overview";
 import SignUp from "../views/SignUp";
 import HowItWorks from "../views/HowItWorks";
+import InputForm from "../views/InputForm";
 
 function Home(props) {
   const { userChange } = props;
@@ -18,7 +19,8 @@ function Home(props) {
   return (
     <div>
       <Overview />
-      <SignUp userChange={handleUserChange} handleError={handle_Error} />
+      <InputForm />
+      {/* <SignUp userChange={handleUserChange} handleError={handle_Error} /> */}
       <HowItWorks />
     </div>
   );

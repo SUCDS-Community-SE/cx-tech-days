@@ -1,14 +1,30 @@
 export default class SuggestionObject {
-  constructor(id, topic, type, speaker, votes) {
+  constructor(
+    id,
+    title,
+    topic,
+    type,
+    speaker,
+    abstract,
+    speakerShortInfo,
+    votes
+  ) {
     this.id = parseInt(id);
+    this.title = title;
     this.topic = topic;
     this.type = type;
     this.speaker = speaker;
+    this.abstract = abstract;
+    this.speakerShortInfo = speakerShortInfo;
     this.votes = parseInt(votes);
   }
 
   getId() {
     return this.id;
+  }
+
+  getVotes() {
+    return this.votes;
   }
 
   static fromJSON(json) {

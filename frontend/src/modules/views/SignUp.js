@@ -6,6 +6,7 @@ import Typography from "../components/Typography";
 import Button from "../components/Button";
 import Anmelden from "../form/Anmelden";
 import Registrieren from "../form/Registrieren";
+import MHP18_00173 from "../../pictures/MHP18_00173.jpg";
 
 export default function SignUp(props) {
   const { userChange } = props;
@@ -110,12 +111,11 @@ export default function SignUp(props) {
               right: 0,
               bottom: 0,
               width: "100%",
-              background: "url(/static/themes/onepirate/CTAImageDots.png)",
             }}
           />
           <Box
             component="img"
-            src="https://images.unsplash.com/photo-1550305080-4e029753abcf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80"
+            src={MHP18_00173}
             alt="call to action"
             sx={{
               position: "absolute",

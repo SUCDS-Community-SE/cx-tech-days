@@ -4,12 +4,12 @@ from objects.suggestionObject import SuggestionObject
 
 # Suggestion Mapper
 
-def create_suggestion(id, topic, type, speaker, votes):
+def create_suggestion(id, title, topic, type, speaker, abstract, speakerShortInfo, votes):
     """
     Creates a new person object.
     :return: the new person object
     """
-    suggestion = SuggestionObject(id, topic, type, speaker, votes)
+    suggestion = SuggestionObject(id, title, topic, type, speaker, abstract, speakerShortInfo, votes)
 
     with SuggestionMapper() as mapper:
         return mapper.insert(suggestion)

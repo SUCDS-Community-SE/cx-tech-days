@@ -2,9 +2,9 @@ import React from "react";
 import Button from "../components/Button";
 import Typography from "../components/Typography";
 import HeroLayout from "../components/HeroLayout";
+import MHP20_00097_powerpoint from "../../pictures/MHP20_00097_powerpoint.jpg";
 
-const backgroundImage =
-  "https://images.unsplash.com/photo-1591115765373-5207764f72e7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80";
+const backgroundImage = MHP20_00097_powerpoint;
 
 export default function Hero() {
   return (

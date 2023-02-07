@@ -20,17 +20,14 @@ cxtechdays = api.namespace('cxtechdays', description='function of the Website')
 
 suggestion = api.model('Suggestion', {
     'id': fields.Integer(attribute='_id', description='unique identifier for a object'),
+    'title': fields.String(attribute='_title', description='The title of the suggestion'),
     'topic': fields.String(attribute='_topic', description='The topic of the suggestion'),
     'type': fields.String(attribute='_type', description='The type of the suggestion'),
     'speaker': fields.String(attribute='_speaker', description='The speaker of the suggestion'),
+    'abstract': fields.String(attribute='_abstract', description='The abstract of the suggestion'),
+    'speakerShortInfo': fields.String(attribute='_speakerShortInfo', description='The speakerShortInfo of the suggestion'),
     'votes': fields.Integer(attribute='_votes', description='The votes of the suggestion'),
 })
-
-email = api.model('Email', {
-    'id': fields.Integer(attribute='_id', description='unique identifier for a object'),
-    'email': fields.String(attribute='_email', description='The email of the user'),
-})
-
 #######################################################################################################################
 # SUGGESTIONS API
 #######################################################################################################################
@@ -60,7 +57,7 @@ class SuggestionsListOps(Resource):
         suggestion = SuggestionObject.from_dict(api.payload)
 
         if suggestion is not None:
-            logic.create_suggestion(suggestion.get_id(), suggestion.get_topic(), suggestion.get_type(), suggestion.get_speaker(), suggestion.get_votes())
+            logic.create_suggestion(suggestion.get_id(), suggestion.get_title(), suggestion.get_topic(), suggestion.get_type(), suggestion.get_speaker(), suggestion.get_abstract(), suggestion.get_speakerShortInfo(), suggestion.get_votes())
             return suggestion, 200
         else:
             return "", 500
@@ -97,30 +94,3 @@ class SuggestionOps(Resource):
             return suggestion, 200
         else:
             return '', 500
-
-
-#######################################################################################################################
-# REGISTRATIONS API
-#######################################################################################################################
-@cxtechdays.route('/api/emails')
-@cxtechdays.response(500, 'If there is an error from the server.')
-
-class EmailsListOps(Resource):
-    @cxtechdays.marshal_list_with(email, code=201)
-    def post(self, id):
-        """
-        Creates and inserts a new suggestion into the database.
-        :param id: identifies the data set of the suggestion
-        :return: the new suggestion object
-        """
-        email = logic.get_email_by_id(id)
-
-        if email is not None:
-            result = logic.insert_email(email)
-            return result
-        else:
-            return "Unknown email", 500
-
-# The two following lines are only executed in local environment. They have no effect in the cloud.
-if __name__ == '__main__':
-    app.run(debug=True)

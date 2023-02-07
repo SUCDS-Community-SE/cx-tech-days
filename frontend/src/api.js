@@ -1,5 +1,4 @@
 import SuggestionObject from "./modules/objects/suggestionObject";
-import EmailObject from "./modules/objects/emailObject";
 
 export default class API {
   static #api = null;
@@ -9,7 +8,6 @@ export default class API {
   #getSuggestionsURL = () => `${this.#ServerBaseURL}/suggestions`;
   #addSuggestionURL = () => `${this.#ServerBaseURL}/suggestions`;
   #updateSuggestionURL = (id) => `${this.#ServerBaseURL}/suggestions/${id}`;
-  #addEmailURL = () => `${this.#ServerBaseURL}/email`;
 
   static getAPI() {
     if (this.#api == null) {
@@ -84,24 +82,6 @@ export default class API {
       //console.log(body);
       return new Promise(function (resolve) {
         resolve();
-      });
-    });
-  }
-
-  // Email related
-
-  addEmail(emailObject) {
-    return this.#fetchAdvanced(this.#addEmailURL(), {
-      method: "POST",
-      headers: {
-        Accept: "application/json, text/plain",
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(emailObject),
-    }).then((responseJSON) => {
-      let responseEmail = EmailObject.fromJSON(responseJSON)[0];
-      return new Promise(function (resolve) {
-        resolve(responseEmail);
       });
     });
   }
