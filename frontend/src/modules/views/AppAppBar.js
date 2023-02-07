@@ -9,13 +9,13 @@ function AppAppBar() {
   return (
     <div>
       <AppBar position="fixed" sx={{ bgcolor: "white", boxShadow: 1 }}>
-        <Toolbar sx={{ justifyContent: "space-between" }}>
-          <Box sx={{ flex: 1 }} />
+        <Toolbar sx={{ justifyContent: "flex-start" }}>
+          <Box />
           <Link
-            variant="h6"
+            variant="h7"
             underline="none"
             href={PUBLIC_URL}
-            sx={{ fontSize: 24 }}
+            sx={{ fontSize: 45 }}
           >
             {"MHP"}
           </Link>

@@ -1,11 +1,12 @@
 import React from "react";
-
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
-import Button from "../components/Button";
 import Typography from "../components/Typography";
-import { useNavigate } from "react-router";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import { Link } from "@mui/material";
 
 const item = {
   display: "flex",
@@ -27,8 +28,6 @@ const image = {
 };
 
 export default function HowItWorks() {
-  const navigate = useNavigate();
-
   return (
     <Box
       component="section"
@@ -36,8 +35,8 @@ export default function HowItWorks() {
     >
       <Container
         sx={{
-          mt: 10,
-          mb: 15,
+          mt: 7,
+          mb: 7,
           position: "relative",
           display: "flex",
           flexDirection: "column",
@@ -55,8 +54,8 @@ export default function HowItWorks() {
             opacity: 0.7,
           }}
         />
-        <Typography variant="h4" marked="center" component="h2" sx={{ mb: 14 }}>
-          How it works
+        <Typography variant="h4" marked="center" component="h2" sx={{ mb: 5 }}>
+          Deadline ist der 20.02.2023
         </Typography>
         <div>
           <Grid container spacing={5}>
@@ -65,13 +64,37 @@ export default function HowItWorks() {
                 <Box sx={number}>1.</Box>
                 <Box
                   component="img"
-                  src="https://img.icons8.com/ios/250/000000/dating-website.png"
+                  src="https://img.icons8.com/ios/250/000000/map.png"
                   alt="Picture 1"
                   sx={image}
                 />
                 <Typography variant="h5" align="center">
-                  Thema einreichen
+                  Formate zur Auswahl
                 </Typography>
+                <List sx={{ listStyleType: "disc" }}>
+                  <ListItem sx={{ display: "list-item" }}>
+                    <ListItemText
+                      primary="Session"
+                      secondary="45 Minuten, gut geeignet, wenn auch tiefergehen in ein Thema eingetaucht werden soll."
+                    />
+                  </ListItem>
+                  <ListItem sx={{ display: "list-item" }}>
+                    <ListItemText
+                      primary={
+                        <Link href="https://de.wikipedia.org/wiki/Pecha_Kucha">
+                          Pecha Kucha
+                        </Link>
+                      }
+                      secondary="6:40 Minuten Zeit, um ein Thema kurz und knapp vorzustellen."
+                    />
+                  </ListItem>
+                  <ListItem sx={{ display: "list-item" }}>
+                    <ListItemText
+                      primary="Workshop"
+                      secondary="2 Stunden, hands-on, um ein Thema zu vertiefen."
+                    />
+                  </ListItem>
+                </List>
               </Box>
             </Grid>
             <Grid item xs={12} md={4}>
@@ -79,13 +102,41 @@ export default function HowItWorks() {
                 <Box sx={number}>2.</Box>
                 <Box
                   component="img"
-                  src="https://img.icons8.com/ios/250/000000/training.png"
+                  src="https://img.icons8.com/ios/250/000000/resume.png"
                   alt="Picture 2"
                   sx={image}
                 />
                 <Typography variant="h5" align="center">
-                  Art des Vortrags auswählen
+                  Themen zur Auswahl
                 </Typography>
+                <List sx={{ listStyleType: "disc" }}>
+                  <ListItem sx={{ display: "list-item" }}>
+                    Case Studies
+                  </ListItem>
+                  <ListItem sx={{ display: "list-item" }}>
+                    Live Demo #Slideless
+                  </ListItem>
+                  <ListItem sx={{ display: "list-item" }}>
+                    Core Programming Languages (Java, Kotlin, JavaScript,
+                    TypeScript, Go, ...)
+                  </ListItem>
+                  <ListItem sx={{ display: "list-item" }}>
+                    Technische Architektur
+                  </ListItem>
+                  <ListItem sx={{ display: "list-item" }}>Frameworks</ListItem>
+                  <ListItem sx={{ display: "list-item" }}>
+                    Future Tech & Trends
+                  </ListItem>
+                  <ListItem sx={{ display: "list-item" }}>
+                    Developer Experience
+                  </ListItem>
+                  <ListItem sx={{ display: "list-item" }}>
+                    Performance & Security
+                  </ListItem>
+                  <ListItem sx={{ display: "list-item" }}>Cloud</ListItem>
+                  <ListItem sx={{ display: "list-item" }}>Web</ListItem>
+                  <ListItem sx={{ display: "list-item" }}>Immersive</ListItem>
+                </List>
               </Box>
             </Grid>
             <Grid item xs={12} md={4}>
@@ -93,29 +144,31 @@ export default function HowItWorks() {
                 <Box sx={number}>3.</Box>
                 <Box
                   component="img"
-                  src="https://img.icons8.com/ios/250/000000/user.png"
+                  src="https://img.icons8.com/ios/250/000000/delete-sign.png"
                   alt="Picture 3"
                   sx={image}
                 />
                 <Typography variant="h5" align="center">
-                  {"Speaker eintragen"}
+                  {"Was wir nicht suchen..."}
                 </Typography>
+                <List sx={{ listStyleType: "disc" }}>
+                  <ListItem sx={{ display: "list-item" }}>
+                    Vorträge über agile Arbeitsweisen
+                  </ListItem>
+                  <ListItem sx={{ display: "list-item" }}>
+                    HighLevel-Themen
+                  </ListItem>
+                  <ListItem sx={{ display: "list-item" }}>
+                    Hochglanzfolien
+                  </ListItem>
+                  <ListItem sx={{ display: "list-item" }}>
+                    Management-Themen
+                  </ListItem>
+                </List>
               </Box>
             </Grid>
           </Grid>
         </div>
-        <Button
-          color="secondary"
-          size="large"
-          variant="contained"
-          component="a"
-          onClick={() => {
-            navigate();
-          }}
-          sx={{ mt: 8, boxShadow: 3, borderRadius: "12px" }}
-        >
-          Submit Topic
-        </Button>
       </Container>
     </Box>
   );

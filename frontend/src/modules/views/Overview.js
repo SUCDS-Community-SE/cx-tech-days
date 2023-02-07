@@ -34,14 +34,14 @@ function Values() {
                 alt="Picture 1"
                 sx={{ height: 55 }}
               />
-              <Typography variant="h6" sx={{ my: 5 }}>
+              <Typography variant="h5" sx={{ my: 5 }}>
                 Wann & Wo?
               </Typography>
-              <Typography variant="h5">{"Mittwoch 26.04.2023"}</Typography>
-              <Typography variant="h5">{"12 – 17 Uhr"}</Typography>
-              <Typography variant="h5">{"Hindenburgstraße 45,"}</Typography>
-              <Typography variant="h5">{"Ludwigsburg"}</Typography>
-              <Typography variant="h5">
+              <Typography variant="body">{"Mittwoch 26.04.2023"}</Typography>
+              <Typography variant="body">{"12 – 17 Uhr"}</Typography>
+              <Typography variant="body">{"Hindenburgstraße 45,"}</Typography>
+              <Typography variant="body">{"Ludwigsburg"}</Typography>
+              <Typography variant="body">
                 {"(anschließendes After Work)"}
               </Typography>
             </Box>
@@ -54,10 +54,10 @@ function Values() {
                 alt="Picture 2"
                 sx={{ height: 55 }}
               />
-              <Typography variant="h6" sx={{ my: 5 }}>
+              <Typography variant="h5" sx={{ my: 5 }}>
                 Nutze deine Chance!
               </Typography>
-              <Typography variant="h5">
+              <Typography variant="body">
                 {
                   "Hast du Interesse dein Projekt, eine Lösung auf die du besonders Stolz bist, eine Architektur, besondere Coding Guidelines oder ein sonstiges technisches Thema vorzustellen? Dann nutze deine Chance und die Bühne, die dir hiermit gegeben wird."
                 }
@@ -72,10 +72,10 @@ function Values() {
                 alt="Picture 3"
                 sx={{ height: 55 }}
               />
-              <Typography variant="h6" sx={{ my: 5 }}>
+              <Typography variant="h5" sx={{ my: 5 }}>
                 Was erwartet euch?
               </Typography>
-              <Typography variant="h5">
+              <Typography variant="body">
                 {
                   "Wir bieten euch Vorträge von Kollegen sowie Gastvorträge externen Experten Platz für einen Austausch untereinander sowie ein gemütliches After Work mit Essen und Trinken"
                 }
