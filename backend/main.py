@@ -19,7 +19,7 @@ cxtechdays = api.namespace('cxtechdays', description='function of the Website')
 #######################################################################################################################
 
 suggestion = api.model('Suggestion', {
-    'id': fields.Integer(attribute='_id', description='unique identifier for a object'),
+    'id': fields.String(attribute='_id', description='unique identifier for a object'),
     'title': fields.String(attribute='_title', description='The title of the suggestion'),
     'topic': fields.String(attribute='_topic', description='The topic of the suggestion'),
     'type': fields.String(attribute='_type', description='The type of the suggestion'),
@@ -94,3 +94,6 @@ class SuggestionOps(Resource):
             return suggestion, 200
         else:
             return '', 500
+
+if __name__ == '__main__':
+    app.run(debug=True)

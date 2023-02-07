@@ -15,7 +15,7 @@ class SuggestionMapper(Mapper):
         cursor.execute("SELECT * FROM suggestions")
         tuples = cursor.fetchall()
         for (tuple) in tuples:
-            suggestion = SuggestionObject(tuple['id'], tuple['topic'], tuple['type'], tuple['speaker'], tuple['votes'])
+            suggestion = SuggestionObject(tuple['id'], tuple['title'], tuple['topic'], tuple['type'], tuple['speaker'], tuple['abstract'], tuple['speakerShortInfo'], tuple['votes'])
             result.append(suggestion.__dict__)
         self._connection.commit()
         cursor.close()
@@ -34,8 +34,8 @@ class SuggestionMapper(Mapper):
         cursor.execute(command)
         tuples = cursor.fetchall()
         try:
-            (id, topic, type, speaker, votes) = tuples[0]
-            suggestion = SuggestionObject(tuple['id'], tuple['topic'], tuple['type'], tuple['speaker'], tuple['votes'])
+            (id, title, topic, type, speaker, abstract, speakerShortInfo, votes) = tuples[0]
+            suggestion = SuggestionObject(tuple['id'], tuple['title'], tuple['topic'], tuple['type'], tuple['speaker'], tuple['abstract'], tuple['speakerShortInfo'], tuple['votes'])
             result = suggestion
         except IndexError:
             result = None
@@ -65,9 +65,9 @@ class SuggestionMapper(Mapper):
         :return: suggestion object, which is to be added.
         """
         cursor = self._connection.cursor()
-        query = "INSERT INTO suggestions (id, topic, type, speaker, votes ) " \
-                "VALUES (%s, %s, %s, %s, %s)"
-        data = (str(suggestion.get_id()), suggestion.get_topic(), suggestion.get_type(), suggestion.get_speaker(), str(suggestion.get_votes()))
+        query = "INSERT INTO suggestions (id, title, topic, type, speaker, abstract, speakerShortInfo, votes ) " \
+                "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        data = (str(suggestion.get_id()),suggestion.get_title(), suggestion.get_topic(), suggestion.get_type(), suggestion.get_speaker(), suggestion.get_abstract(), suggestion.get_speakerShortInfo(), str(suggestion.get_votes()))
         cursor.execute(query, data)
 
         self._connection.commit()
@@ -81,8 +81,8 @@ class SuggestionMapper(Mapper):
         :return: suggestion object, which is to be updated.
         """
         cursor = self._connection.cursor()
-        query = "UPDATE suggestions SET topic=%s, type=%s, speaker=%s, votes=%s WHERE id=%s"
-        data = (suggestion.get_topic(), suggestion.get_type(), suggestion.get_speaker(), str(suggestion.get_votes()), str(suggestion.get_id()))
+        query = "UPDATE suggestions SET title=%s, topic=%s, type=%s, speaker=%s, abstract=%s, speakerShortInfo=%s, votes=%s WHERE id=%s"
+        data = (str(suggestion.get_id()),suggestion.get_title(), suggestion.get_topic(), suggestion.get_type(), suggestion.get_speaker(), suggestion.get_abstract(), suggestion.get_speakerShortInfo(), str(suggestion.get_votes()))
         cursor.execute(query, data)
 
         self._connection.commit()

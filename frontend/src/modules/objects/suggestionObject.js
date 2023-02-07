@@ -9,7 +9,7 @@ export default class SuggestionObject {
     speakerShortInfo,
     votes
   ) {
-    this.id = parseInt(id);
+    this.id = id;
     this.title = title;
     this.topic = topic;
     this.type = type;
