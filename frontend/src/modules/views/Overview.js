@@ -37,11 +37,11 @@ function Values() {
               <Typography variant="h5" sx={{ my: 5 }}>
                 Wann & Wo?
               </Typography>
-              <Typography variant="body">{"Mittwoch 26.04.2023"}</Typography>
-              <Typography variant="body">{"12 – 17 Uhr"}</Typography>
-              <Typography variant="body">{"Hindenburgstraße 45,"}</Typography>
-              <Typography variant="body">{"Ludwigsburg"}</Typography>
-              <Typography variant="body">
+              <Typography variant="body1">{"Mittwoch 26.04.2023"}</Typography>
+              <Typography variant="body1">{"12 – 17 Uhr"}</Typography>
+              <Typography variant="body1">{"Hindenburgstraße 45,"}</Typography>
+              <Typography variant="body1">{"Ludwigsburg"}</Typography>
+              <Typography variant="body1">
                 {"(anschließendes After Work)"}
               </Typography>
             </Box>
@@ -57,7 +57,7 @@ function Values() {
               <Typography variant="h5" sx={{ my: 5 }}>
                 Nutze deine Chance!
               </Typography>
-              <Typography variant="body">
+              <Typography variant="body1">
                 {
                   "Hast du Interesse dein Projekt, eine Lösung auf die du besonders Stolz bist, eine Architektur, besondere Coding Guidelines oder ein sonstiges technisches Thema vorzustellen? Dann nutze deine Chance und die Bühne, die dir hiermit gegeben wird."
                 }
@@ -75,7 +75,7 @@ function Values() {
               <Typography variant="h5" sx={{ my: 5 }}>
                 Was erwartet euch?
               </Typography>
-              <Typography variant="body">
+              <Typography variant="body1">
                 {
                   "Wir bieten euch Vorträge von Kollegen sowie Gastvorträge externen Experten Platz für einen Austausch untereinander sowie ein gemütliches After Work mit Essen und Trinken"
                 }

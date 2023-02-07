@@ -11,6 +11,8 @@ import { auth } from "../../FirebaseConfig";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import { useNavigate } from "react-router-dom";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function Anmelden(props) {
   const { onClose, open, handleError } = props;
@@ -63,7 +65,7 @@ export default function Anmelden(props) {
     <Dialog
       onBackdropClick={handleBackdropClick}
       open={open}
-      PaperProps={{ sx: { width: "45%", height: "23%" } }}
+      PaperProps={{ sx: { width: "500px", height: "310px" } }}
     >
       <Container
         sx={{
@@ -73,7 +75,21 @@ export default function Anmelden(props) {
           alignItems: "center",
         }}
       >
-        <DialogTitle>Anmelden</DialogTitle>
+        <DialogTitle>
+          Anmelden
+          <IconButton
+            aria-label="close"
+            onClick={onClose}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
         <TextField
           required
           placeholder="Deine email"

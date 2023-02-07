@@ -27,7 +27,6 @@ function App() {
   const [open, setOpen] = React.useState(false);
 
   const handleUserChange = (user) => {
-    console.log(user);
     setUser(user);
   };
 
@@ -40,7 +39,6 @@ function App() {
     if (reason === "clickaway") {
       return;
     }
-
     setOpen(false);
   };
 

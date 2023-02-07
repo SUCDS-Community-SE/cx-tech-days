@@ -21,7 +21,7 @@ export default function Hero() {
         src={backgroundImage}
         alt="increase priority"
       />
-      <Typography color="inherit" align="center" variant="h2" marked="center">
+      <Typography color="inherit" align="center" variant="h1" marked="center">
         2023 MHP CX Tech Days
       </Typography>
       <Typography
@@ -45,8 +45,8 @@ export default function Hero() {
       >
         Registrieren
       </Button>
-      <Typography variant="body2" color="inherit" sx={{ mt: 2 }}>
-        Registere dich jetzt und vote für deine Favoriten!
+      <Typography variant="body1" color="inherit" sx={{ mt: 2 }}>
+        Jetzt noch bis zum 20.02.2023 Themen einreichen!
       </Typography>
     </HeroLayout>
   );

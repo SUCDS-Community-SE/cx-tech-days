@@ -7,6 +7,8 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../FirebaseConfig";
 import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 
 const validEmail = new RegExp("^[a-zA-Z0-9._:$!%-]+@mhp.com$");
 
@@ -50,7 +52,7 @@ export default function Registrieren(props) {
     <Dialog
       onBackdropClick={handleBackdropClick}
       open={open}
-      PaperProps={{ sx: { width: "45%", height: "30%" } }}
+      PaperProps={{ sx: { width: "500px", height: "380px" } }}
     >
       <Box
         sx={{
@@ -60,7 +62,21 @@ export default function Registrieren(props) {
           alignItems: "center",
         }}
       >
-        <DialogTitle>Registrieren</DialogTitle>
+        <DialogTitle>
+          Registrieren
+          <IconButton
+            aria-label="close"
+            onClick={onClose}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
         <TextField
           required
           placeholder="Deine email"
