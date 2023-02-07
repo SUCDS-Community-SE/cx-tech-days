@@ -39,11 +39,11 @@ export default function Hero() {
         size="large"
         component="a"
         onClick={() => {
-          window.scrollTo(0, 1600);
+          window.scrollTo(0, 1400);
         }}
         sx={{ minWidth: 200, borderRadius: "12px", boxShadow: 3 }}
       >
-        Registrieren
+        Thema einreichen
       </Button>
       <Typography variant="body1" color="inherit" sx={{ mt: 2 }}>
         Jetzt noch bis zum 20.02.2023 Themen einreichen!

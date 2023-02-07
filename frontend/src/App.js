@@ -61,17 +61,16 @@ function App() {
         <AppAppBar />
         <Hero />
         <Routes>
-          <Route
-            path={PUBLIC_URL}
-            element={
-              <Home userChange={handleUserChange} handleError={handle_Error} />
-            }
-          />
+          <Route path={PUBLIC_URL} element={<Home />} />
           <Route
             path={PUBLIC_URL + "/main"}
             element={
               <Secured user={user}>
-                <Main user={user} />
+                <Main
+                  user={user}
+                  userChange={handleUserChange}
+                  handleError={handle_Error}
+                />
               </Secured>
             }
           />
