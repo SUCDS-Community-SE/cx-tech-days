@@ -13,7 +13,7 @@ class Mapper(ABC):
         """Checks if we run in the cloud or local and uses corresponding credentials to connect"""
         if os.getenv('GAE_ENV', '').startswith('standard'):
             self._connection = mysql.connector.connect(user='admin', password='adminadmin',
-                                                       unix_socket='mysql-db-cx-dev-days.civwsopmd2k6.eu-central-1.rds.amazonaws.com,
+                                                       unix_socket='mysql-db-cx-dev-days.civwsopmd2k6.eu-central-1.rds.amazonaws.com',
                                                        database='cx_tech_days')
         else:
             self._connection = mysql.connector.connect(user='root', password='a9FeYtYZEpmZahuLfvqG',
