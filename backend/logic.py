@@ -1,5 +1,4 @@
 from dbabstraction.SuggestionMapper import SuggestionMapper
-from dbabstraction.EmailMapper import EmailMapper
 from objects.suggestionObject import SuggestionObject
 
 # Suggestion Mapper
