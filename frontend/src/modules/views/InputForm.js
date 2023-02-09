@@ -144,6 +144,7 @@ export default function InputForm() {
             label="Abstract"
             name="abstract"
             multiline
+            rows={4}
             maxRows={10}
             value={abstract}
             sx={{ paddingBottom: 2 }}
@@ -156,6 +157,7 @@ export default function InputForm() {
             label="Speaker Short Info"
             name="speakerShortInfo"
             multiline
+            rows={4}
             maxRows={10}
             value={speakerShortInfo}
             sx={{ paddingBottom: 2 }}
