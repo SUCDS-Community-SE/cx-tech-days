@@ -143,6 +143,8 @@ export default function InputForm() {
             autoComplete="off"
             label="Abstract"
             name="abstract"
+            multiline
+            maxRows={10}
             value={abstract}
             sx={{ paddingBottom: 2 }}
             onChange={(e) => {
@@ -150,10 +152,11 @@ export default function InputForm() {
             }}
           />
           <TextField
-            id="speakerShortInfo"
+            autoComplete="off"
             label="Speaker Short Info"
+            name="speakerShortInfo"
             multiline
-            maxRows={4}
+            maxRows={10}
             value={speakerShortInfo}
             sx={{ paddingBottom: 2 }}
             onChange={(e) => {
