@@ -61,7 +61,10 @@ function App() {
         <AppAppBar />
         <Hero />
         <Routes>
-          <Route path={PUBLIC_URL} element={<Home />} />
+          <Route
+            path={PUBLIC_URL}
+            element={<Home handleError={handle_Error} />}
+          />
           <Route
             path={PUBLIC_URL + "/main"}
             element={

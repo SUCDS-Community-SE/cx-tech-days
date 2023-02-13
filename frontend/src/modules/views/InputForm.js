@@ -9,6 +9,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import SuccessMessage from "../components/SuccessMessage";
 import API from "../../api";
 
 function addNewSuggestion(
@@ -33,7 +34,10 @@ function addNewSuggestion(
   API.getAPI().addSuggestion(suggestion);
 }
 
-export default function InputForm() {
+export default function InputForm(props) {
+  const { handleError } = props;
+
+  const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [topic, setTopic] = useState("");
   const [type, setType] = useState("");
@@ -41,17 +45,41 @@ export default function InputForm() {
   const [abstract, setAbstract] = useState("");
   const [speakerShortInfo, setSpeakerShortInfo] = useState("");
 
+  const handle_Error = (errorMessage) => {
+    handleError(errorMessage);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    //adds new suggestion to the list
-    addNewSuggestion(title, topic, type, speaker, abstract, speakerShortInfo);
-    // clears the input fields
-    setTitle("");
-    setTopic("");
-    setType("");
-    setSpeaker("");
-    setAbstract("");
-    setSpeakerShortInfo("");
+    //checks if any of the input fields is empty
+    if (
+      title === "" ||
+      topic === "" ||
+      type === "" ||
+      speaker === "" ||
+      abstract === "" ||
+      speakerShortInfo === ""
+    ) {
+      handle_Error("Bitte alle Felder ausfüllen");
+    } else {
+      //adds new suggestion to the list
+      addNewSuggestion(title, topic, type, speaker, abstract, speakerShortInfo);
+      // clears the input fields
+      setOpen(true);
+      setTitle("");
+      setTopic("");
+      setType("");
+      setSpeaker("");
+      setAbstract("");
+      setSpeakerShortInfo("");
+    }
   };
 
   return (
@@ -145,7 +173,6 @@ export default function InputForm() {
             name="abstract"
             multiline
             rows={4}
-            maxRows={10}
             value={abstract}
             sx={{ paddingBottom: 2 }}
             onChange={(e) => {
@@ -158,7 +185,6 @@ export default function InputForm() {
             name="speakerShortInfo"
             multiline
             rows={4}
-            maxRows={10}
             value={speakerShortInfo}
             sx={{ paddingBottom: 2 }}
             onChange={(e) => {
@@ -175,6 +201,7 @@ export default function InputForm() {
           </Button>
         </Box>
       </Container>
+      <SuccessMessage open={open} handleClose={handleClose} />
     </Box>
   );
 }
