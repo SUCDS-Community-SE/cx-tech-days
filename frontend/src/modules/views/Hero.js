@@ -39,7 +39,7 @@ export default function Hero() {
         size="large"
         component="a"
         onClick={() => {
-          window.scrollTo(0, 1400);
+          window.scrollTo({ top: 1400, behavior: "smooth" });
         }}
         sx={{ minWidth: 200, borderRadius: "12px", boxShadow: 3 }}
       >
