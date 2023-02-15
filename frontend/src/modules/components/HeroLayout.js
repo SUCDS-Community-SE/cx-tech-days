@@ -5,12 +5,14 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import IconButton from "@mui/material/IconButton";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 const HeroLayoutRoot = styled("section")(({ theme }) => ({
   color: theme.palette.common.white,
   position: "relative",
   display: "flex",
-  alignItems: "center",
+  flexDirection: "column",
+  justifyContent: "center",
   [theme.breakpoints.up("sm")]: {
     height: "80vh",
     minHeight: 500,
@@ -37,10 +39,18 @@ function HeroLayout(props) {
       <Container
         sx={{
           mt: 3,
-          mb: 14,
+        }}
+      >
+        <Typography color="inherit" align="center" variant="h1" marked="center">
+          2023 MHP CX Tech Days
+        </Typography>
+      </Container>
+      <Container
+        sx={{
+          mt: 3,
+          mb: 15,
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
         }}
       >
         {children}
@@ -62,7 +72,14 @@ function HeroLayout(props) {
           onClick={() => {
             window.scrollTo({ top: 1045, behavior: "smooth" });
           }}
-          sx={{ position: "absolute", bottom: 32 }}
+          sx={{
+            mt: 2,
+            position: "absolute",
+            bottom: 32,
+            left: "50%",
+            borderRadius: "50px",
+            boxShadow: 2,
+          }}
         >
           <ExpandMore color="secondary" fontSize="large" />
         </IconButton>

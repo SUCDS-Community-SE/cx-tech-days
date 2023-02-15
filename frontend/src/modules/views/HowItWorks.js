@@ -11,8 +11,13 @@ import { Link } from "@mui/material";
 const item = {
   display: "flex",
   flexDirection: "column",
+  justifyContent: "flex-start",
   alignItems: "center",
   px: 5,
+  padding: 6,
+  boxShadow: 3,
+  borderRadius: "12px",
+  minHeight: "775px",
 };
 
 const number = {
@@ -35,8 +40,8 @@ export default function HowItWorks() {
     >
       <Container
         sx={{
-          mt: 7,
-          mb: 7,
+          mt: 15,
+          mb: 10,
           position: "relative",
           display: "flex",
           flexDirection: "column",
@@ -54,7 +59,7 @@ export default function HowItWorks() {
             opacity: 0.7,
           }}
         />
-        <Typography variant="h4" marked="center" component="h2" sx={{ mb: 5 }}>
+        <Typography variant="h3" marked="center" component="h2" sx={{ mb: 5 }}>
           Deadline ist der 20.02.2023
         </Typography>
         <div>

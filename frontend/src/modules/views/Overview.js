@@ -6,10 +6,14 @@ import Container from "@mui/material/Container";
 import Typography from "../components/Typography";
 
 const item = {
+  minHeight: "375px",
+  padding: 2,
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   px: 5,
+  boxShadow: 3,
+  borderRadius: "12px",
 };
 
 function Values() {
@@ -18,7 +22,7 @@ function Values() {
       component="section"
       sx={{ display: "flex", overflow: "hidden", bgcolor: "primary" }}
     >
-      <Container sx={{ mt: 15, mb: 30, display: "flex", position: "relative" }}>
+      <Container sx={{ mt: 15, mb: 15, display: "flex", position: "relative" }}>
         <Box
           component="img"
           src=""

@@ -52,7 +52,7 @@ export default function Registrieren(props) {
     <Dialog
       onBackdropClick={handleBackdropClick}
       open={open}
-      PaperProps={{ sx: { width: "500px", height: "380px" } }}
+      PaperProps={{ sx: { width: "500px", height: "400px" } }}
     >
       <Box
         sx={{
@@ -62,7 +62,7 @@ export default function Registrieren(props) {
           alignItems: "center",
         }}
       >
-        <DialogTitle>
+        <DialogTitle variant="h4">
           Registrieren
           <IconButton
             aria-label="close"

@@ -35,7 +35,14 @@ export default function SignUp(props) {
   };
 
   return (
-    <Container component="section" sx={{ display: "flex" }}>
+    <Container
+      component="section"
+      sx={{
+        mb: 17,
+        mt: 17,
+        display: "flex",
+      }}
+    >
       <Grid container>
         <Grid item xs={12} md={6} sx={{ zIndex: 1 }}>
           <Box
@@ -50,8 +57,8 @@ export default function SignUp(props) {
             }}
           >
             <Box component="form" sx={{ maxWidth: 400 }}>
-              <Typography variant="h2" component="h2" gutterBottom>
-                Anmeldung
+              <Typography variant="h3" component="h2" gutterBottom>
+                Login
               </Typography>
               <Typography variant="h5">
                 Werde Teil eines neuen Formats, um den Austausch untereinander

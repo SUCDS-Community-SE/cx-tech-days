@@ -4,8 +4,34 @@ import Link from "@mui/material/Link";
 import AppBar from "../components/AppBar";
 import Toolbar from "../components/Toolbar";
 import { PUBLIC_URL } from "../../FirebaseConfig";
+import Button from "@mui/material/Button";
 
-function AppAppBar() {
+function AppAppBar(props) {
+  const { user } = props;
+
+  const loginState = user ? (
+    true
+  ) : (
+    <Button
+      variant="text"
+      underline="none"
+      disableElevation
+      disableRipple
+      size="large"
+      sx={{
+        color: "secondary.main",
+        fontSize: 15,
+        fontWeight: "bold",
+        bgcolor: "transparent",
+      }}
+      onClick={() => {
+        window.scrollTo({ top: 1045, behavior: "smooth" });
+      }}
+    >
+      Login
+    </Button>
+  );
+
   return (
     <div>
       <AppBar position="fixed" sx={{ bgcolor: "white", boxShadow: 1 }}>
@@ -19,9 +45,9 @@ function AppAppBar() {
           >
             {"MHP"}
           </Link>
-          <Box
-            sx={{ flex: 1, display: "flex", justifyContent: "flex-end" }}
-          ></Box>
+          <Box sx={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
+            {loginState}
+          </Box>
         </Toolbar>
       </AppBar>
       <Toolbar />

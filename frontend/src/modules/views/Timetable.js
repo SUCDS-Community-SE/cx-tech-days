@@ -29,22 +29,29 @@ export default function Timetable() {
       component="section"
       sx={{ display: "flex", overflow: "hidden", bgcolor: "white" }}
     >
-      <Container sx={{ mt: 15, mb: 30, display: "flex", position: "relative" }}>
+      <Container
+        sx={{
+          mt: 10,
+          mb: 15,
+          display: "flex",
+          position: "relative",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Typography variant="h2" component="h4" gutterBottom>
+          Timetable
+        </Typography>
         <TableContainer
           component={Paper}
           sx={{
-            mt: 10,
-            mb: 10,
             bgcolor: "white",
             padding: 3,
-            margin: 3,
+            mt: 3,
             boxShadow: 3,
             borderRadius: "12px",
           }}
         >
-          <Typography variant="h4" component="h4" gutterBottom>
-            Timetable
-          </Typography>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>

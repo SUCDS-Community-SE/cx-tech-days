@@ -15,16 +15,40 @@ import {
   redirect,
 } from "react-router-dom";
 import Home from "./modules/pages/Home";
-import Main from "./modules/pages/Main";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
+function getTimeRemaining() {
+  //UTC time 04/26/2023,11:00:00 (UTC+1 = 12:00:00)
+  const date = "04/26/2023,11:00:00";
+  const total = Date.parse(date) - Date.parse(new Date());
+  const seconds = Math.floor((total / 1000) % 60);
+  const minutes = Math.floor((total / 1000 / 60) % 60);
+  const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
+  const days = Math.floor(total / (1000 * 60 * 60 * 24));
+  return {
+    total,
+    days,
+    hours,
+    minutes,
+    seconds,
+  };
+}
+
 function App() {
   const [user, setUser] = React.useState();
   const [errorMessage, setErrorMessage] = React.useState("");
   const [open, setOpen] = React.useState(false);
+  const [timeRemaining, setTimeRemaining] = React.useState(getTimeRemaining());
+
+  React.useEffect(() => {
+    const intervalId = setInterval(() => {
+      setTimeRemaining(getTimeRemaining());
+    }, 1000);
+    return () => clearInterval(intervalId);
+  }, []);
 
   const handleUserChange = (user) => {
     setUser(user);
@@ -58,23 +82,13 @@ function App() {
   return (
     <Router>
       <React.Fragment>
-        <AppAppBar />
-        <Hero />
+        <AppAppBar user={user} />
+        <Hero timeRemaining={timeRemaining} />
         <Routes>
           <Route
             path={PUBLIC_URL}
-            element={<Home handleError={handle_Error} />}
-          />
-          <Route
-            path={PUBLIC_URL + "/main"}
             element={
-              <Secured user={user}>
-                <Main
-                  user={user}
-                  userChange={handleUserChange}
-                  handleError={handle_Error}
-                />
-              </Secured>
+              <Home handleError={handle_Error} userChange={handleUserChange} />
             }
           />
         </Routes>
@@ -98,7 +112,7 @@ export default withRoot(App);
 function Secured(props) {
   const { user } = props;
 
-  if (!user) {
+  if (!user || user === undefined) {
     // Redirect them to the /homepage, but save the current location they were
     // trying to go to when they were redirected. This allows us to send them
     // along to that page after they login, which is a nicer user experience

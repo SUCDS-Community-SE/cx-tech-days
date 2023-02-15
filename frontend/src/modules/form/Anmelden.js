@@ -65,7 +65,7 @@ export default function Anmelden(props) {
     <Dialog
       onBackdropClick={handleBackdropClick}
       open={open}
-      PaperProps={{ sx: { width: "500px", height: "310px" } }}
+      PaperProps={{ sx: { width: "500px", height: "325px" } }}
     >
       <Container
         sx={{
@@ -75,7 +75,7 @@ export default function Anmelden(props) {
           alignItems: "center",
         }}
       >
-        <DialogTitle>
+        <DialogTitle variant="h4">
           Anmelden
           <IconButton
             aria-label="close"

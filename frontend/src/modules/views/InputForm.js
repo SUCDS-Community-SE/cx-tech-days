@@ -12,6 +12,13 @@ import Select from "@mui/material/Select";
 import SuccessMessage from "../components/SuccessMessage";
 import API from "../../api";
 
+const item = {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  px: 5,
+};
+
 function addNewSuggestion(
   title,
   topic,
@@ -88,19 +95,24 @@ export default function InputForm(props) {
       sx={{
         display: "flex",
         justifyContent: "center",
+        flexDirection: "column",
+        alignItems: "center",
         overflow: "hidden",
         bgcolor: "white",
-        mt: -20,
+        mt: 10,
+        mb: 15,
       }}
     >
+      <Typography sx={{ mb: 5 }} variant="h2" component="h2" gutterBottom>
+        Thema einreichen
+      </Typography>
       <Container
         sx={{
-          mt: 10,
-          mb: 10,
           bgcolor: "white",
-          padding: 3,
+          paddingTop: 4,
+          paddingBottom: 4,
           margin: 3,
-          boxShadow: 3,
+          boxShadow: 2,
           borderRadius: "12px",
           width: "70%",
         }}
@@ -114,9 +126,6 @@ export default function InputForm(props) {
           }}
           onSubmit={handleSubmit}
         >
-          <Typography variant="h2" component="h2" gutterBottom>
-            Anmeldung
-          </Typography>
           <TextField
             autoComplete="off"
             label="Titel"
