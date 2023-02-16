@@ -38,8 +38,8 @@ export default function SignUp(props) {
     <Container
       component="section"
       sx={{
-        mb: 17,
-        mt: 17,
+        mb: 10,
+        mt: 13,
         display: "flex",
       }}
     >

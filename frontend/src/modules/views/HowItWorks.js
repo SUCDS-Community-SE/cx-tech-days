@@ -37,15 +37,15 @@ export default function HowItWorks() {
     <Box component="section" sx={{ display: "flex", overflow: "hidden" }}>
       <Container
         sx={{
-          mt: 10,
-          mb: 15,
+          mt: 7,
+          mb: 10,
           position: "relative",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}
       >
-        <Typography variant="h3" marked="center" component="h2" sx={{ mb: 3 }}>
+        <Typography variant="h3" marked="center" component="h2" sx={{ mb: 5 }}>
           Deadline ist der 20.02.2023
         </Typography>
         <div>

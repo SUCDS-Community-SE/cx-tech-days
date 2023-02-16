@@ -21,12 +21,15 @@ export default function Timetable() {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        mt: 10,
+        mt: 5,
         mb: 10,
       }}
     >
-      <Typography variant="h3" marked="center" component="h2" sx={{ mb: 3 }}>
+      <Typography variant="h3" marked="center" component="h2" sx={{ mb: 2 }}>
         Timetable
+      </Typography>
+      <Typography variant="h5" marked="center" component="h2">
+        Mittwoch 26.04.2023
       </Typography>
       <Box
         component="section"

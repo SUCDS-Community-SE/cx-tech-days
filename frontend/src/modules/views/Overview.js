@@ -22,7 +22,7 @@ function Values() {
       component="section"
       sx={{ display: "flex", overflow: "hidden", bgcolor: "primary" }}
     >
-      <Container sx={{ mt: 15, mb: 15, display: "flex", position: "relative" }}>
+      <Container sx={{ mt: 10, mb: 10, display: "flex", position: "relative" }}>
         <Box
           component="img"
           src=""

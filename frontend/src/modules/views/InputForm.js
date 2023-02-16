@@ -92,8 +92,8 @@ export default function InputForm(props) {
         alignItems: "center",
         overflow: "hidden",
         bgcolor: "white",
-        mt: 10,
-        mb: 15,
+        mt: 5,
+        mb: 10,
       }}
     >
       <Typography variant="h3" marked="center" component="h2" sx={{ mb: 3 }}>
