@@ -12,8 +12,8 @@ export default function SpeakerCard({ name, imageSrc, shortInfo }) {
         boxShadow: 3,
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
         overflow: "visible",
+        justifyContent: "flex-start",
         borderRadius: 15,
         height: 350,
         width: 300,
@@ -26,6 +26,7 @@ export default function SpeakerCard({ name, imageSrc, shortInfo }) {
       }}
     >
       <CardHeader
+        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
         avatar={
           <Avatar
             sx={{ mt: -6, mb: -3, width: 150, height: 150 }}

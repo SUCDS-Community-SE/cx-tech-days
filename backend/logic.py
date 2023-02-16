@@ -48,30 +48,3 @@ def update_suggestion(suggestion):
     with SuggestionMapper() as mapper:
         return mapper.update(suggestion)
 
-# Email Mapper
-def get_all_emails():
-    """
-    Requests the email-mapper to return all the emails from the DB.
-    :return: all email objects from the DB.
-    """
-    with EmailMapper() as mapper:
-        return mapper.find_all()
-
-def get_email_by_id(id):
-    """
-    Requests the email-mapper to return a specific email from the DB.
-    :param id: identifies the data set of the email
-    :return: the email object with the given id.
-    """
-    with EmailMapper() as mapper:
-        return mapper.find_by_key(id)
-
-def insert_email(email):
-    """
-    Requests the email-mapper to create a new email in the DB.
-    :param email: the email object to be created in the DB.
-    :return: the email object with the given id.
-    """
-    with EmailMapper() as mapper:
-        return mapper.insert(email)
-

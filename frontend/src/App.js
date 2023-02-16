@@ -47,7 +47,6 @@ function App() {
     auth.onAuthStateChanged((user) => {
       setUser(user);
     });
-    console.log(user);
     const intervalId = setInterval(() => {
       setTimeRemaining(getTimeRemaining());
     }, 1000);

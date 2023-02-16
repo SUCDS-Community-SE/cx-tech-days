@@ -82,7 +82,7 @@ class SuggestionMapper(Mapper):
         """
         cursor = self._connection.cursor()
         query = "UPDATE suggestions SET title=%s, topic=%s, type=%s, speaker=%s, abstract=%s, speakerShortInfo=%s, votes=%s WHERE id=%s"
-        data = (str(suggestion.get_id()),suggestion.get_title(), suggestion.get_topic(), suggestion.get_type(), suggestion.get_speaker(), suggestion.get_abstract(), suggestion.get_speakerShortInfo(), str(suggestion.get_votes()))
+        data = (suggestion.get_title(), suggestion.get_topic(), suggestion.get_type(), suggestion.get_speaker(), suggestion.get_abstract(), suggestion.get_speakerShortInfo(), str(suggestion.get_votes()), str(suggestion.get_id()))
         cursor.execute(query, data)
 
         self._connection.commit()

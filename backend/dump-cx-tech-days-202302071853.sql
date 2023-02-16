@@ -41,7 +41,6 @@ CREATE TABLE `suggestions` (
 
 LOCK TABLES `suggestions` WRITE;
 /*!40000 ALTER TABLE `suggestions` DISABLE KEYS */;
-INSERT INTO `suggestions` VALUES ('1','React','45min Session','Anna Maier','2','Vortrag 1','Wichtige Infos','Software Engineer'),('2','JavaScript','Pecha Kucha','Tobias Müller','7','Vortrag 2','Mein Vortrag','Cloud Engineer'),('54b59de6-45cd-9c82-728c-2234da68c972','Thema','Session','Speaker','0','Title','Abtract','Speaker Short Info');
 /*!40000 ALTER TABLE `suggestions` ENABLE KEYS */;
 UNLOCK TABLES;
 
