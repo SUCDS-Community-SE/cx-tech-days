@@ -3,14 +3,40 @@ import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import AppBar from "../components/AppBar";
 import Toolbar from "../components/Toolbar";
-import { PUBLIC_URL } from "../../FirebaseConfig";
+import { PUBLIC_URL, auth } from "../../FirebaseConfig";
+import { signOut } from "firebase/auth";
 import Button from "@mui/material/Button";
 
-function AppAppBar(props) {
-  const { user } = props;
+export default function AppAppBar(props) {
+  const { user, userChange, handleError } = props;
 
   const loginState = user ? (
-    true
+    <Button
+      variant="text"
+      underline="none"
+      disableElevation
+      disableRipple
+      size="large"
+      sx={{
+        color: "secondary.main",
+        fontSize: 15,
+        fontWeight: "bold",
+        bgcolor: "transparent",
+      }}
+      onClick={() => {
+        signOut(auth)
+          .then(() => {
+            userChange(null);
+            // Sign-out successful.
+          })
+          .catch((error) => {
+            // An error happened.
+            handleError(error.message);
+          });
+      }}
+    >
+      Logout
+    </Button>
   ) : (
     <Button
       variant="text"
@@ -54,5 +80,3 @@ function AppAppBar(props) {
     </div>
   );
 }
-
-export default AppAppBar;

@@ -6,28 +6,24 @@ import Button from "../components/Button";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../FirebaseConfig";
 import Box from "@mui/material/Box";
-import { useNavigate } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 
 const validEmail = new RegExp("^[a-zA-Z0-9._:$!%-]+@mhp.com$");
 
 export default function Registrieren(props) {
-  const { onClose, open, handleError } = props;
+  const { open, onClose, handleuserchange, handleError } = props;
   const [email, setEmail] = React.useState();
   const [password, setPassword] = React.useState();
   const [confPassword, setConfPassword] = React.useState();
-  const navigate = useNavigate();
 
-  const handleSignUp = (e) => {
-    e.preventDefault();
+  const handleSignUp = () => {
     if (validEmail.test(email)) {
       if (confPassword === password) {
         createUserWithEmailAndPassword(auth, email, password)
           .then((userCredential) => {
             // Signed in
-            onClose(userCredential.user);
-            navigate("/main");
+            handleuserchange(userCredential.user);
           })
           .catch((error) => {
             const errorCode = error.code;

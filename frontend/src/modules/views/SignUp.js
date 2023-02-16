@@ -19,6 +19,11 @@ export default function SignUp(props) {
     setSignInOpen(true);
   };
 
+  const handleAnmeldenClose = () => {
+    //e.preventDefault();
+    setSignInOpen(false);
+  };
+
   const handleUserChange = (user) => {
     setSignInOpen(false);
     setSignUpOpen(false);
@@ -28,6 +33,11 @@ export default function SignUp(props) {
   const handleRegestrierenClickOpen = (e) => {
     e.preventDefault();
     setSignUpOpen(true);
+  };
+
+  const handleRegestrierenClose = () => {
+    //e.preventDefault();
+    setSignUpOpen(false);
   };
 
   const handle_Error = (errorMessage) => {
@@ -127,12 +137,14 @@ export default function SignUp(props) {
               </Box>
               <Anmelden
                 open={si_open}
-                onClose={handleUserChange}
+                onClose={handleAnmeldenClose}
+                handleuserchange={handleUserChange}
                 handleError={handle_Error}
               />
               <Registrieren
                 open={su_open}
-                onClose={handleUserChange}
+                onClose={handleRegestrierenClose}
+                handleuserchange={handleUserChange}
                 handleError={handle_Error}
               />
             </Box>

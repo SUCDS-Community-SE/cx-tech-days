@@ -10,24 +10,20 @@ import {
 import { auth } from "../../FirebaseConfig";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import { useNavigate } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 
 export default function Anmelden(props) {
-  const { onClose, open, handleError } = props;
+  const { handleuserchange, open, onClose, handleError } = props;
   const [email, setEmail] = React.useState();
   const [password, setPassword] = React.useState();
 
-  const navigate = useNavigate();
-
-  const handleSignIn = (e) => {
-    e.preventDefault();
+  const handleSignIn = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
-        onClose(userCredential.user);
-        navigate("/main");
+        handleuserchange(userCredential.user);
+        console.log(userCredential.user);
       })
       .catch((error) => {
         const errorCode = error.code;

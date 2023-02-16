@@ -33,6 +33,7 @@ export default function Speaker() {
       >
         {speakers.map((speaker) => (
           <SpeakerCard
+            key={speaker.id}
             name={speaker.name}
             imageSrc={speaker.imageSrc}
             shortInfo={speaker.shortInfo}

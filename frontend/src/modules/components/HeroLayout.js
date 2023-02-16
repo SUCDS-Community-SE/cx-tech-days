@@ -77,8 +77,13 @@ function HeroLayout(props) {
             position: "absolute",
             bottom: 32,
             left: "50%",
-            borderRadius: "50px",
-            boxShadow: 2,
+            transition: "transform 0.3s, border 0.3s",
+            "&:hover": {
+              transform: "translateY(-4px)",
+            },
+            "& > *": {
+              minWidth: "clamp(0px, (360px - 100%) * 999,100%)",
+            },
           }}
         >
           <ExpandMore color="secondary" fontSize="large" />

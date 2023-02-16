@@ -7,7 +7,7 @@ import MuiAlert from "@mui/material/Alert";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import withRoot from "./modules/withRoot";
-import { PUBLIC_URL } from "./FirebaseConfig";
+import { PUBLIC_URL, auth } from "./FirebaseConfig";
 import {
   BrowserRouter as Router,
   Routes,
@@ -38,12 +38,16 @@ function getTimeRemaining() {
 }
 
 function App() {
-  const [user, setUser] = React.useState();
+  const [user, setUser] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState("");
   const [open, setOpen] = React.useState(false);
   const [timeRemaining, setTimeRemaining] = React.useState(getTimeRemaining());
 
   React.useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
+    console.log(user);
     const intervalId = setInterval(() => {
       setTimeRemaining(getTimeRemaining());
     }, 1000);
@@ -52,6 +56,7 @@ function App() {
 
   const handleUserChange = (user) => {
     setUser(user);
+    console.log(user);
   };
 
   const handle_Error = (errorMessage) => {
@@ -82,13 +87,21 @@ function App() {
   return (
     <Router>
       <React.Fragment>
-        <AppAppBar user={user} />
+        <AppAppBar
+          userChange={handleUserChange}
+          user={user}
+          handleError={handle_Error}
+        />
         <Hero timeRemaining={timeRemaining} />
         <Routes>
           <Route
             path={PUBLIC_URL}
             element={
-              <Home handleError={handle_Error} userChange={handleUserChange} />
+              <Home
+                user={user}
+                handleError={handle_Error}
+                userChange={handleUserChange}
+              />
             }
           />
         </Routes>
