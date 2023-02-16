@@ -34,32 +34,18 @@ const image = {
 
 export default function HowItWorks() {
   return (
-    <Box
-      component="section"
-      sx={{ display: "flex", bgcolor: "primary", overflow: "hidden" }}
-    >
+    <Box component="section" sx={{ display: "flex", overflow: "hidden" }}>
       <Container
         sx={{
-          mt: 15,
-          mb: 10,
+          mt: 10,
+          mb: 15,
           position: "relative",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}
       >
-        <Box
-          component="img"
-          src=""
-          alt="Picture"
-          sx={{
-            pointerEvents: "none",
-            position: "absolute",
-            top: -180,
-            opacity: 0.7,
-          }}
-        />
-        <Typography variant="h3" marked="center" component="h2" sx={{ mb: 5 }}>
+        <Typography variant="h3" marked="center" component="h2" sx={{ mb: 3 }}>
           Deadline ist der 20.02.2023
         </Typography>
         <div>

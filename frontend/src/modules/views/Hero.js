@@ -28,6 +28,7 @@ export default function Hero(props) {
         align="center"
         variant="h3"
         sx={{
+          fontStyle: "italic",
           mb: 4,
           alignSelf: "center",
           justifySelf: "flex-end",

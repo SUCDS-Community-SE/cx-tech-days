@@ -4,20 +4,13 @@ import TextField from "@mui/material/TextField";
 import Button from "../components/Button";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
+import Typography from "../components/Typography";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import SuccessMessage from "../components/SuccessMessage";
 import API from "../../api";
-
-const item = {
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  px: 5,
-};
 
 function addNewSuggestion(
   title,
@@ -103,7 +96,7 @@ export default function InputForm(props) {
         mb: 15,
       }}
     >
-      <Typography sx={{ mb: 5 }} variant="h2" component="h2" gutterBottom>
+      <Typography variant="h3" marked="center" component="h2" sx={{ mb: 3 }}>
         Thema einreichen
       </Typography>
       <Container
