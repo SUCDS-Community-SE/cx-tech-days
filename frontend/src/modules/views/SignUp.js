@@ -44,7 +44,14 @@ export default function SignUp(props) {
       }}
     >
       <Grid container>
-        <Grid item xs={12} md={6} sx={{ zIndex: 1 }}>
+        <Grid
+          item
+          xs={12}
+          md={6}
+          sx={{
+            zIndex: 1,
+          }}
+        >
           <Box
             sx={{
               display: "flex",
@@ -56,7 +63,12 @@ export default function SignUp(props) {
               borderRadius: "12px",
             }}
           >
-            <Box component="form" sx={{ maxWidth: 400 }}>
+            <Box
+              component="form"
+              sx={{
+                maxWidth: 400,
+              }}
+            >
               <Typography variant="h3" component="h2" gutterBottom>
                 Login
               </Typography>
@@ -75,7 +87,18 @@ export default function SignUp(props) {
                   color="secondary"
                   variant="contained"
                   align="center"
-                  sx={{ width: "40%", borderRadius: "12px", mt: 3 }}
+                  sx={{
+                    width: "40%",
+                    borderRadius: "12px",
+                    mt: 3,
+                    transition: "transform 0.3s, border 0.3s",
+                    "&:hover": {
+                      transform: "translateY(-1px)",
+                    },
+                    "& > *": {
+                      minWidth: "clamp(0px, (360px - 100%) * 999,100%)",
+                    },
+                  }}
                   onClick={handleAnmeldenClickOpen}
                 >
                   Anmelden
@@ -85,7 +108,18 @@ export default function SignUp(props) {
                   color="secondary"
                   variant="contained"
                   align="center"
-                  sx={{ width: "40%", borderRadius: "12px", mt: 3 }}
+                  sx={{
+                    width: "40%",
+                    borderRadius: "12px",
+                    mt: 3,
+                    transition: "transform 0.3s, border 0.3s",
+                    "&:hover": {
+                      transform: "translateY(-1px)",
+                    },
+                    "& > *": {
+                      minWidth: "clamp(0px, (360px - 100%) * 999,100%)",
+                    },
+                  }}
                   onClick={handleRegestrierenClickOpen}
                 >
                   Registrieren

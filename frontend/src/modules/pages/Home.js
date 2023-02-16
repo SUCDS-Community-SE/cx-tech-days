@@ -5,6 +5,7 @@ import InputForm from "../views/InputForm";
 import SignUp from "../views/SignUp";
 import VoteForm from "../views/VoteForm";
 import Timetable from "../views/Timetable";
+import Speaker from "../views/Speaker";
 import { Divider } from "@mui/material";
 
 function Home(props) {
@@ -29,13 +30,12 @@ function Home(props) {
   return (
     <div>
       <Overview />
-      <Divider />
       {loginState}
       <Divider />
       <Timetable />
+      <Speaker />
       <Divider />
       <InputForm handleError={handle_Error} />
-      <Divider />
       <HowItWorks />
     </div>
   );

@@ -30,7 +30,18 @@ function Values() {
           sx={{ pointerEvents: "none", position: "absolute", top: -180 }}
         />
         <Grid container spacing={5}>
-          <Grid item xs={12} md={4}>
+          <Grid
+            item
+            xs={12}
+            md={4}
+            sx={{
+              transition: "transform 0.3s, border 0.3s",
+              "&:hover": {
+                transform: "translateY(-5px)",
+              },
+              "& > *": { minWidth: "clamp(0px, (360px - 100%) * 999,100%)" },
+            }}
+          >
             <Box sx={item}>
               <Box
                 component="img"
@@ -50,7 +61,18 @@ function Values() {
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid
+            item
+            xs={12}
+            md={4}
+            sx={{
+              transition: "transform 0.3s, border 0.3s",
+              "&:hover": {
+                transform: "translateY(-5px)",
+              },
+              "& > *": { minWidth: "clamp(0px, (360px - 100%) * 999,100%)" },
+            }}
+          >
             <Box sx={item}>
               <Box
                 component="img"
@@ -68,7 +90,18 @@ function Values() {
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid
+            item
+            xs={12}
+            md={4}
+            sx={{
+              transition: "transform 0.3s, border 0.3s",
+              "&:hover": {
+                transform: "translateY(-5px)",
+              },
+              "& > *": { minWidth: "clamp(0px, (360px - 100%) * 999,100%)" },
+            }}
+          >
             <Box sx={item}>
               <Box
                 component="img"

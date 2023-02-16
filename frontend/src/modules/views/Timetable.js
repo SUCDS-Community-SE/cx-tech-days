@@ -74,7 +74,9 @@ export default function Timetable() {
                   {row.speakerShortInfo}
                   {")"}
                 </Typography>
-                <Typography>{row.abstract}</Typography>
+                <Typography sx={{ color: "primary.light" }}>
+                  {row.abstract}
+                </Typography>
               </TimelineContent>
             </TimelineItem>
           ))}
@@ -109,7 +111,9 @@ export default function Timetable() {
                   {secondrow.speakerShortInfo}
                   {")"}
                 </Typography>
-                <Typography>{secondrow.abstract}</Typography>
+                <Typography sx={{ color: "primary.light" }}>
+                  {secondrow.abstract}
+                </Typography>
               </TimelineContent>
             </TimelineItem>
           ))}

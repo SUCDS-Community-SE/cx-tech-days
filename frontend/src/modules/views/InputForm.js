@@ -197,7 +197,16 @@ export default function InputForm(props) {
             variant="contained"
             color="secondary"
             type="submit"
-            sx={{ width: 100 }}
+            sx={{
+              width: 100,
+              transition: "transform 0.3s, border 0.3s",
+              "&:hover": {
+                transform: "translateY(-1px)",
+              },
+              "& > *": {
+                minWidth: "clamp(0px, (360px - 100%) * 999,100%)",
+              },
+            }}
           >
             Submit
           </Button>

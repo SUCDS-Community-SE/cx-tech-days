@@ -64,6 +64,13 @@ export default function Hero(props) {
           borderRadius: "12px",
           boxShadow: 3,
           alignSelf: "center",
+          transition: "transform 0.3s, border 0.3s",
+          "&:hover": {
+            transform: "translateY(-1px)",
+          },
+          "& > *": {
+            minWidth: "clamp(0px, (360px - 100%) * 999,100%)",
+          },
         }}
       >
         Anmelden
