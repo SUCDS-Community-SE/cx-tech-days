@@ -8,6 +8,8 @@ import { auth } from "../../FirebaseConfig";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import API from "../../api";
+import VoteObject from "../objects/voteObject";
 
 const validEmail = new RegExp("^[a-zA-Z0-9._:$!%-]+@mhp.com$");
 
@@ -24,6 +26,7 @@ export default function Registrieren(props) {
           .then((userCredential) => {
             // Signed in
             handleuserchange(userCredential.user);
+            API.getAPI().addVote(new VoteObject(userCredential.user.uid, ""));
           })
           .catch((error) => {
             const errorCode = error.code;

@@ -28,14 +28,14 @@ class SuggestionMapper(Mapper):
         :param key: key of the suggestion object, which is to be found.
         :return: suggestion object, which is to be found.
         """
-        result = None
+        result = []
         cursor = self._connection.cursor()
         command = "SELECT * FROM suggestions WHERE id='{}'".format(key)
         cursor.execute(command)
         tuples = cursor.fetchall()
         try:
             (id, title, topic, type, speaker, abstract, speakerShortInfo, votes) = tuples[0]
-            suggestion = SuggestionObject(tuple['id'], tuple['title'], tuple['topic'], tuple['type'], tuple['speaker'], tuple['abstract'], tuple['speakerShortInfo'], tuple['votes'])
+            suggestion = SuggestionObject(id, title, topic, type, speaker, abstract, speakerShortInfo, votes)
             result = suggestion
         except IndexError:
             result = None

@@ -22,7 +22,7 @@ function Home(props) {
   };
 
   const loginState = user ? (
-    <VoteForm />
+    <VoteForm user={user} />
   ) : (
     <SignUp userChange={handleUserChange} handleError={handle_Error} />
   );

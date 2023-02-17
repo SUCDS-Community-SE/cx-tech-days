@@ -55,7 +55,6 @@ function App() {
 
   const handleUserChange = (user) => {
     setUser(user);
-    console.log(user);
   };
 
   const handle_Error = (errorMessage) => {

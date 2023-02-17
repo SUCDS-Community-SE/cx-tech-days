@@ -14,10 +14,17 @@ import IconButton from "@mui/material/IconButton";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import API from "../../api";
 import SuggestionObject from "../objects/suggestionObject";
+import VoteObject from "../objects/voteObject";
 
 async function getData() {
   const data = await API.getAPI().getSuggestions();
   return data;
+}
+
+async function getVote(userID) {
+  const voteArray = await API.getAPI().getVoteByUser(userID);
+  const vote = new VoteObject(voteArray[0].userID, voteArray[0].suggestionID);
+  return vote;
 }
 
 function addVote(suggestion) {
@@ -54,14 +61,33 @@ function removeVote(suggestion) {
   return suggestionObject;
 }
 
-export default function VoteForm() {
+function updateVote(voteObject) {
+  const vote = new VoteObject(voteObject.userID, voteObject.suggestionID);
+  API.getAPI().updateVote(vote);
+}
+
+export default function VoteForm(props) {
+  const { user } = props;
   const [rows, setRows] = useState([]);
   const [selectedButton, setSelectedButton] = useState();
+  const [voteObject, setVoteObject] = useState({
+    userID: "",
+    suggestionID: "",
+  });
 
   useEffect(() => {
     let mounted = true;
     if (mounted) {
-      getData().then((rows) => setRows(rows));
+      getData().then((data) => setRows(data));
+      getVote(user.uid)
+        .then((vote) =>
+          setVoteObject({
+            ...voteObject,
+            userID: vote.getUserId(),
+            suggestionID: vote.getSuggestionId(),
+          })
+        )
+        .then(() => setSelectedButton(voteObject.suggestionID));
     }
     return () => (mounted = false);
   }, []);
@@ -69,17 +95,27 @@ export default function VoteForm() {
   const handleChange = (suggestion) => {
     if (selectedButton === suggestion.id) {
       setSelectedButton(null);
+      setVoteObject({
+        ...voteObject,
+        suggestionID: "",
+      });
+
       removeVote(suggestion);
     } else {
       setSelectedButton(suggestion.id);
+      setVoteObject({
+        ...voteObject,
+        suggestionID: suggestion.id,
+      });
+
       addVote(suggestion);
     }
-    //console.log(selectedButton);
-    //updateSuggestions(suggestion);
   };
 
-  const selectedVote = (suggestion) => {
-    if (selectedButton === suggestion.id) {
+  const selectedVote = (suggestionID) => {
+    //console.log(selectedButton);
+    //console.log(suggestionID);
+    if (selectedButton === suggestionID) {
       return <FavoriteIcon />;
     } else {
       return <FavoriteBorderIcon />;
@@ -106,11 +142,12 @@ export default function VoteForm() {
           <IconButton
             sx={{ color: "secondary.main" }}
             key={row.id}
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault();
               handleChange(row);
             }}
           >
-            {selectedVote(row)}
+            {selectedVote(row.id)}
           </IconButton>
         </TableCell>
       </TableRow>
