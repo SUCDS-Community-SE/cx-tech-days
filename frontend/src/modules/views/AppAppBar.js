@@ -71,9 +71,10 @@ export default function AppAppBar(props) {
           >
             {"MHP"}
           </Link>
-          <Box sx={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
+          {/* Login für User zunächst onhold */}
+          {/* <Box sx={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
             {loginState}
-          </Box>
+          </Box> */}
         </Toolbar>
       </AppBar>
       <Toolbar />

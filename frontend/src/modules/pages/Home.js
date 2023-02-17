@@ -30,11 +30,11 @@ function Home(props) {
   return (
     <div>
       <Overview />
-      {loginState}
+      {/* {loginState}
       <Divider />
       <Timetable />
       <Speaker />
-      <Divider />
+      <Divider /> */}
       <InputForm handleError={handle_Error} />
       <HowItWorks />
     </div>
