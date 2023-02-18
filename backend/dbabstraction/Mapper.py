@@ -12,7 +12,7 @@ class Mapper(ABC):
     def __enter__(self):
         """Checks if we run in the cloud or local and uses corresponding credentials to connect"""
         self._connection = mysql.connector.connect(user='admin', password='adminadmin',
-                                                       host='mysql-db-cx-dev-days.civwsopmd2k6.eu-central-1.rds.amazonaws.com',
+                                                       host='mysql-db-cx-tech-days.civwsopmd2k6.eu-central-1.rds.amazonaws.com',
                                                        database='cx_tech_days')
         return self
 
