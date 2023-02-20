@@ -16,7 +16,6 @@ import {
   useLocation,
 } from "react-router-dom";
 import Home from "./modules/pages/Home";
-import Admin from "./modules/pages/Admin";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -41,7 +40,6 @@ function getTimeRemaining() {
 
 function App() {
   const [user, setUser] = React.useState(false);
-  const [admin, setAdmin] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState("");
   const [open, setOpen] = React.useState(false);
   const [timeRemaining, setTimeRemaining] = React.useState(getTimeRemaining());
@@ -58,10 +56,6 @@ function App() {
 
   const handleUserChange = (user) => {
     setUser(user);
-  };
-
-  const handleAdminChange = (admin) => {
-    setAdmin(admin);
   };
 
   const handle_Error = (errorMessage) => {
@@ -107,14 +101,6 @@ function App() {
                 handleError={handle_Error}
                 userChange={handleUserChange}
               />
-            }
-          />
-          <Route
-            path={PUBLIC_URL + "/admin"}
-            element={
-              <Secured admin={admin}>
-                <Admin admin={admin} />
-              </Secured>
             }
           />
         </Routes>
