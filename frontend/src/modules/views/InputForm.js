@@ -175,6 +175,10 @@ export default function InputForm(props) {
             name="abstract"
             multiline
             rows={4}
+<<<<<<< HEAD
+=======
+            maxRows={10}
+>>>>>>> origin/master
             value={abstract}
             sx={{ paddingBottom: 2 }}
             onChange={(e) => {
@@ -187,6 +191,10 @@ export default function InputForm(props) {
             name="speakerShortInfo"
             multiline
             rows={4}
+<<<<<<< HEAD
+=======
+            maxRows={10}
+>>>>>>> origin/master
             value={speakerShortInfo}
             sx={{ paddingBottom: 2 }}
             onChange={(e) => {
