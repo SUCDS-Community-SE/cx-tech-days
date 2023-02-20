@@ -12,9 +12,11 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  redirect,
+  Navigate,
+  useLocation,
 } from "react-router-dom";
 import Home from "./modules/pages/Home";
+import Admin from "./modules/pages/Admin";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -39,6 +41,7 @@ function getTimeRemaining() {
 
 function App() {
   const [user, setUser] = React.useState(false);
+  const [admin, setAdmin] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState("");
   const [open, setOpen] = React.useState(false);
   const [timeRemaining, setTimeRemaining] = React.useState(getTimeRemaining());
@@ -55,6 +58,10 @@ function App() {
 
   const handleUserChange = (user) => {
     setUser(user);
+  };
+
+  const handleAdminChange = (admin) => {
+    setAdmin(admin);
   };
 
   const handle_Error = (errorMessage) => {
@@ -102,6 +109,14 @@ function App() {
               />
             }
           />
+          <Route
+            path={PUBLIC_URL + "/admin"}
+            element={
+              <Secured admin={admin}>
+                <Admin admin={admin} />
+              </Secured>
+            }
+          />
         </Routes>
         <Snackbar
           onClose={handleClose}
@@ -121,14 +136,14 @@ function App() {
 export default withRoot(App);
 
 function Secured(props) {
-  const { user } = props;
-
-  if (!user || user === undefined) {
+  const { admin } = props;
+  let location = useLocation();
+  if (!admin || admin === undefined) {
     // Redirect them to the /homepage, but save the current location they were
     // trying to go to when they were redirected. This allows us to send them
     // along to that page after they login, which is a nicer user experience
     // than dropping them off on the home page.
-    redirect({ PUBLIC_URL });
+    return <Navigate to={PUBLIC_URL} state={{ from: location }} replace />;
   }
 
   return props.children;

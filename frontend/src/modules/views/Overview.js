@@ -78,12 +78,17 @@ function Values() {
                 component="img"
                 src="https://img.icons8.com/ios/250/000000/training.png"
                 alt="Picture 2"
-                sx={{ height: 55 }}
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  height: 55,
+                }}
               />
               <Typography variant="h5" sx={{ my: 5 }}>
                 Nutze deine Chance!
               </Typography>
-              <Typography variant="body1">
+              <Typography align="center" variant="body1">
                 {
                   "Hast du Interesse dein Projekt, eine Lösung auf die du besonders Stolz bist, eine Architektur, besondere Coding Guidelines oder ein sonstiges technisches Thema vorzustellen? Dann nutze deine Chance und die Bühne, die dir hiermit gegeben wird."
                 }
@@ -112,9 +117,9 @@ function Values() {
               <Typography variant="h5" sx={{ my: 5 }}>
                 Was erwartet euch?
               </Typography>
-              <Typography variant="body1">
+              <Typography align="center" variant="body1">
                 {
-                  "Wir bieten euch Vorträge von Kollegen sowie Gastvorträge externen Experten Platz für einen Austausch untereinander sowie ein gemütliches After Work mit Essen und Trinken"
+                  "Wir bieten euch Vorträge von Kollegen sowie Gastvorträge externen Experten Platz für einen Austausch untereinander sowie ein gemütliches After Work mit Essen und Trinken."
                 }
               </Typography>
             </Box>

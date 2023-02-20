@@ -46,7 +46,7 @@ export default function HowItWorks() {
         }}
       >
         <Typography variant="h3" marked="center" component="h2" sx={{ mb: 5 }}>
-          Deadline ist der 20.02.2023
+          Deadline ist der 15.03.2023
         </Typography>
         <div>
           <Grid container spacing={5}>

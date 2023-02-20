@@ -79,7 +79,7 @@ export default function Hero(props) {
         color="inherit"
         sx={{ mt: 2, alignSelf: "center" }}
       >
-        Jetzt noch bis zum 20.02.2023 Themen einreichen!
+        Jetzt noch bis zum 15.03.2023 Themen einreichen!
       </Typography>
     </HeroLayout>
   );
