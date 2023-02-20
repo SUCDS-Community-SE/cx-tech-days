@@ -1,5 +1,4 @@
 import React from "react";
-import Hero from "./modules/views/Hero";
 import AppFooter from "./modules/views/AppFooter";
 import AppAppBar from "./modules/views/AppAppBar";
 import Snackbar from "@mui/material/Snackbar";
@@ -13,10 +12,10 @@ import {
   Routes,
   Route,
   Navigate,
-  useLocation,
 } from "react-router-dom";
 import Home from "./modules/pages/Home";
 import Admin from "./modules/pages/Admin";
+import AdminSignIn from "./modules/pages/AdminSignIn";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -40,15 +39,13 @@ function getTimeRemaining() {
 }
 
 function App() {
-  const [user, setUser] = React.useState(false);
-  const [admin, setAdmin] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState("");
   const [open, setOpen] = React.useState(false);
   const [timeRemaining, setTimeRemaining] = React.useState(getTimeRemaining());
 
   React.useEffect(() => {
     auth.onAuthStateChanged((user) => {
-      setUser(user);
+      //setUser(user);
     });
     const intervalId = setInterval(() => {
       setTimeRemaining(getTimeRemaining());
@@ -57,11 +54,11 @@ function App() {
   }, []);
 
   const handleUserChange = (user) => {
-    setUser(user);
+    //setUser(user);
   };
 
   const handleAdminChange = (admin) => {
-    setAdmin(admin);
+    //setAdmin(admin);
   };
 
   const handle_Error = (errorMessage) => {
@@ -90,61 +87,77 @@ function App() {
   );
 
   return (
-    <Router>
-      <React.Fragment>
-        <AppAppBar
-          userChange={handleUserChange}
-          user={user}
-          handleError={handle_Error}
-        />
-        <Hero timeRemaining={timeRemaining} />
-        <Routes>
-          <Route
-            path={PUBLIC_URL}
-            element={
-              <Home
-                user={user}
-                handleError={handle_Error}
-                userChange={handleUserChange}
-              />
-            }
-          />
-          <Route
-            path={PUBLIC_URL + "/admin"}
-            element={
-              <Secured admin={admin}>
-                <Admin admin={admin} />
-              </Secured>
-            }
-          />
-        </Routes>
-        <Snackbar
-          onClose={handleClose}
-          open={open}
-          action={action}
-          anchorOrigin={{ vertical: "top", horizontal: "right" }}
-          autoHideDuration={3000}
-        >
-          <Alert severity="error">{errorMessage}</Alert>
-        </Snackbar>
-        <AppFooter />
-      </React.Fragment>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <AppAppBar userChange={handleUserChange} handleError={handle_Error} />
+        <React.Fragment>
+          <Routes>
+            <Route
+              path={PUBLIC_URL}
+              element={
+                <Home
+                  handleError={handle_Error}
+                  userChange={handleUserChange}
+                  timeRemaining={timeRemaining}
+                />
+              }
+            />
+            <Route
+              path={PUBLIC_URL + "admin/signin"}
+              element={<AdminSignIn />}
+            ></Route>
+            <AdminSecured
+              exact
+              path={PUBLIC_URL + "/admin"}
+              component={Admin}
+            />
+          </Routes>
+          <Snackbar
+            onClose={handleClose}
+            open={open}
+            action={action}
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            autoHideDuration={3000}
+          >
+            <Alert severity="error">{errorMessage}</Alert>
+          </Snackbar>
+          <AppFooter />
+        </React.Fragment>
+      </Router>
+    </AuthProvider>
   );
 }
 
 export default withRoot(App);
 
-function Secured(props) {
-  const { admin } = props;
-  let location = useLocation();
-  if (!admin || admin === undefined) {
-    // Redirect them to the /homepage, but save the current location they were
-    // trying to go to when they were redirected. This allows us to send them
-    // along to that page after they login, which is a nicer user experience
-    // than dropping them off on the home page.
-    return <Navigate to={PUBLIC_URL} state={{ from: location }} replace />;
-  }
+const AuthContext = React.createContext();
 
-  return props.children;
+function AuthProvider({ children }) {
+  const [user, setUser] = React.useState(false);
+  const [admin, setAdmin] = React.useState(false);
+
+  React.useEffect(() => {
+    auth.onAuthStateChanged(setUser, setAdmin);
+  }, []);
+  return (
+    <AuthContext.Provider value={{ user, admin }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
+
+const AdminSecured = ({ component: Route, ...rest }) => {
+  const { admin } = React.useContext(AuthContext);
+  return (
+    <Route
+      {...rest}
+      render={(routeProps) =>
+        !!admin ? (
+          <Route {...routeProps} />
+        ) : (
+          <Navigate to={PUBLIC_URL + "/admin/signin"} />
+        )
+      }
+    />
+  );
+};
