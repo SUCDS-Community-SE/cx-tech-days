@@ -6,10 +6,14 @@ import Container from "@mui/material/Container";
 import Typography from "../components/Typography";
 
 const item = {
+  minHeight: "375px",
+  padding: 2,
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   px: 5,
+  boxShadow: 3,
+  borderRadius: "12px",
 };
 
 function Values() {
@@ -18,7 +22,7 @@ function Values() {
       component="section"
       sx={{ display: "flex", overflow: "hidden", bgcolor: "primary" }}
     >
-      <Container sx={{ mt: 15, mb: 30, display: "flex", position: "relative" }}>
+      <Container sx={{ mt: 10, mb: 10, display: "flex", position: "relative" }}>
         <Box
           component="img"
           src=""
@@ -26,7 +30,18 @@ function Values() {
           sx={{ pointerEvents: "none", position: "absolute", top: -180 }}
         />
         <Grid container spacing={5}>
-          <Grid item xs={12} md={4}>
+          <Grid
+            item
+            xs={12}
+            md={4}
+            sx={{
+              transition: "transform 0.3s, border 0.3s",
+              "&:hover": {
+                transform: "translateY(-5px)",
+              },
+              "& > *": { minWidth: "clamp(0px, (360px - 100%) * 999,100%)" },
+            }}
+          >
             <Box sx={item}>
               <Box
                 component="img"
@@ -46,25 +61,52 @@ function Values() {
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid
+            item
+            xs={12}
+            md={4}
+            sx={{
+              transition: "transform 0.3s, border 0.3s",
+              "&:hover": {
+                transform: "translateY(-5px)",
+              },
+              "& > *": { minWidth: "clamp(0px, (360px - 100%) * 999,100%)" },
+            }}
+          >
             <Box sx={item}>
               <Box
                 component="img"
                 src="https://img.icons8.com/ios/250/000000/training.png"
                 alt="Picture 2"
-                sx={{ height: 55 }}
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  height: 55,
+                }}
               />
               <Typography variant="h5" sx={{ my: 5 }}>
                 Nutze deine Chance!
               </Typography>
-              <Typography variant="body1">
+              <Typography align="center" variant="body1">
                 {
                   "Hast du Interesse dein Projekt, eine Lösung auf die du besonders Stolz bist, eine Architektur, besondere Coding Guidelines oder ein sonstiges technisches Thema vorzustellen? Dann nutze deine Chance und die Bühne, die dir hiermit gegeben wird."
                 }
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid
+            item
+            xs={12}
+            md={4}
+            sx={{
+              transition: "transform 0.3s, border 0.3s",
+              "&:hover": {
+                transform: "translateY(-5px)",
+              },
+              "& > *": { minWidth: "clamp(0px, (360px - 100%) * 999,100%)" },
+            }}
+          >
             <Box sx={item}>
               <Box
                 component="img"
@@ -75,9 +117,9 @@ function Values() {
               <Typography variant="h5" sx={{ my: 5 }}>
                 Was erwartet euch?
               </Typography>
-              <Typography variant="body1">
+              <Typography align="center" variant="body1">
                 {
-                  "Wir bieten euch Vorträge von Kollegen sowie Gastvorträge externen Experten Platz für einen Austausch untereinander sowie ein gemütliches After Work mit Essen und Trinken"
+                  "Wir bieten euch Vorträge von Kollegen sowie Gastvorträge externen Experten Platz für einen Austausch untereinander sowie ein gemütliches After Work mit Essen und Trinken."
                 }
               </Typography>
             </Box>

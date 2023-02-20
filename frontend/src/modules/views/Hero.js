@@ -6,13 +6,15 @@ import MHP20_00097_powerpoint from "../../pictures/MHP20_00097_powerpoint.jpg";
 
 const backgroundImage = MHP20_00097_powerpoint;
 
-export default function Hero() {
+export default function Hero(props) {
+  const { timeRemaining } = props;
+
   return (
     <HeroLayout
       sxBackground={{
         backgroundImage: `url(${backgroundImage})`,
         backgroundColor: "#7fc7d9", // Average color of the background image.
-        backgroundPosition: "center",
+        backgroundPosition: "left",
       }}
     >
       {/* Increase the network loading priority of the background image. */}
@@ -21,17 +23,32 @@ export default function Hero() {
         src={backgroundImage}
         alt="increase priority"
       />
-      <Typography color="inherit" align="center" variant="h1" marked="center">
-        2023 MHP CX Tech Days
+      <Typography
+        color="inherit"
+        align="center"
+        variant="h3"
+        sx={{
+          mb: 4,
+          alignSelf: "center",
+          justifySelf: "flex-end",
+          color: "secondary.main",
+          bgcolor: "white",
+          borderRadius: "12px",
+          boxShadow: 3,
+          padding: "12px",
+        }}
+      >
+        {timeRemaining.days} Days : {timeRemaining.hours} Hours :{" "}
+        {timeRemaining.minutes} Minutes : {timeRemaining.seconds} Seconds
       </Typography>
       <Typography
         color="inherit"
         align="center"
         variant="h5"
-        sx={{ mb: 4, mt: { xs: 4, sm: 10 } }}
+        sx={{ mb: 4, alignSelf: "center" }}
       >
-        Die Konferenz für Entwickler, Architekten Technologie-Interessierte und
-        Software-Innovation
+        - Die Konferenz für Entwickler, Architekten Technologie-Interessierte
+        und Software-Innovation -
       </Typography>
       <Button
         color="secondary"
@@ -41,12 +58,28 @@ export default function Hero() {
         onClick={() => {
           window.scrollTo({ top: 1400, behavior: "smooth" });
         }}
-        sx={{ minWidth: 200, borderRadius: "12px", boxShadow: 3 }}
+        sx={{
+          minWidth: 200,
+          borderRadius: "12px",
+          boxShadow: 3,
+          alignSelf: "center",
+          transition: "transform 0.3s, border 0.3s",
+          "&:hover": {
+            transform: "translateY(-1px)",
+          },
+          "& > *": {
+            minWidth: "clamp(0px, (360px - 100%) * 999,100%)",
+          },
+        }}
       >
-        Thema einreichen
+        Anmelden
       </Button>
-      <Typography variant="body1" color="inherit" sx={{ mt: 2 }}>
-        Jetzt noch bis zum 20.02.2023 Themen einreichen!
+      <Typography
+        variant="body1"
+        color="inherit"
+        sx={{ mt: 2, alignSelf: "center" }}
+      >
+        Jetzt noch bis zum 15.03.2023 Themen einreichen!
       </Typography>
     </HeroLayout>
   );

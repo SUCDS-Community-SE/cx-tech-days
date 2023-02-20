@@ -4,6 +4,7 @@ from flask_cors import CORS
 from flask import request
 import logic as logic
 from objects.suggestionObject import SuggestionObject
+from objects.voteObject import VoteObject
 
 app = Flask("CXTechDays")
 
@@ -27,6 +28,11 @@ suggestion = api.model('Suggestion', {
     'abstract': fields.String(attribute='_abstract', description='The abstract of the suggestion'),
     'speakerShortInfo': fields.String(attribute='_speakerShortInfo', description='The speakerShortInfo of the suggestion'),
     'votes': fields.Integer(attribute='_votes', description='The votes of the suggestion'),
+})
+
+vote = api.model('Suggestion', {
+    'userID': fields.String(attribute='_userid', description='unique identifier for a object'),
+    'suggestionID': fields.String(attribute='_suggestionid', description='The title of the suggestion'),
 })
 #######################################################################################################################
 # SUGGESTIONS API
@@ -64,7 +70,7 @@ class SuggestionsListOps(Resource):
     
 @cxtechdays.route('/api/suggestions/<id>')
 @cxtechdays.response(500, 'If there is an error from the server.')
-@cxtechdays.param('id', 'ID of the person object')
+@cxtechdays.param('id', 'ID of the suggestion object')
 class SuggestionOps(Resource):
     @cxtechdays.marshal_with(suggestion)
     def get(self, id):
@@ -92,6 +98,73 @@ class SuggestionOps(Resource):
         if suggestion is not None:
             logic.update_suggestion(suggestion)
             return suggestion, 200
+        else:
+            return '', 500
+
+#######################################################################################################################
+# USER VOTES API
+#######################################################################################################################
+         
+@cxtechdays.route('/api/votes')
+@cxtechdays.response(500, 'If there is an error from the server.')
+class VotesListOps(Resource):
+    @cxtechdays.marshal_list_with(vote)
+    def get(self):
+        """
+        Gets all user votes objects.
+        :return: user votes objects, if there are no suggestion objects, an empty sequence will be returned
+        """
+        uservotes_list = logic.get_all_votes()
+
+        #print(suggestion_list)
+        return uservotes_list
+
+    @cxtechdays.marshal_with(vote, code=201)
+    @cxtechdays.expect(vote, validate=True)
+    def post(self):
+        """
+        Creates and inserts a new vote into the database.
+        :param id: identifies the data set of the vote
+        :return: the new suggestion object
+        """
+        vote = VoteObject.from_dict(api.payload)
+
+        if vote is not None:
+            logic.create_vote(vote.get_userid(), vote.get_suggestionid())
+            return vote, 200
+        else:
+            return "", 500
+    
+@cxtechdays.route('/api/votes/<id>')
+@cxtechdays.response(500, 'If there is an error from the server.')
+@cxtechdays.param('id', 'ID of the user of the vote object')
+class VoteOps(Resource):
+    @cxtechdays.marshal_with(vote)
+    def get(self, id):
+        """
+        Gets a vote object by its ID.
+        :param id: identifies the data set of the vote
+        :return: the vote object
+        """
+        vote = logic.get_vote_by_id(id)
+
+        return vote
+
+    @cxtechdays.marshal_with(vote)
+    @cxtechdays.expect(vote, validate=True)
+    def put(self, id):
+        """
+        Updates a vote in the database.
+        :param id: identifies the data set of the vote
+        :return: the updated vote object
+        """
+        vote = VoteObject.from_dict(api.payload)
+        #vote['id'] = id
+        #print(id, vote)
+
+        if vote is not None:
+            logic.update_vote(vote)
+            return vote, 200
         else:
             return '', 500
 

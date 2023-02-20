@@ -28,14 +28,14 @@ class SuggestionMapper(Mapper):
         :param key: key of the suggestion object, which is to be found.
         :return: suggestion object, which is to be found.
         """
-        result = None
+        result = []
         cursor = self._connection.cursor()
         command = "SELECT * FROM suggestions WHERE id='{}'".format(key)
         cursor.execute(command)
         tuples = cursor.fetchall()
         try:
             (id, title, topic, type, speaker, abstract, speakerShortInfo, votes) = tuples[0]
-            suggestion = SuggestionObject(tuple['id'], tuple['title'], tuple['topic'], tuple['type'], tuple['speaker'], tuple['abstract'], tuple['speakerShortInfo'], tuple['votes'])
+            suggestion = SuggestionObject(id, title, topic, type, speaker, abstract, speakerShortInfo, votes)
             result = suggestion
         except IndexError:
             result = None
@@ -82,7 +82,7 @@ class SuggestionMapper(Mapper):
         """
         cursor = self._connection.cursor()
         query = "UPDATE suggestions SET title=%s, topic=%s, type=%s, speaker=%s, abstract=%s, speakerShortInfo=%s, votes=%s WHERE id=%s"
-        data = (str(suggestion.get_id()),suggestion.get_title(), suggestion.get_topic(), suggestion.get_type(), suggestion.get_speaker(), suggestion.get_abstract(), suggestion.get_speakerShortInfo(), str(suggestion.get_votes()))
+        data = (suggestion.get_title(), suggestion.get_topic(), suggestion.get_type(), suggestion.get_speaker(), suggestion.get_abstract(), suggestion.get_speakerShortInfo(), str(suggestion.get_votes()), str(suggestion.get_id()))
         cursor.execute(query, data)
 
         self._connection.commit()

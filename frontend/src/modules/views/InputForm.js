@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 import Button from "../components/Button";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
+import Typography from "../components/Typography";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -88,19 +88,24 @@ export default function InputForm(props) {
       sx={{
         display: "flex",
         justifyContent: "center",
+        flexDirection: "column",
+        alignItems: "center",
         overflow: "hidden",
         bgcolor: "white",
-        mt: -20,
+        mt: 5,
+        mb: 10,
       }}
     >
+      <Typography variant="h3" marked="center" component="h2" sx={{ mb: 3 }}>
+        Thema einreichen
+      </Typography>
       <Container
         sx={{
-          mt: 10,
-          mb: 10,
           bgcolor: "white",
-          padding: 3,
+          paddingTop: 4,
+          paddingBottom: 4,
           margin: 3,
-          boxShadow: 3,
+          boxShadow: 2,
           borderRadius: "12px",
           width: "70%",
         }}
@@ -114,9 +119,6 @@ export default function InputForm(props) {
           }}
           onSubmit={handleSubmit}
         >
-          <Typography variant="h2" component="h2" gutterBottom>
-            Anmeldung
-          </Typography>
           <TextField
             autoComplete="off"
             label="Titel"
@@ -203,7 +205,16 @@ export default function InputForm(props) {
             variant="contained"
             color="secondary"
             type="submit"
-            sx={{ width: 100 }}
+            sx={{
+              width: 100,
+              transition: "transform 0.3s, border 0.3s",
+              "&:hover": {
+                transform: "translateY(-1px)",
+              },
+              "& > *": {
+                minWidth: "clamp(0px, (360px - 100%) * 999,100%)",
+              },
+            }}
           >
             Submit
           </Button>

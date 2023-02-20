@@ -19,6 +19,11 @@ export default function SignUp(props) {
     setSignInOpen(true);
   };
 
+  const handleAnmeldenClose = () => {
+    //e.preventDefault();
+    setSignInOpen(false);
+  };
+
   const handleUserChange = (user) => {
     setSignInOpen(false);
     setSignUpOpen(false);
@@ -30,14 +35,33 @@ export default function SignUp(props) {
     setSignUpOpen(true);
   };
 
+  const handleRegestrierenClose = () => {
+    //e.preventDefault();
+    setSignUpOpen(false);
+  };
+
   const handle_Error = (errorMessage) => {
     handleError(errorMessage);
   };
 
   return (
-    <Container component="section" sx={{ display: "flex" }}>
+    <Container
+      component="section"
+      sx={{
+        mb: 10,
+        mt: 13,
+        display: "flex",
+      }}
+    >
       <Grid container>
-        <Grid item xs={12} md={6} sx={{ zIndex: 1 }}>
+        <Grid
+          item
+          xs={12}
+          md={6}
+          sx={{
+            zIndex: 1,
+          }}
+        >
           <Box
             sx={{
               display: "flex",
@@ -49,9 +73,14 @@ export default function SignUp(props) {
               borderRadius: "12px",
             }}
           >
-            <Box component="form" sx={{ maxWidth: 400 }}>
-              <Typography variant="h2" component="h2" gutterBottom>
-                Anmeldung
+            <Box
+              component="form"
+              sx={{
+                maxWidth: 400,
+              }}
+            >
+              <Typography variant="h3" component="h2" gutterBottom>
+                Login
               </Typography>
               <Typography variant="h5">
                 Werde Teil eines neuen Formats, um den Austausch untereinander
@@ -68,7 +97,18 @@ export default function SignUp(props) {
                   color="secondary"
                   variant="contained"
                   align="center"
-                  sx={{ width: "40%", borderRadius: "12px", mt: 3 }}
+                  sx={{
+                    width: "40%",
+                    borderRadius: "12px",
+                    mt: 3,
+                    transition: "transform 0.3s, border 0.3s",
+                    "&:hover": {
+                      transform: "translateY(-1px)",
+                    },
+                    "& > *": {
+                      minWidth: "clamp(0px, (360px - 100%) * 999,100%)",
+                    },
+                  }}
                   onClick={handleAnmeldenClickOpen}
                 >
                   Anmelden
@@ -78,7 +118,18 @@ export default function SignUp(props) {
                   color="secondary"
                   variant="contained"
                   align="center"
-                  sx={{ width: "40%", borderRadius: "12px", mt: 3 }}
+                  sx={{
+                    width: "40%",
+                    borderRadius: "12px",
+                    mt: 3,
+                    transition: "transform 0.3s, border 0.3s",
+                    "&:hover": {
+                      transform: "translateY(-1px)",
+                    },
+                    "& > *": {
+                      minWidth: "clamp(0px, (360px - 100%) * 999,100%)",
+                    },
+                  }}
                   onClick={handleRegestrierenClickOpen}
                 >
                   Registrieren
@@ -86,12 +137,14 @@ export default function SignUp(props) {
               </Box>
               <Anmelden
                 open={si_open}
-                onClose={handleUserChange}
+                onClose={handleAnmeldenClose}
+                handleuserchange={handleUserChange}
                 handleError={handle_Error}
               />
               <Registrieren
                 open={su_open}
-                onClose={handleUserChange}
+                onClose={handleRegestrierenClose}
+                handleuserchange={handleUserChange}
                 handleError={handle_Error}
               />
             </Box>

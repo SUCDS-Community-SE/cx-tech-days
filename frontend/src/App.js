@@ -7,27 +7,61 @@ import MuiAlert from "@mui/material/Alert";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import withRoot from "./modules/withRoot";
-import { PUBLIC_URL } from "./FirebaseConfig";
+import { PUBLIC_URL, auth } from "./FirebaseConfig";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
-  redirect,
+  Navigate,
+  useLocation,
 } from "react-router-dom";
 import Home from "./modules/pages/Home";
-import Main from "./modules/pages/Main";
+import Admin from "./modules/pages/Admin";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
+function getTimeRemaining() {
+  //UTC time 04/26/2023,11:00:00 (UTC+1 = 12:00:00)
+  const date = "04/26/2023,11:00:00";
+  const total = Date.parse(date) - Date.parse(new Date());
+  const seconds = Math.floor((total / 1000) % 60);
+  const minutes = Math.floor((total / 1000 / 60) % 60);
+  const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
+  const days = Math.floor(total / (1000 * 60 * 60 * 24));
+  return {
+    total,
+    days,
+    hours,
+    minutes,
+    seconds,
+  };
+}
+
 function App() {
-  const [user, setUser] = React.useState();
+  const [user, setUser] = React.useState(false);
+  const [admin, setAdmin] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState("");
   const [open, setOpen] = React.useState(false);
+  const [timeRemaining, setTimeRemaining] = React.useState(getTimeRemaining());
+
+  React.useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
+    const intervalId = setInterval(() => {
+      setTimeRemaining(getTimeRemaining());
+    }, 1000);
+    return () => clearInterval(intervalId);
+  }, []);
 
   const handleUserChange = (user) => {
     setUser(user);
+  };
+
+  const handleAdminChange = (admin) => {
+    setAdmin(admin);
   };
 
   const handle_Error = (errorMessage) => {
@@ -58,22 +92,28 @@ function App() {
   return (
     <Router>
       <React.Fragment>
-        <AppAppBar />
-        <Hero />
+        <AppAppBar
+          userChange={handleUserChange}
+          user={user}
+          handleError={handle_Error}
+        />
+        <Hero timeRemaining={timeRemaining} />
         <Routes>
           <Route
             path={PUBLIC_URL}
-            element={<Home handleError={handle_Error} />}
+            element={
+              <Home
+                user={user}
+                handleError={handle_Error}
+                userChange={handleUserChange}
+              />
+            }
           />
           <Route
-            path={PUBLIC_URL + "/main"}
+            path={PUBLIC_URL + "/admin"}
             element={
-              <Secured user={user}>
-                <Main
-                  user={user}
-                  userChange={handleUserChange}
-                  handleError={handle_Error}
-                />
+              <Secured admin={admin}>
+                <Admin admin={admin} />
               </Secured>
             }
           />
@@ -96,14 +136,14 @@ function App() {
 export default withRoot(App);
 
 function Secured(props) {
-  const { user } = props;
-
-  if (!user) {
+  const { admin } = props;
+  let location = useLocation();
+  if (!admin || admin === undefined) {
     // Redirect them to the /homepage, but save the current location they were
     // trying to go to when they were redirected. This allows us to send them
     // along to that page after they login, which is a nicer user experience
     // than dropping them off on the home page.
-    redirect({ PUBLIC_URL });
+    return <Navigate to={PUBLIC_URL} state={{ from: location }} replace />;
   }
 
   return props.children;

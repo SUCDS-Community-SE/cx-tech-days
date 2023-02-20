@@ -11,8 +11,13 @@ import { Link } from "@mui/material";
 const item = {
   display: "flex",
   flexDirection: "column",
+  justifyContent: "flex-start",
   alignItems: "center",
   px: 5,
+  padding: 6,
+  boxShadow: 3,
+  borderRadius: "12px",
+  minHeight: "775px",
 };
 
 const number = {
@@ -29,37 +34,34 @@ const image = {
 
 export default function HowItWorks() {
   return (
-    <Box
-      component="section"
-      sx={{ display: "flex", bgcolor: "primary", overflow: "hidden" }}
-    >
+    <Box component="section" sx={{ display: "flex", overflow: "hidden" }}>
       <Container
         sx={{
           mt: 7,
-          mb: 7,
+          mb: 10,
           position: "relative",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}
       >
-        <Box
-          component="img"
-          src=""
-          alt="Picture"
-          sx={{
-            pointerEvents: "none",
-            position: "absolute",
-            top: -180,
-            opacity: 0.7,
-          }}
-        />
-        <Typography variant="h4" marked="center" component="h2" sx={{ mb: 5 }}>
-          Deadline ist der 20.02.2023
+        <Typography variant="h3" marked="center" component="h2" sx={{ mb: 5 }}>
+          Deadline ist der 15.03.2023
         </Typography>
         <div>
           <Grid container spacing={5}>
-            <Grid item xs={12} md={4}>
+            <Grid
+              item
+              xs={12}
+              md={4}
+              sx={{
+                transition: "transform 0.3s, border 0.3s",
+                "&:hover": {
+                  transform: "translateY(-5px)",
+                },
+                "& > *": { minWidth: "clamp(0px, (360px - 100%) * 999,100%)" },
+              }}
+            >
               <Box sx={item}>
                 <Box sx={number}>1.</Box>
                 <Box
@@ -97,7 +99,18 @@ export default function HowItWorks() {
                 </List>
               </Box>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid
+              item
+              xs={12}
+              md={4}
+              sx={{
+                transition: "transform 0.3s, border 0.3s",
+                "&:hover": {
+                  transform: "translateY(-5px)",
+                },
+                "& > *": { minWidth: "clamp(0px, (360px - 100%) * 999,100%)" },
+              }}
+            >
               <Box sx={item}>
                 <Box sx={number}>2.</Box>
                 <Box
@@ -139,7 +152,18 @@ export default function HowItWorks() {
                 </List>
               </Box>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid
+              item
+              xs={12}
+              md={4}
+              sx={{
+                transition: "transform 0.3s, border 0.3s",
+                "&:hover": {
+                  transform: "translateY(-5px)",
+                },
+                "& > *": { minWidth: "clamp(0px, (360px - 100%) * 999,100%)" },
+              }}
+            >
               <Box sx={item}>
                 <Box sx={number}>3.</Box>
                 <Box
