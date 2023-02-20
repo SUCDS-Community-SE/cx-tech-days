@@ -11,13 +11,13 @@ class Mapper(ABC):
 
     def __enter__(self):
         """AWS connection"""
-        # self._connection = mysql.connector.connect(user='admin', password='adminadmin',
-        #                                             host='mysql-db-cx-dev-days.civwsopmd2k6.eu-central-1.rds.amazonaws.com',
-        #                                             database='cx_tech_days')
+        self._connection = mysql.connector.connect(user='admin', password='adminadmin',
+                                                    host='mysql-db-cx-dev-days.civwsopmd2k6.eu-central-1.rds.amazonaws.com',
+                                                    database='cx_tech_days')
         """local connection"""
-        self._connection = mysql.connector.connect(user='root', password='a9FeYtYZEpmZahuLfvqG',
-                                                       host='127.0.0.1',
-                                                       database='cx-tech-days')
+        #self._connection = mysql.connector.connect(user='root', password='a9FeYtYZEpmZahuLfvqG',
+        #                                              host='127.0.0.1',
+        #                                               database='cx-tech-days')
 
         return self
 
