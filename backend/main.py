@@ -38,7 +38,7 @@ vote = api.model('Suggestion', {
 # SUGGESTIONS API
 #######################################################################################################################
 
-@cxtechdays.route('/api/suggestions')
+@cxtechdays.route('/api/suggestions', methods=["GET", "POST"])
 @cxtechdays.response(500, 'If there is an error from the server.')
 class SuggestionsListOps(Resource):
     @cxtechdays.marshal_list_with(suggestion)
@@ -68,7 +68,7 @@ class SuggestionsListOps(Resource):
         else:
             return "", 500
     
-@cxtechdays.route('/api/suggestions/<id>')
+@cxtechdays.route('/api/suggestions/<id>', methods=["GET", "PUT"])
 @cxtechdays.response(500, 'If there is an error from the server.')
 @cxtechdays.param('id', 'ID of the suggestion object')
 class SuggestionOps(Resource):
@@ -105,7 +105,7 @@ class SuggestionOps(Resource):
 # USER VOTES API
 #######################################################################################################################
          
-@cxtechdays.route('/api/votes')
+@cxtechdays.route('/api/votes', methods=["GET", "POST"])
 @cxtechdays.response(500, 'If there is an error from the server.')
 class VotesListOps(Resource):
     @cxtechdays.marshal_list_with(vote)
@@ -135,7 +135,7 @@ class VotesListOps(Resource):
         else:
             return "", 500
     
-@cxtechdays.route('/api/votes/<id>')
+@cxtechdays.route('/api/votes/<id>', methods=["GET", "PUT"])
 @cxtechdays.response(500, 'If there is an error from the server.')
 @cxtechdays.param('id', 'ID of the user of the vote object')
 class VoteOps(Resource):

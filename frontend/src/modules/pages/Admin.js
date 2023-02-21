@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../App";
+import SuggestionTable from "../views/SuggestionTable";
 
 export default function Admin() {
   const { user } = useContext(AuthContext);
 
   return (
     <div>
-      <h1>Admin</h1>
+      <SuggestionTable />
     </div>
   );
 }
