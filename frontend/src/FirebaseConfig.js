@@ -20,6 +20,4 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-export const PUBLIC_URL = "";
-//http://127.0.0.1:3000/cxtechdays
-//http://localhost:3000
+export const adminId = "9BY7D1alPUfBgHull1klDcqJH6U2";

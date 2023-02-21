@@ -3,12 +3,14 @@ import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import AppBar from "../components/AppBar";
 import Toolbar from "../components/Toolbar";
-import { PUBLIC_URL, auth } from "../../FirebaseConfig";
+import { auth } from "../../FirebaseConfig";
 import { signOut } from "firebase/auth";
 import Button from "@mui/material/Button";
+import { AuthContext } from "../../App";
 
 export default function AppAppBar(props) {
-  const { user, userChange, handleError } = props;
+  const { user, setUser } = React.useContext(AuthContext);
+  const { handleError } = props;
 
   const loginState = user ? (
     <Button
@@ -26,7 +28,7 @@ export default function AppAppBar(props) {
       onClick={() => {
         signOut(auth)
           .then(() => {
-            userChange(null);
+            setUser(null);
             // Sign-out successful.
           })
           .catch((error) => {
@@ -38,24 +40,25 @@ export default function AppAppBar(props) {
       Logout
     </Button>
   ) : (
-    <Button
-      variant="text"
-      underline="none"
-      disableElevation
-      disableRipple
-      size="large"
-      sx={{
-        color: "secondary.main",
-        fontSize: 15,
-        fontWeight: "bold",
-        bgcolor: "transparent",
-      }}
-      onClick={() => {
-        window.scrollTo({ top: 1045, behavior: "smooth" });
-      }}
-    >
-      Login
-    </Button>
+    <div />
+    // <Button
+    //   variant="text"
+    //   underline="none"
+    //   disableElevation
+    //   disableRipple
+    //   size="large"
+    //   sx={{
+    //     color: "secondary.main",
+    //     fontSize: 15,
+    //     fontWeight: "bold",
+    //     bgcolor: "transparent",
+    //   }}
+    //   onClick={() => {
+    //     window.scrollTo({ top: 1045, behavior: "smooth" });
+    //   }}
+    // >
+    //   Login
+    // </Button>
   );
 
   return (
@@ -63,18 +66,13 @@ export default function AppAppBar(props) {
       <AppBar position="fixed" sx={{ bgcolor: "white", boxShadow: 1 }}>
         <Toolbar sx={{ justifyContent: "flex-start" }}>
           <Box />
-          <Link
-            variant="h7"
-            underline="none"
-            href={PUBLIC_URL}
-            sx={{ fontSize: 45 }}
-          >
+          <Link variant="h7" underline="none" href={""} sx={{ fontSize: 45 }}>
             {"MHP"}
           </Link>
           {/* Login für User zunächst onhold */}
-          {/* <Box sx={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
+          <Box sx={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
             {loginState}
-          </Box> */}
+          </Box>
         </Toolbar>
       </AppBar>
       <Toolbar />

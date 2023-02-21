@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../../App";
 
-export default function Admin(props) {
-  const { admin } = props;
+export default function Admin() {
+  const { user } = useContext(AuthContext);
 
   return (
     <div>

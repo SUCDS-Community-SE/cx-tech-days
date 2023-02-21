@@ -1,25 +1,22 @@
 import React from "react";
-import AppFooter from "./modules/views/AppFooter";
 import AppAppBar from "./modules/views/AppAppBar";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import withRoot from "./modules/withRoot";
-import { PUBLIC_URL, auth } from "./FirebaseConfig";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { auth } from "./FirebaseConfig";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./modules/pages/Home";
 import Admin from "./modules/pages/Admin";
 import AdminSignIn from "./modules/pages/AdminSignIn";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
+
+export const AuthContext = React.createContext(null);
 
 function getTimeRemaining() {
   //UTC time 04/26/2023,11:00:00 (UTC+1 = 12:00:00)
@@ -39,13 +36,16 @@ function getTimeRemaining() {
 }
 
 function App() {
-  const [errorMessage, setErrorMessage] = React.useState("");
+  const [errorMessage, setErrorMessage] = React.useState();
+  const [authLoading, setAuthLoading] = React.useState(true);
   const [open, setOpen] = React.useState(false);
   const [timeRemaining, setTimeRemaining] = React.useState(getTimeRemaining());
+  const [user, setUser] = React.useState();
 
   React.useEffect(() => {
     auth.onAuthStateChanged((user) => {
-      //setUser(user);
+      setUser(user);
+      setAuthLoading(false);
     });
     const intervalId = setInterval(() => {
       setTimeRemaining(getTimeRemaining());
@@ -87,77 +87,60 @@ function App() {
   );
 
   return (
-    <AuthProvider>
+    <AuthContext.Provider value={{ user, setUser }}>
       <Router>
-        <AppAppBar userChange={handleUserChange} handleError={handle_Error} />
-        <React.Fragment>
-          <Routes>
-            <Route
-              path={PUBLIC_URL}
-              element={
-                <Home
-                  handleError={handle_Error}
-                  userChange={handleUserChange}
-                  timeRemaining={timeRemaining}
-                />
-              }
-            />
-            <Route
-              path={PUBLIC_URL + "admin/signin"}
-              element={<AdminSignIn />}
-            ></Route>
-            <AdminSecured
-              exact
-              path={PUBLIC_URL + "/admin"}
-              component={Admin}
-            />
-          </Routes>
-          <Snackbar
-            onClose={handleClose}
-            open={open}
-            action={action}
-            anchorOrigin={{ vertical: "top", horizontal: "right" }}
-            autoHideDuration={3000}
-          >
-            <Alert severity="error">{errorMessage}</Alert>
-          </Snackbar>
-          <AppFooter />
-        </React.Fragment>
+        <AppAppBar handleError={handle_Error} />
+
+        <Routes>
+          <Route
+            path={""}
+            element={
+              <Home
+                handleError={handle_Error}
+                userChange={handleUserChange}
+                timeRemaining={timeRemaining}
+              />
+            }
+          />
+          <Route
+            exact
+            path={"/admin/signin"}
+            element={
+              authLoading ? (
+                <LinearProgress color="secondary" />
+              ) : !user ? (
+                <AdminSignIn handleError={handle_Error} />
+              ) : (
+                <Admin />
+              )
+            }
+          />
+          <Route
+            exact
+            path={"/admin"}
+            element={
+              authLoading ? (
+                <LinearProgress color="secondary" />
+              ) : !user ? (
+                <AdminSignIn handleError={handle_Error} />
+              ) : (
+                <Admin />
+              )
+            }
+          />
+        </Routes>
+        <Snackbar
+          onClose={handleClose}
+          open={open}
+          action={action}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          autoHideDuration={3000}
+        >
+          <Alert severity="error">{errorMessage}</Alert>
+        </Snackbar>
       </Router>
-    </AuthProvider>
-  );
-}
-
-export default withRoot(App);
-
-const AuthContext = React.createContext();
-
-function AuthProvider({ children }) {
-  const [user, setUser] = React.useState(false);
-  const [admin, setAdmin] = React.useState(false);
-
-  React.useEffect(() => {
-    auth.onAuthStateChanged(setUser, setAdmin);
-  }, []);
-  return (
-    <AuthContext.Provider value={{ user, admin }}>
-      {children}
     </AuthContext.Provider>
   );
 }
 
-const AdminSecured = ({ component: Route, ...rest }) => {
-  const { admin } = React.useContext(AuthContext);
-  return (
-    <Route
-      {...rest}
-      render={(routeProps) =>
-        !!admin ? (
-          <Route {...routeProps} />
-        ) : (
-          <Navigate to={PUBLIC_URL + "/admin/signin"} />
-        )
-      }
-    />
-  );
-};
+export default withRoot(App);

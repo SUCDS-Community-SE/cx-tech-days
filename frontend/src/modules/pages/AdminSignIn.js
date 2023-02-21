@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -8,17 +8,40 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { auth, adminId } from "../../FirebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../App";
 
 const theme = createTheme();
 
-export default function SignIn() {
+export default function AdminSignIn(props) {
+  const { handleError } = props;
+  const [email, setEmail] = React.useState();
+  const [password, setPassword] = React.useState();
+  const { user, setUser } = React.useContext(AuthContext);
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    try {
+      handleSignIn(email, password);
+      console.log(user);
+      navigate("/admin");
+    } catch (error) {
+      handleError(error.message);
+    }
+  };
+
+  const handleSignIn = (email, password) => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        setUser(userCredential.user);
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        handleError(errorMessage);
+      });
   };
 
   return (
@@ -55,8 +78,10 @@ export default function SignIn() {
               id="email"
               label="Email Address"
               name="email"
-              autoComplete="email"
               autoFocus
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
             />
             <TextField
               margin="normal"
@@ -66,7 +91,9 @@ export default function SignIn() {
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
             />
             <Box
               onSubmit={handleSubmit}
