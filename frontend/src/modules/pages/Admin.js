@@ -6,8 +6,8 @@ export default function Admin() {
   const { user } = useContext(AuthContext);
 
   return (
-    <div>
+    <React.Fragment>
       <SuggestionTable />
-    </div>
+    </React.Fragment>
   );
 }

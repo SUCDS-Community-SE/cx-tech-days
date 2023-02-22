@@ -25,7 +25,6 @@ async function getData() {
 export default function SuggestionTable() {
   const { user } = useContext(AuthContext);
   const [rows, setRows] = useState([]);
-  const [open, setOpen] = useState(false);
   //   const [selectedButton, setSelectedButton] = useState();
 
   useEffect(() => {
@@ -43,57 +42,6 @@ export default function SuggestionTable() {
   //       setSelectedButton(suggestion.id);
   //     }
   //   };
-
-  const sortAndMap = (rows) => {
-    return rows.map((row) => (
-      <React.Fragment>
-        <TableRow
-          key={row.id}
-          sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-        >
-          <TableCell>
-            <IconButton
-              aria-label="expand row"
-              size="small"
-              onClick={() => setOpen(!open)}
-            >
-              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </IconButton>
-          </TableCell>
-          <TableCell component="th" scope="row">
-            {row.title}
-          </TableCell>
-          <TableCell align="left">{row.topic}</TableCell>
-          <TableCell align="left">{row.type}</TableCell>
-          <TableCell align="left">{row.speaker}</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              <Box sx={{ margin: 1 }}>
-                <TableRow>
-                  <TableCell align="left">
-                    <Typography variant="h6" marked="center" component="h2">
-                      Abstract
-                    </Typography>
-                  </TableCell>
-                  <TableCell align="left">{row.abstract}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">
-                    <Typography variant="h6" marked="center" component="h2">
-                      Speaker Short Info
-                    </Typography>
-                  </TableCell>
-                  <TableCell align="left">{row.speakerShortInfo}</TableCell>
-                </TableRow>
-              </Box>
-            </Collapse>
-          </TableCell>
-        </TableRow>
-      </React.Fragment>
-    ));
-  };
 
   return (
     <Box
@@ -155,10 +103,68 @@ export default function SuggestionTable() {
                 </TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>{sortAndMap(rows)}</TableBody>
+            <TableBody>
+              {rows.map((row) => (
+                <Row key={row.id} row={row} />
+              ))}
+            </TableBody>
           </Table>
         </TableContainer>
       </Container>
     </Box>
+  );
+}
+
+function Row(props) {
+  const { row } = props;
+  const [open, setOpen] = useState(false);
+
+  return (
+    <React.Fragment>
+      <TableRow
+        key={row.id}
+        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+      >
+        <TableCell>
+          <IconButton
+            aria-label="expand row"
+            size="small"
+            onClick={() => setOpen(!open)}
+          >
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+        </TableCell>
+        <TableCell component="th" scope="row">
+          {row.title}
+        </TableCell>
+        <TableCell align="left">{row.topic}</TableCell>
+        <TableCell align="left">{row.type}</TableCell>
+        <TableCell align="left">{row.speaker}</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Box sx={{ margin: 1 }}>
+              <TableRow>
+                <TableCell align="left">
+                  <Typography variant="h6" marked="center" component="h2">
+                    Abstract
+                  </Typography>
+                </TableCell>
+                <TableCell align="left">{row.abstract}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="left">
+                  <Typography variant="h6" marked="center" component="h2">
+                    Speaker Short Info
+                  </Typography>
+                </TableCell>
+                <TableCell align="left">{row.speakerShortInfo}</TableCell>
+              </TableRow>
+            </Box>
+          </Collapse>
+        </TableCell>
+      </TableRow>
+    </React.Fragment>
   );
 }
