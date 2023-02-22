@@ -5,11 +5,11 @@ export default class API {
   static #api = null;
 
   //Cloud
-  #ServerBaseURL =
-    "http://ec2-3-120-134-153.eu-central-1.compute.amazonaws.com:5000/cxtechdays/api";
+  // #ServerBaseURL =
+  //   "http://ec2-3-120-134-153.eu-central-1.compute.amazonaws.com:5000/cxtechdays/api";
 
   //Local
-  //#ServerBaseURL = "http://127.0.0.1:5000/cxtechdays/api";
+  #ServerBaseURL = "http://127.0.0.1:5000/cxtechdays/api";
 
   #getSuggestionsURL = () => `${this.#ServerBaseURL}/suggestions`;
   #addSuggestionURL = () => `${this.#ServerBaseURL}/suggestions`;
