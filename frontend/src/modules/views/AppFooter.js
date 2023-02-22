@@ -3,7 +3,6 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Container from "@mui/material/Container";
-import Typography from "../components/Typography";
 
 function Copyright() {
   return (
@@ -19,12 +18,35 @@ function Copyright() {
 
 export default function AppFooter() {
   return (
-    <Typography
+    <Box
       component="footer"
-      sx={{ display: "flex", bgcolor: "secondary.light" }}
+      sx={{
+        position: "absolute",
+        left: 0,
+        right: 0,
+        height: 175,
+        display: "flex",
+        bgcolor: "secondary.light",
+      }}
     >
-      <Container sx={{ my: 8, display: "flex" }}>
-        <Grid container spacing={5}>
+      {" "}
+      <Container
+        sx={{
+          my: 8,
+          display: "flex",
+        }}
+      >
+        <Grid
+          container
+          spacing={5}
+          sx={{
+            position: "absolute",
+            left: 0,
+            bottom: 0,
+            right: 0,
+            height: 175,
+          }}
+        >
           <Grid item xs={6} sm={4} md={3}>
             <Grid
               container
@@ -57,6 +79,6 @@ export default function AppFooter() {
           <Grid item xs={6} sm={8} md={4}></Grid>
         </Grid>
       </Container>
-    </Typography>
+    </Box>
   );
 }

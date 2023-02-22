@@ -1,25 +1,22 @@
 import React from "react";
-import Hero from "./modules/views/Hero";
-import AppFooter from "./modules/views/AppFooter";
 import AppAppBar from "./modules/views/AppAppBar";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import withRoot from "./modules/withRoot";
-import { PUBLIC_URL, auth } from "./FirebaseConfig";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-  useLocation,
-} from "react-router-dom";
+import { auth } from "./FirebaseConfig";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./modules/pages/Home";
+import Admin from "./modules/pages/Admin";
+import AdminSignIn from "./modules/pages/AdminSignIn";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
+
+export const AuthContext = React.createContext(null);
 
 function getTimeRemaining() {
   //UTC time 04/26/2023,11:00:00 (UTC+1 = 12:00:00)
@@ -39,14 +36,16 @@ function getTimeRemaining() {
 }
 
 function App() {
-  const [user, setUser] = React.useState(false);
-  const [errorMessage, setErrorMessage] = React.useState("");
+  const [errorMessage, setErrorMessage] = React.useState();
+  const [authLoading, setAuthLoading] = React.useState(true);
   const [open, setOpen] = React.useState(false);
   const [timeRemaining, setTimeRemaining] = React.useState(getTimeRemaining());
+  const [user, setUser] = React.useState();
 
   React.useEffect(() => {
     auth.onAuthStateChanged((user) => {
       setUser(user);
+      setAuthLoading(false);
     });
     const intervalId = setInterval(() => {
       setTimeRemaining(getTimeRemaining());
@@ -55,7 +54,11 @@ function App() {
   }, []);
 
   const handleUserChange = (user) => {
-    setUser(user);
+    //setUser(user);
+  };
+
+  const handleAdminChange = (admin) => {
+    //setAdmin(admin);
   };
 
   const handle_Error = (errorMessage) => {
@@ -84,23 +87,45 @@ function App() {
   );
 
   return (
-    <Router>
-      <React.Fragment>
-        <AppAppBar
-          userChange={handleUserChange}
-          user={user}
-          handleError={handle_Error}
-        />
-        <Hero timeRemaining={timeRemaining} />
+    <AuthContext.Provider value={{ user, setUser }}>
+      <Router>
+        <AppAppBar handleError={handle_Error} />
+
         <Routes>
           <Route
-            path={PUBLIC_URL}
+            path={""}
             element={
               <Home
-                user={user}
                 handleError={handle_Error}
                 userChange={handleUserChange}
+                timeRemaining={timeRemaining}
               />
+            }
+          />
+          <Route
+            exact
+            path={"/admin/signin"}
+            element={
+              authLoading ? (
+                <LinearProgress color="secondary" />
+              ) : !user ? (
+                <AdminSignIn handleError={handle_Error} />
+              ) : (
+                <Admin />
+              )
+            }
+          />
+          <Route
+            exact
+            path={"/admin"}
+            element={
+              authLoading ? (
+                <LinearProgress color="secondary" />
+              ) : !user ? (
+                <AdminSignIn handleError={handle_Error} />
+              ) : (
+                <Admin />
+              )
             }
           />
         </Routes>
@@ -113,24 +138,9 @@ function App() {
         >
           <Alert severity="error">{errorMessage}</Alert>
         </Snackbar>
-        <AppFooter />
-      </React.Fragment>
-    </Router>
+      </Router>
+    </AuthContext.Provider>
   );
 }
 
 export default withRoot(App);
-
-function Secured(props) {
-  const { admin } = props;
-  let location = useLocation();
-  if (!admin || admin === undefined) {
-    // Redirect them to the /homepage, but save the current location they were
-    // trying to go to when they were redirected. This allows us to send them
-    // along to that page after they login, which is a nicer user experience
-    // than dropping them off on the home page.
-    return <Navigate to={PUBLIC_URL} state={{ from: location }} replace />;
-  }
-
-  return props.children;
-}
