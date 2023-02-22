@@ -68,7 +68,7 @@ class SuggestionsListOps(Resource):
         else:
             return "", 500
     
-@cxtechdays.route('/api/suggestions/<id>', methods=["GET", "PUT"])
+@cxtechdays.route('/api/suggestions/<id>', methods=["GET", "PUT", "DELETE"])
 @cxtechdays.response(500, 'If there is an error from the server.')
 @cxtechdays.param('id', 'ID of the suggestion object')
 class SuggestionOps(Resource):
@@ -100,6 +100,15 @@ class SuggestionOps(Resource):
             return suggestion, 200
         else:
             return '', 500
+
+    def delete(self, id):
+        """
+        Deletes a suggestion from the database.
+        :param id: identifies the data set of the suggestion
+        :return: an empty string
+        """
+        logic.delete_suggestion(id)
+        return '', 200
 
 #######################################################################################################################
 # USER VOTES API

@@ -13,6 +13,7 @@ export default class API {
   #getSuggestionsURL = () => `${this.#ServerBaseURL}/suggestions`;
   #addSuggestionURL = () => `${this.#ServerBaseURL}/suggestions`;
   #updateSuggestionURL = (id) => `${this.#ServerBaseURL}/suggestions/${id}`;
+  #deleteSuggestionURL = (id) => `${this.#ServerBaseURL}/suggestions/${id}`;
 
   #getVoteURL = (userid) => `${this.#ServerBaseURL}/votes/${userid}`;
   #addVoteURL = () => `${this.#ServerBaseURL}/votes`;
@@ -87,10 +88,24 @@ export default class API {
         },
         body: JSON.stringify(suggestionObject),
       }
-    ).then((body) => {
-      //console.log(body);
+    ).then((responseJSON) => {
+      let responseSuggestionObject = SuggestionObject.fromJSON(responseJSON)[0];
       return new Promise(function (resolve) {
-        resolve();
+        resolve(responseSuggestionObject);
+      });
+    });
+  }
+
+  deleteSuggestion(suggestionObject) {
+    return this.#fetchAdvanced(
+      this.#deleteSuggestionURL(suggestionObject.getId()),
+      {
+        method: "DELETE",
+      }
+    ).then((responseJSON) => {
+      let responseSuggestionObject = SuggestionObject.fromJSON(responseJSON)[0];
+      return new Promise(function (resolve) {
+        resolve(responseSuggestionObject);
       });
     });
   }
@@ -133,10 +148,10 @@ export default class API {
         "Content-type": "application/json",
       },
       body: JSON.stringify(voteObject),
-    }).then((body) => {
-      //console.log(body);
+    }).then((responseJSON) => {
+      let responseVoteObject = VoteObject.fromJSON(responseJSON)[0];
       return new Promise(function (resolve) {
-        resolve();
+        resolve(responseVoteObject);
       });
     });
   }

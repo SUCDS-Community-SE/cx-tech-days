@@ -50,6 +50,15 @@ def update_suggestion(suggestion):
     with SuggestionMapper() as mapper:
         return mapper.update(suggestion)
 
+def delete_suggestion(id):
+    """
+    Requests the suggestions-mapper to delete a suggestion in the DB.
+    :param id: the suggestion object to be deleted in the DB.
+    :return: the suggestion object with the given id.
+    """
+    with SuggestionMapper() as mapper:
+        return mapper.delete(id)
+
 # UserVote Mapper
 
 def create_vote(userid, suggestionid):

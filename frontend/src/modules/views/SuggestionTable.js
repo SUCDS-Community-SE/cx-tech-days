@@ -7,15 +7,17 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import DeleteIcon from "@mui/icons-material/Delete";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "../components/Typography";
 import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Collapse from "@mui/material/Collapse";
+import { Dialog, Button, DialogTitle, DialogContent } from "@mui/material";
 import API from "../../api";
-import SuggestionObject from "../objects/suggestionObject";
 
 async function getData() {
   const data = await API.getAPI().getSuggestions();
@@ -25,7 +27,6 @@ async function getData() {
 export default function SuggestionTable() {
   const { user } = useContext(AuthContext);
   const [rows, setRows] = useState([]);
-  //   const [selectedButton, setSelectedButton] = useState();
 
   useEffect(() => {
     let mounted = true;
@@ -35,13 +36,10 @@ export default function SuggestionTable() {
     return () => (mounted = false);
   }, []);
 
-  //   const handleChange = (suggestion) => {
-  //     if (selectedButton === suggestion.id) {
-  //       setSelectedButton(null);
-  //     } else {
-  //       setSelectedButton(suggestion.id);
-  //     }
-  //   };
+  const handleDelete = (suggestion) => {
+    API.getAPI().deleteSuggestion(suggestion);
+    setRows(rows.filter((row) => row !== suggestion));
+  };
 
   return (
     <Box
@@ -73,39 +71,26 @@ export default function SuggestionTable() {
         >
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
-              <TableRow>
+              <TableRow sx={{ borderTopColor: "2px solid black" }}>
+                <TableCell align="left"></TableCell>
                 <TableCell align="left">
-                  <Typography
-                    variant="h5"
-                    marked="center"
-                    component="h2"
-                  ></Typography>
+                  <Typography variant="h5">Title</Typography>
                 </TableCell>
-                <TableCell align="left">
-                  <Typography variant="h5" marked="center" component="h2">
-                    Title
-                  </Typography>
+                <TableCell align="center">
+                  <Typography variant="h5">Thema</Typography>
                 </TableCell>
-                <TableCell align="left">
-                  <Typography variant="h5" marked="center" component="h2">
-                    Thema
-                  </Typography>
+                <TableCell align="center">
+                  <Typography variant="h5">Format</Typography>
                 </TableCell>
-                <TableCell align="left">
-                  <Typography variant="h5" marked="center" component="h2">
-                    Format
-                  </Typography>
+                <TableCell align="center">
+                  <Typography variant="h5">Speaker</Typography>
                 </TableCell>
-                <TableCell align="left">
-                  <Typography variant="h5" marked="center" component="h2">
-                    Speaker
-                  </Typography>
-                </TableCell>
+                <TableCell align="right"></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {rows.map((row) => (
-                <Row key={row.id} row={row} />
+                <Row key={row.id} row={row} onDelete={handleDelete} />
               ))}
             </TableBody>
           </Table>
@@ -116,11 +101,26 @@ export default function SuggestionTable() {
 }
 
 function Row(props) {
-  const { row } = props;
+  const { row, onDelete } = props;
   const [open, setOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+
+  const onDeleteClose = () => {
+    setDeleteOpen(false);
+  };
+
+  const handleDelete = (suggestion) => {
+    onDelete(suggestion);
+  };
 
   return (
     <React.Fragment>
+      <DeleteDialog
+        suggestion={row}
+        open={deleteOpen}
+        handleClose={onDeleteClose}
+        onDelete={handleDelete}
+      />
       <TableRow
         key={row.id}
         sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -129,6 +129,7 @@ function Row(props) {
           <IconButton
             aria-label="expand row"
             size="small"
+            color="secondary"
             onClick={() => setOpen(!open)}
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
@@ -137,9 +138,14 @@ function Row(props) {
         <TableCell component="th" scope="row">
           {row.title}
         </TableCell>
-        <TableCell align="left">{row.topic}</TableCell>
-        <TableCell align="left">{row.type}</TableCell>
-        <TableCell align="left">{row.speaker}</TableCell>
+        <TableCell align="center">{row.topic}</TableCell>
+        <TableCell align="center">{row.type}</TableCell>
+        <TableCell align="center">{row.speaker}</TableCell>
+        <TableCell align="center">
+          <IconButton onClick={() => setDeleteOpen(!deleteOpen)}>
+            <DeleteIcon />
+          </IconButton>
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -147,17 +153,13 @@ function Row(props) {
             <Box sx={{ margin: 1 }}>
               <TableRow>
                 <TableCell align="left">
-                  <Typography variant="h6" marked="center" component="h2">
-                    Abstract
-                  </Typography>
+                  <Typography variant="h5">Abstract:</Typography>
                 </TableCell>
                 <TableCell align="left">{row.abstract}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell align="left">
-                  <Typography variant="h6" marked="center" component="h2">
-                    Speaker Short Info
-                  </Typography>
+                  <Typography variant="h5">Speaker Short Info:</Typography>
                 </TableCell>
                 <TableCell align="left">{row.speakerShortInfo}</TableCell>
               </TableRow>
@@ -166,5 +168,95 @@ function Row(props) {
         </TableCell>
       </TableRow>
     </React.Fragment>
+  );
+}
+
+function DeleteDialog(props) {
+  const { suggestion, open, handleClose, onDelete } = props;
+
+  const handleBackdropClick = () => {
+    handleClose();
+  };
+
+  const handleDeleteClose = () => {
+    handleClose();
+  };
+
+  const handleDelete = () => {
+    onDelete(suggestion);
+    handleClose();
+  };
+
+  return (
+    <Dialog
+      onBackdropClick={handleBackdropClick}
+      open={open}
+      PaperProps={{ sx: { width: "400px", height: "250px" } }}
+    >
+      <Container
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <DialogTitle variant="h4" sx={{ mt: 2 }}>
+          Eintrag löschen?
+          <IconButton
+            aria-label="close"
+            onClick={handleDeleteClose}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Typography variant="h5" sx={{ mt: 2, mb: 4 }}>
+            {suggestion.title} löschen?
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <Button
+              type="submit"
+              color="error"
+              variant="contained"
+              align="center"
+              sx={{ mr: 2 }}
+              onClick={handleDelete}
+            >
+              Löschen
+            </Button>
+            <Button
+              type="submit"
+              variant="contained"
+              align="center"
+              sx={{ ml: 2 }}
+              onClick={handleDeleteClose}
+            >
+              Cancel
+            </Button>
+          </Box>
+        </DialogContent>
+      </Container>
+    </Dialog>
   );
 }
