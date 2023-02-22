@@ -46,44 +46,61 @@ export default function SuggestionTable() {
       component="section"
       sx={{
         display: "flex",
-        overflow: "hidden",
-        bgcolor: "primary",
         flexDirection: "column",
         alignItems: "center",
-        marginTop: 10,
+        marginBottom: 10,
       }}
     >
-      <Typography variant="h3" marked="center" component="h2" sx={{ mb: 2 }}>
+      <Typography variant="h3" marked="center" sx={{ mt: 2, mb: 2 }}>
         Einreichungen
       </Typography>
-      <Container sx={{ mt: 2, mb: 10, display: "flex", position: "relative" }}>
+      <Typography fontWeight="bold" sx={{ mt: 2, mb: 2 }}>
+        Anzahl: {rows.length}
+      </Typography>
+      <Paper
+        sx={{
+          mt: 2,
+          mb: 10,
+          ml: 5,
+          mr: 5,
+          padding: 2,
+          overflow: "hidden",
+          boxShadow: 0,
+        }}
+      >
         <TableContainer
-          component={Paper}
           sx={{
-            mt: 10,
-            mb: 10,
-            bgcolor: "white",
-            padding: 3,
-            margin: 3,
-            boxShadow: 3,
+            paddingLeft: 2,
+            paddingRight: 2,
             borderRadius: "12px",
+            boxShadow: 3,
+            minWidth: 650,
+            maxHeight: 600,
           }}
         >
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table aria-label="sticky table" stickyHeader>
             <TableHead>
-              <TableRow sx={{ borderTopColor: "2px solid black" }}>
+              <TableRow>
                 <TableCell align="left"></TableCell>
                 <TableCell align="left">
-                  <Typography variant="h5">Title</Typography>
+                  <Typography fontWeight="bold" variant="h5">
+                    Title
+                  </Typography>
                 </TableCell>
-                <TableCell align="center">
-                  <Typography variant="h5">Thema</Typography>
+                <TableCell align="left">
+                  <Typography fontWeight="bold" variant="h5">
+                    Thema
+                  </Typography>
                 </TableCell>
-                <TableCell align="center">
-                  <Typography variant="h5">Format</Typography>
+                <TableCell align="left">
+                  <Typography fontWeight="bold" variant="h5">
+                    Format
+                  </Typography>
                 </TableCell>
-                <TableCell align="center">
-                  <Typography variant="h5">Speaker</Typography>
+                <TableCell align="left">
+                  <Typography fontWeight="bold" variant="h5">
+                    Speaker
+                  </Typography>
                 </TableCell>
                 <TableCell align="right"></TableCell>
               </TableRow>
@@ -95,7 +112,7 @@ export default function SuggestionTable() {
             </TableBody>
           </Table>
         </TableContainer>
-      </Container>
+      </Paper>
     </Box>
   );
 }
@@ -123,7 +140,9 @@ function Row(props) {
       />
       <TableRow
         key={row.id}
-        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+        sx={{
+          "&:last-child td, &:last-child th": { border: 0 },
+        }}
       >
         <TableCell>
           <IconButton
@@ -138,32 +157,30 @@ function Row(props) {
         <TableCell component="th" scope="row">
           {row.title}
         </TableCell>
-        <TableCell align="center">{row.topic}</TableCell>
-        <TableCell align="center">{row.type}</TableCell>
-        <TableCell align="center">{row.speaker}</TableCell>
-        <TableCell align="center">
+        <TableCell align="left">{row.topic}</TableCell>
+        <TableCell align="left">{row.type}</TableCell>
+        <TableCell align="left">{row.speaker}</TableCell>
+        <TableCell align="left">
           <IconButton onClick={() => setDeleteOpen(!deleteOpen)}>
-            <DeleteIcon />
+            <DeleteIcon sx={{ "&:hover": { color: "red" } }} />
           </IconButton>
         </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              <TableRow>
-                <TableCell align="left">
-                  <Typography variant="h5">Abstract:</Typography>
-                </TableCell>
-                <TableCell align="left">{row.abstract}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell align="left">
-                  <Typography variant="h5">Speaker Short Info:</Typography>
-                </TableCell>
-                <TableCell align="left">{row.speakerShortInfo}</TableCell>
-              </TableRow>
-            </Box>
+            <TableRow>
+              <TableCell align="left">
+                <Typography fontWeight="bold">Abstract:</Typography>
+              </TableCell>
+              <TableCell align="left">{row.abstract}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell align="left">
+                <Typography fontWeight="bold">Speaker Short Info:</Typography>
+              </TableCell>
+              <TableCell align="left">{row.speakerShortInfo}</TableCell>
+            </TableRow>
           </Collapse>
         </TableCell>
       </TableRow>
