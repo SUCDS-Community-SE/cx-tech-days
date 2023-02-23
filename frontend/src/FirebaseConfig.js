@@ -20,4 +20,4 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-export const adminId = "9BY7D1alPUfBgHull1klDcqJH6U2";
+export const adminId = process.env.ADMIN_ID;
