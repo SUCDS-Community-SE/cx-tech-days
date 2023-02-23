@@ -5,11 +5,10 @@ export default class API {
   static #api = null;
 
   //Cloud
-  // #ServerBaseURL =
-  //   "http://ec2-3-120-134-153.eu-central-1.compute.amazonaws.com:5000/cxtechdays/api";
+  // #ServerBaseURL = process.env.REACT_APP_cloud_API_URL;
 
   //Local
-  #ServerBaseURL = "http://127.0.0.1:5000/cxtechdays/api";
+  #ServerBaseURL = process.env.REACT_APP_local_API_URL;
 
   #getSuggestionsURL = () => `${this.#ServerBaseURL}/suggestions`;
   #addSuggestionURL = () => `${this.#ServerBaseURL}/suggestions`;
