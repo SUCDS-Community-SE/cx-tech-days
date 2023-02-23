@@ -5,7 +5,7 @@ export default class API {
   static #api = null;
 
   //Cloud
-  #ServerBaseURL = process.env.REACT_APP_cloud_API_URL;
+  #ServerBaseURL = process.env.REACT_APP_API_CLOUD_URL;
 
   //Local
   //#ServerBaseURL = process.env.REACT_APP_local_API_URL;
