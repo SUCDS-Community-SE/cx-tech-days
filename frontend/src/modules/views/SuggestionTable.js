@@ -17,6 +17,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Collapse from "@mui/material/Collapse";
 import { Dialog, Button, DialogTitle, DialogContent } from "@mui/material";
+import AdminStats from "../components/AdminStats";
 import API from "../../api";
 
 async function getData() {
@@ -43,19 +44,24 @@ export default function SuggestionTable() {
 
   return (
     <Box
-      component="section"
       sx={{
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
+        alignItems: "flex-start",
         marginBottom: 10,
       }}
     >
-      <Typography variant="h3" marked="center" sx={{ mt: 2, mb: 2 }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "flex-start",
+        }}
+      >
+        <AdminStats title={"Submissons"} value={rows.length} />
+      </Box>
+      <Typography variant="h5" sx={{ ml: 7, mt: 2, mb: 1 }}>
         Einreichungen
-      </Typography>
-      <Typography fontWeight="bold" sx={{ mt: 2, mb: 2 }}>
-        Anzahl: {rows.length}
       </Typography>
       <Paper
         sx={{
@@ -66,6 +72,7 @@ export default function SuggestionTable() {
           padding: 2,
           overflow: "hidden",
           boxShadow: 0,
+          bgcolor: "secondary.lighter",
         }}
       >
         <TableContainer
@@ -76,6 +83,7 @@ export default function SuggestionTable() {
             boxShadow: 3,
             minWidth: 650,
             maxHeight: 600,
+            bgcolor: "white",
           }}
         >
           <Table aria-label="sticky table" stickyHeader>

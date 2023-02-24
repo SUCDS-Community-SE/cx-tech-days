@@ -7,7 +7,7 @@ import VoteForm from "../views/VoteForm";
 import Hero from "../views/Hero";
 import Timetable from "../views/Timetable";
 import Speaker from "../views/Speaker";
-import AppFooter from "../views/AppFooter";
+import Footer from "../views/Footer";
 import { Divider } from "@mui/material";
 
 function Home(props) {
@@ -41,7 +41,8 @@ function Home(props) {
       <Divider /> */}
       <InputForm handleError={handle_Error} />
       <HowItWorks />
-      <AppFooter />
+      <Divider />
+      <Footer />
     </div>
   );
 }

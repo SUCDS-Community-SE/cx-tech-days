@@ -1,16 +1,25 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import Link from "@mui/material/Link";
 import AppBar from "../components/AppBar";
 import Toolbar from "../components/Toolbar";
 import { auth } from "../../FirebaseConfig";
 import { signOut } from "firebase/auth";
 import Button from "@mui/material/Button";
 import { AuthContext } from "../../App";
+import { useNavigate } from "react-router";
+import MHP17_00208_powerpoint from "../../pictures/MHP17_00208_powerpoint.jpg";
+
+const image = MHP17_00208_powerpoint;
 
 export default function AppAppBar(props) {
   const { user, setUser } = React.useContext(AuthContext);
   const { handleError } = props;
+
+  const navigate = useNavigate();
+
+  const navigateHome = () => {
+    navigate("/");
+  };
 
   const loginState = user ? (
     <Button
@@ -64,11 +73,15 @@ export default function AppAppBar(props) {
   return (
     <div>
       <AppBar position="fixed" sx={{ bgcolor: "white", boxShadow: 1 }}>
-        <Toolbar sx={{ justifyContent: "flex-start" }}>
+        <Toolbar sx={{ justifyContent: "flex-start", overflow: "hidden" }}>
           <Box />
-          <Link variant="h7" underline="none" href={""} sx={{ fontSize: 45 }}>
-            {"MHP"}
-          </Link>
+          <Button
+            onClick={navigateHome}
+            style={{ backgroundColor: "transparent" }}
+            sx={{ borderRadius: 10 }}
+          >
+            <img src={image} alt="MHP Logo" width="160" height="100" />
+          </Button>
           {/* Login für User zunächst onhold */}
           <Box sx={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
             {loginState}
