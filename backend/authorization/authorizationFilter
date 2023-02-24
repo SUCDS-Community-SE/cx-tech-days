@@ -3,6 +3,11 @@ from functools import wraps
 def authenticate(function):
     @wraps(function)
     def wrap(*args, **kwargs):
-        request.headers.get('userID')
+        userID = request.headers.get('userID')
+        if session[userID]
+            # TODO
+            # check if token is valid within session
+            # if session expired -> redirect to login
+            # if session valid + token available -> grant access to page
         return function(*args, **kwargs)
     return wrap

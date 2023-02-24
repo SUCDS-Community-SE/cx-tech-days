@@ -18,12 +18,20 @@ cxtechdays = api.namespace('cxtechdays', description='function of the Website')
 
 SESSION_TYPE = 'redis'
 #SESSION_USE_SIGNER = TODO
-SESSION_REDIS_HOST = "127.0.0.1"
-SESSION_REDIS_PORT = "6379"
+SESSION_REDIS = redis.from_url('redis://localhost:6379')
 PERMANENT_SESSION_LIFETIME = 60 * 60 # 60 minutes
 app.config.from_object(__name__)
-Session(app)    
+Session(app)
 
+@cxtechdays.route('/api/authenticate')
+def authenticate(): 
+    # TODO
+    # validate user
+    # call to firebase to get Token for mail + password
+    # if user valid -> store token in redis session
+    # if user not valid -> return error code
+    return 
+    
 #######################################################################################################################
 # Model declaration for serialization
 #######################################################################################################################
