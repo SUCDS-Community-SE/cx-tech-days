@@ -1,9 +1,8 @@
 from functools import wraps
 
-def authenticate(f):
-    @wraps(f)
+def authenticate(function):
+    @wraps(function)
     def wrap(*args, **kwargs):
-
-    
-        return f(*args, **kwargs)
+        request.headers.get('userID')
+        return function(*args, **kwargs)
     return wrap

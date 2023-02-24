@@ -1,7 +1,8 @@
-from flask import Flask
+from flask import Flask, session
 from flask_restx import Resource, Api, fields
 from flask_cors import CORS
 from flask import request
+from flask_session import Session
 import logic as logic
 from objects.suggestionObject import SuggestionObject
 from objects.voteObject import VoteObject
@@ -14,6 +15,14 @@ CORS(app, resources=r'*')
 api = Api(app, version='1.0', title='API of the CX Tech Days', description='An API for the CX Tech Days Website.')
 
 cxtechdays = api.namespace('cxtechdays', description='function of the Website')
+
+SESSION_TYPE = 'redis'
+#SESSION_USE_SIGNER = TODO
+SESSION_REDIS_HOST = "127.0.0.1"
+SESSION_REDIS_PORT = "6379"
+PERMANENT_SESSION_LIFETIME = 60 * 60 # 60 minutes
+app.config.from_object(__name__)
+Session(app)    
 
 #######################################################################################################################
 # Model declaration for serialization
