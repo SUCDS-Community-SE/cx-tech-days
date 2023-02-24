@@ -4,8 +4,11 @@ from flask_cors import CORS
 from flask import request
 from flask_session import Session
 import logic as logic
+import redis
 from objects.suggestionObject import SuggestionObject
 from objects.voteObject import VoteObject
+from firebase_admin import credentials, auth
+
 
 app = Flask("CXTechDays")
 
@@ -16,22 +19,24 @@ api = Api(app, version='1.0', title='API of the CX Tech Days', description='An A
 
 cxtechdays = api.namespace('cxtechdays', description='function of the Website')
 
-SESSION_TYPE = 'redis'
+#SESSION_TYPE = 'redis'
 #SESSION_USE_SIGNER = TODO
-SESSION_REDIS = redis.from_url('redis://localhost:6379')
-PERMANENT_SESSION_LIFETIME = 60 * 60 # 60 minutes
-app.config.from_object(__name__)
-Session(app)
+#SESSION_REDIS = redis.from_url('redis://localhost:6379')
+#PERMANENT_SESSION_LIFETIME = 60 * 60 # 60 minutes
+#app.config.from_object(__name__)
+#Session(app)
 
-@cxtechdays.route('/api/authenticate')
-def authenticate(): 
-    # TODO
-    # validate user
-    # call to firebase to get Token for mail + password
-    # if user valid -> store token in redis session
-    # if user not valid -> return error code
-    return 
-    
+#@cxtechdays.route('/api/authenticate', methods=["POST"])
+#class Authenticate(Resource):
+#    def post(): 
+        # TODO
+        # validate user
+        # call to firebase to get Token for mail + password
+        # if user valid -> store token in redis session
+        # if user not valid -> return error code
+#        print("Mail" + api.payload["email"] + " " + "password" + api.payload[password])
+ #       return "passt"  
+
 #######################################################################################################################
 # Model declaration for serialization
 #######################################################################################################################
