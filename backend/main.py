@@ -1,14 +1,16 @@
+import logic 
+import redis
+import pyrebase
+import requests
+import json
 from flask import Flask, session
 from flask_restx import Resource, Api, fields
 from flask_cors import CORS
 from flask import request
 from flask_session import Session
-import logic as logic
-import redis
 from objects.suggestionObject import SuggestionObject
 from objects.voteObject import VoteObject
-from firebase_admin import credentials, auth
-
+from authorization.authorizationFilter import authorize
 
 app = Flask("CXTechDays")
 
@@ -19,23 +21,44 @@ api = Api(app, version='1.0', title='API of the CX Tech Days', description='An A
 
 cxtechdays = api.namespace('cxtechdays', description='function of the Website')
 
-#SESSION_TYPE = 'redis'
-#SESSION_USE_SIGNER = TODO
-#SESSION_REDIS = redis.from_url('redis://localhost:6379')
-#PERMANENT_SESSION_LIFETIME = 60 * 60 # 60 minutes
-#app.config.from_object(__name__)
-#Session(app)
+SESSION_TYPE = 'redis'
+SESSION_REDIS = redis.from_url('redis://localhost:6379')
+PERMANENT_SESSION_LIFETIME = 60 * 20 # 20 min
+app.config.from_object(__name__)
+Session(app)
 
-#@cxtechdays.route('/api/authenticate', methods=["POST"])
-#class Authenticate(Resource):
-#    def post(): 
-        # TODO
-        # validate user
-        # call to firebase to get Token for mail + password
-        # if user valid -> store token in redis session
-        # if user not valid -> return error code
-#        print("Mail" + api.payload["email"] + " " + "password" + api.payload[password])
- #       return "passt"  
+config = {
+"apiKey": "AIzaSyA95baSAKgaRGoj8MV3iV1hpF0zpvpRYNo",
+"authDomain": "cx-tech-days.firebaseapp.com",
+"projectId": "cx-tech-days",
+"storageBucket": "cx-tech-days.appspot.com",
+"messagingSenderId": "316855049115",
+"appId": "1:316855049115:web:3d221fa672bb3d3bfb1f3e",
+"measurementId": "G-3GJT4D9KJL",
+"databaseURL": ""
+}
+
+firebase = pyrebase.initialize_app(config)
+
+@app.route('/authenticate', methods=["POST"])
+def authenticate():
+    try:
+        firebase_response = firebase.auth().sign_in_with_email_and_password(request.json["email"], request.json["password"])
+        session["token"] = firebase_response["localId"]
+        return "ok", 200  #redirect
+    except requests.exceptions.HTTPError as e:
+        try:
+            error_dict = json.loads(e.strerror)
+            error_message = error_dict["error"]["message"]
+            error_code = error_dict["error"]["code"]
+            return error_message, error_code
+        except json.JSONDecodeError as e:  
+            return "Unbekannter Fehler", 500
+
+@app.route('/test', methods=["GET"])
+@authorize
+def test():
+    return "SENSITIVE DATEN 1!!!1!"
 
 #######################################################################################################################
 # Model declaration for serialization
