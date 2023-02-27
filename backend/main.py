@@ -1,10 +1,10 @@
 from flask import Flask
 from flask_restx import Resource, Api, fields
 from flask_cors import CORS
-from flask import request
 import logic as logic
 from objects.suggestionObject import SuggestionObject
 from objects.voteObject import VoteObject
+from authorization.security_decorator import secured
 
 app = Flask("CXTechDays")
 
@@ -41,6 +41,7 @@ vote = api.model('Suggestion', {
 @cxtechdays.route('/api/suggestions', methods=["GET", "POST"])
 @cxtechdays.response(500, 'If there is an error from the server.')
 class SuggestionsListOps(Resource):
+    @secured
     @cxtechdays.marshal_list_with(suggestion)
     def get(self):
         """
@@ -51,7 +52,8 @@ class SuggestionsListOps(Resource):
 
         #print(suggestion_list)
         return suggestion_list
-
+    
+    @secured
     @cxtechdays.marshal_with(suggestion, code=201)
     @cxtechdays.expect(suggestion, validate=True)
     def post(self):
@@ -72,6 +74,7 @@ class SuggestionsListOps(Resource):
 @cxtechdays.response(500, 'If there is an error from the server.')
 @cxtechdays.param('id', 'ID of the suggestion object')
 class SuggestionOps(Resource):
+    @secured
     @cxtechdays.marshal_with(suggestion)
     def get(self, id):
         """
@@ -83,6 +86,7 @@ class SuggestionOps(Resource):
 
         return suggestion
 
+    @secured
     @cxtechdays.marshal_with(suggestion)
     @cxtechdays.expect(suggestion, validate=True)
     def put(self, id):
@@ -101,6 +105,7 @@ class SuggestionOps(Resource):
         else:
             return '', 500
 
+    @secured
     def delete(self, id):
         """
         Deletes a suggestion from the database.
@@ -117,6 +122,7 @@ class SuggestionOps(Resource):
 @cxtechdays.route('/api/votes', methods=["GET", "POST"])
 @cxtechdays.response(500, 'If there is an error from the server.')
 class VotesListOps(Resource):
+    @secured
     @cxtechdays.marshal_list_with(vote)
     def get(self):
         """
@@ -128,6 +134,7 @@ class VotesListOps(Resource):
         #print(suggestion_list)
         return uservotes_list
 
+    @secured
     @cxtechdays.marshal_with(vote, code=201)
     @cxtechdays.expect(vote, validate=True)
     def post(self):
@@ -148,6 +155,7 @@ class VotesListOps(Resource):
 @cxtechdays.response(500, 'If there is an error from the server.')
 @cxtechdays.param('id', 'ID of the user of the vote object')
 class VoteOps(Resource):
+    @secured
     @cxtechdays.marshal_with(vote)
     def get(self, id):
         """
@@ -159,6 +167,7 @@ class VoteOps(Resource):
 
         return vote
 
+    @secured
     @cxtechdays.marshal_with(vote)
     @cxtechdays.expect(vote, validate=True)
     def put(self, id):
