@@ -42,7 +42,7 @@ function HeroLayout(props) {
         }}
       >
         <Typography color="inherit" align="center" variant="h1" marked="center">
-          2023 MHP CX Tech Days
+          2023 MHP CX Tech Day
         </Typography>
       </Container>
       <Container

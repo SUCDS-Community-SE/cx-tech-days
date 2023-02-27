@@ -6,7 +6,7 @@ import List from "@mui/material/List";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import ListItem from "@mui/material/ListItem";
-import { Divider, ListSubheader } from "@mui/material";
+import { Divider } from "@mui/material";
 import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
@@ -15,7 +15,7 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 function Copyright() {
   return (
     <React.Fragment>
-      <Box sx={{ ml: 5, mb: 2, mt: 2 }}>
+      <Box sx={{ ml: 5, mb: 0, mt: 2 }}>
         <Link color="inherit" href="https://www.mhp.com/de/">
           <Typography
             component={"p"}
@@ -35,10 +35,12 @@ const flexContainer = {
   flexDirection: "row",
   padding: 0,
 };
+//
 
 export default function Footer() {
   return (
-    <Box bgcolor={"background.paper"} width={"100%"}>
+    <Box bgcolor={"background.paper"} width={"100%"} boxShadow={2}>
+      <Divider />
       <Container
         sx={{
           display: "flex",
@@ -54,16 +56,14 @@ export default function Footer() {
             </Typography>
             <List>
               <ListItem>
-                <Link>Kontakt</Link>
+                <Link href="/contact" underline="hover">
+                  Kontakt
+                </Link>
               </ListItem>
               <ListItem>
-                <Link>Impressum</Link>
-              </ListItem>
-              <ListItem>
-                <Link>Datenschutz</Link>
-              </ListItem>
-              <ListItem>
-                <Link>Privacy Einstellungen</Link>
+                <Link href="/impress" underline="hover">
+                  Impressum
+                </Link>
               </ListItem>
             </List>
           </Box>

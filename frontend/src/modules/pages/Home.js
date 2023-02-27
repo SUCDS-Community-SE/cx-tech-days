@@ -41,7 +41,6 @@ function Home(props) {
       <Divider /> */}
       <InputForm handleError={handle_Error} />
       <HowItWorks />
-      <Divider />
       <Footer />
     </div>
   );
