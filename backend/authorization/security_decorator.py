@@ -1,10 +1,11 @@
 from flask import request
-from google.auth.transport.requests import Request
+import google.auth.transport.requests
+import requests
 import google.oauth2.id_token
 
 def secured(function):
 
-    firebase_request_adapter = Request()
+    firebase_request_adapter = google.auth.transport.requests.Request()
 
     def wrapper(*args, **kwargs):
 
@@ -20,10 +21,10 @@ def secured(function):
                     objects = function(*args, **kwargs)
                     return objects
                 else:
-                    return '', 401  # UNAUTHORIZED
+                    return 'UNAUTHORIZED', 401  # UNAUTHORIZED
             except ValueError as exc:
                 return exc, 401  # UNAUTHORIZED
 
-        return '', 401  # UNAUTHORIZED
+        return 'UNAUTHORIZED', 401  # UNAUTHORIZED
 
     return wrapper
