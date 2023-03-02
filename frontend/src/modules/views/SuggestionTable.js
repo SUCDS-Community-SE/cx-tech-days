@@ -16,7 +16,9 @@ import CloseIcon from "@mui/icons-material/Close";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Collapse from "@mui/material/Collapse";
-import { Dialog, Button, DialogTitle, DialogContent } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent } from "@mui/material";
+import Button from "../components/Button";
+import AdminStats from "../components/AdminStats";
 import API from "../../api";
 
 async function getData() {
@@ -24,7 +26,13 @@ async function getData() {
   return data;
 }
 
-export default function SuggestionTable() {
+async function getCSV() {
+  const data = await API.getAPI().getSuggestionsCSV();
+  return data;
+}
+
+export default function SuggestionTable(props) {
+  const { handleError } = props;
   const { user } = useContext(AuthContext);
   const [rows, setRows] = useState([]);
 
@@ -36,36 +44,49 @@ export default function SuggestionTable() {
     return () => (mounted = false);
   }, []);
 
+  const handle_Error = (errorMessage) => {
+    handleError(errorMessage);
+  };
+
   const handleDelete = (suggestion) => {
     API.getAPI().deleteSuggestion(suggestion);
     setRows(rows.filter((row) => row !== suggestion));
   };
 
+  const exportCSV = () => {
+    getCSV();
+  };
+
   return (
     <Box
-      component="section"
       sx={{
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
+        alignItems: "flex-start",
         marginBottom: 10,
       }}
     >
-      <Typography variant="h3" marked="center" sx={{ mt: 2, mb: 2 }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "flex-start",
+        }}
+      >
+        <AdminStats title={"Submissons"} value={rows.length} />
+      </Box>
+      <Typography variant="h5" sx={{ ml: 7, mt: 2, mb: 1 }}>
         Einreichungen
-      </Typography>
-      <Typography fontWeight="bold" sx={{ mt: 2, mb: 2 }}>
-        Anzahl: {rows.length}
       </Typography>
       <Paper
         sx={{
           mt: 2,
-          mb: 10,
           ml: 5,
           mr: 5,
           padding: 2,
           overflow: "hidden",
           boxShadow: 0,
+          bgcolor: "secondary.lighter",
         }}
       >
         <TableContainer
@@ -76,6 +97,7 @@ export default function SuggestionTable() {
             boxShadow: 3,
             minWidth: 650,
             maxHeight: 600,
+            bgcolor: "white",
           }}
         >
           <Table aria-label="sticky table" stickyHeader>
@@ -113,6 +135,17 @@ export default function SuggestionTable() {
           </Table>
         </TableContainer>
       </Paper>
+      <Button
+        size="small"
+        variant="outlined"
+        color="secondary"
+        sx={{ ml: 7, mb: 1 }}
+        onClick={exportCSV}
+      >
+        <Typography fontWeight="bold" color="secondary">
+          Export CSV
+        </Typography>
+      </Button>
     </Box>
   );
 }

@@ -1,17 +1,23 @@
-from flask import Flask
+from flask import Flask, send_file
 from flask_restx import Resource, Api, fields
 from flask_cors import CORS
-from flask import request
+import csv
+import io
+import os
+
 import logic as logic
 from objects.suggestionObject import SuggestionObject
 from objects.voteObject import VoteObject
+from authorization.security_decorator import secured
 
 app = Flask("CXTechDays")
 
 """Enable all resources of cxtechdays for cross origin resource sharing"""
-CORS(app, resources=r'*')
+CORS(app, resources=r"/*", origins="*",
+     allow_headers="*", supports_credentials=True)
 
-api = Api(app, version='1.0', title='API of the CX Tech Days', description='An API for the CX Tech Days Website.')
+api = Api(app, version='1.0', title='API of the CX Tech Days',
+          description='An API for the CX Tech Days Website.')
 
 cxtechdays = api.namespace('cxtechdays', description='function of the Website')
 
@@ -38,20 +44,22 @@ vote = api.model('Suggestion', {
 # SUGGESTIONS API
 #######################################################################################################################
 
+
 @cxtechdays.route('/api/suggestions', methods=["GET", "POST"])
 @cxtechdays.response(500, 'If there is an error from the server.')
 class SuggestionsListOps(Resource):
+    @secured
     @cxtechdays.marshal_list_with(suggestion)
     def get(self):
         """
         Gets all suggestions objects.
         :return: suggestions objects, if there are no suggestion objects, an empty sequence will be returned
         """
+
         suggestion_list = logic.get_all_suggestions()
+        return suggestion_list, 200
 
-        #print(suggestion_list)
-        return suggestion_list
-
+    @secured
     @cxtechdays.marshal_with(suggestion, code=201)
     @cxtechdays.expect(suggestion, validate=True)
     def post(self):
@@ -63,15 +71,48 @@ class SuggestionsListOps(Resource):
         suggestion = SuggestionObject.from_dict(api.payload)
 
         if suggestion is not None:
-            logic.create_suggestion(suggestion.get_id(), suggestion.get_title(), suggestion.get_topic(), suggestion.get_type(), suggestion.get_speaker(), suggestion.get_abstract(), suggestion.get_speakerShortInfo(), suggestion.get_votes())
+            logic.create_suggestion(suggestion.get_id(), suggestion.get_title(), suggestion.get_topic(), suggestion.get_type(
+            ), suggestion.get_speaker(), suggestion.get_abstract(), suggestion.get_speakerShortInfo(), suggestion.get_votes())
             return suggestion, 200
         else:
             return "", 500
-    
+
+    # def options(self):
+    #     return {'Allow': 'GET, POST, PUT, DELETE'}, 200
+
+
+@cxtechdays.route('/api/suggestionsCSV', methods=["GET"])
+@cxtechdays.response(500, 'If there is an error from the server.')
+class SuggestionsCSVOps(Resource):
+    @secured
+    def get(self):
+        """
+        Gets all suggestions objects.
+        :return: suggestions objects, if there are no suggestion objects, an empty sequence will be returned
+        """
+        suggestion_list = logic.get_all_suggestions()
+        suggestion_csv = io.StringIO(newline='')
+        fieldnames = ['id', 'title', 'topic', 'type',
+                      'speaker', 'abstract', 'speakerShortInfo', 'votes']
+        writer = csv.DictWriter(suggestion_csv, fieldnames=fieldnames)
+        writer.writeheader()
+        for suggestion in suggestion_list:
+            writer.writerow({'id': suggestion['_id'], 'title': suggestion['_title'], 'topic': suggestion['_topic'], 'type': suggestion['_type'],
+                            'speaker': suggestion['_speaker'], 'abstract': suggestion['_abstract'], 'speakerShortInfo': suggestion['_speakerShortInfo'], 'votes': suggestion['_votes']})
+        suggestion_csv.seek(0)
+        csv_dir = "./csv"
+        csv_file = "suggestions.csv"
+        csv_path = os.path.join(csv_dir, csv_file)
+        with open(csv_path, 'w') as file:
+            file.write(suggestion_csv.getvalue())
+        return send_file(csv_path, as_attachment=True, download_name='suggestions.csv')
+
+
 @cxtechdays.route('/api/suggestions/<id>', methods=["GET", "PUT", "DELETE"])
 @cxtechdays.response(500, 'If there is an error from the server.')
 @cxtechdays.param('id', 'ID of the suggestion object')
 class SuggestionOps(Resource):
+    @secured
     @cxtechdays.marshal_with(suggestion)
     def get(self, id):
         """
@@ -83,6 +124,7 @@ class SuggestionOps(Resource):
 
         return suggestion
 
+    @secured
     @cxtechdays.marshal_with(suggestion)
     @cxtechdays.expect(suggestion, validate=True)
     def put(self, id):
@@ -92,8 +134,8 @@ class SuggestionOps(Resource):
         :return: the updated suggestion object
         """
         suggestion = SuggestionObject.from_dict(api.payload)
-        #suggestion['id'] = id
-        #print(id, suggestion)
+        # suggestion['id'] = id
+        # print(id, suggestion)
 
         if suggestion is not None:
             logic.update_suggestion(suggestion)
@@ -101,6 +143,7 @@ class SuggestionOps(Resource):
         else:
             return '', 500
 
+    @secured
     def delete(self, id):
         """
         Deletes a suggestion from the database.
@@ -110,13 +153,15 @@ class SuggestionOps(Resource):
         logic.delete_suggestion(id)
         return '', 200
 
+
 #######################################################################################################################
 # USER VOTES API
 #######################################################################################################################
-         
+
 @cxtechdays.route('/api/votes', methods=["GET", "POST"])
 @cxtechdays.response(500, 'If there is an error from the server.')
 class VotesListOps(Resource):
+    @secured
     @cxtechdays.marshal_list_with(vote)
     def get(self):
         """
@@ -124,10 +169,9 @@ class VotesListOps(Resource):
         :return: user votes objects, if there are no suggestion objects, an empty sequence will be returned
         """
         uservotes_list = logic.get_all_votes()
-
-        #print(suggestion_list)
         return uservotes_list
 
+    @secured
     @cxtechdays.marshal_with(vote, code=201)
     @cxtechdays.expect(vote, validate=True)
     def post(self):
@@ -143,11 +187,13 @@ class VotesListOps(Resource):
             return vote, 200
         else:
             return "", 500
-    
+
+
 @cxtechdays.route('/api/votes/<id>', methods=["GET", "PUT"])
 @cxtechdays.response(500, 'If there is an error from the server.')
 @cxtechdays.param('id', 'ID of the user of the vote object')
 class VoteOps(Resource):
+    @secured
     @cxtechdays.marshal_with(vote)
     def get(self, id):
         """
@@ -159,6 +205,7 @@ class VoteOps(Resource):
 
         return vote
 
+    @secured
     @cxtechdays.marshal_with(vote)
     @cxtechdays.expect(vote, validate=True)
     def put(self, id):
@@ -168,14 +215,15 @@ class VoteOps(Resource):
         :return: the updated vote object
         """
         vote = VoteObject.from_dict(api.payload)
-        #vote['id'] = id
-        #print(id, vote)
+        # vote['id'] = id
+        # print(id, vote)
 
         if vote is not None:
             logic.update_vote(vote)
             return vote, 200
         else:
             return '', 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)

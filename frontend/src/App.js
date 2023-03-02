@@ -11,6 +11,8 @@ import Home from "./modules/pages/Home";
 import Admin from "./modules/pages/Admin";
 import AdminSignIn from "./modules/pages/AdminSignIn";
 import LinearProgress from "@mui/material/LinearProgress";
+import Contact from "./modules/pages/Contact";
+import Impress from "./modules/pages/Impress";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -102,6 +104,8 @@ function App() {
               />
             }
           />
+          <Route path={"/contact"} element={<Contact />} />
+          <Route path={"/impress"} element={<Impress />} />
           <Route
             exact
             path={"/admin/signin"}
@@ -111,7 +115,7 @@ function App() {
               ) : !user ? (
                 <AdminSignIn handleError={handle_Error} />
               ) : (
-                <Admin />
+                <Admin handleError={handle_Error} />
               )
             }
           />
@@ -124,7 +128,7 @@ function App() {
               ) : !user ? (
                 <AdminSignIn handleError={handle_Error} />
               ) : (
-                <Admin />
+                <Admin handleError={handle_Error} />
               )
             }
           />
