@@ -5,10 +5,10 @@ export default class API {
   static #api = null;
 
   //Cloud
-  //#ServerBaseURL = process.env.REACT_APP_API_CLOUD_URL;
+  #ServerBaseURL = process.env.REACT_APP_API_CLOUD_URL;
 
   //Local
-  #ServerBaseURL = process.env.REACT_APP_LOCAL_API_URL;
+  //#ServerBaseURL = process.env.REACT_APP_LOCAL_API_URL;
 
   #getSuggestionsURL = () => `${this.#ServerBaseURL}/suggestions`;
   #getSuggestionsCSVURL = () => `${this.#ServerBaseURL}/suggestionsCSV`;
