@@ -115,7 +115,7 @@ function App() {
               ) : !user ? (
                 <AdminSignIn handleError={handle_Error} />
               ) : (
-                <Admin />
+                <Admin handleError={handle_Error} />
               )
             }
           />
@@ -128,7 +128,7 @@ function App() {
               ) : !user ? (
                 <AdminSignIn handleError={handle_Error} />
               ) : (
-                <Admin />
+                <Admin handleError={handle_Error} />
               )
             }
           />

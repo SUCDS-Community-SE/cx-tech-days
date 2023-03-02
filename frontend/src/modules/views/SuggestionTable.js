@@ -16,7 +16,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Collapse from "@mui/material/Collapse";
-import { Dialog, Button, DialogTitle, DialogContent } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent } from "@mui/material";
+import Button from "../components/Button";
 import AdminStats from "../components/AdminStats";
 import API from "../../api";
 
@@ -25,7 +26,13 @@ async function getData() {
   return data;
 }
 
-export default function SuggestionTable() {
+async function getCSV() {
+  const data = await API.getAPI().getSuggestionsCSV();
+  return data;
+}
+
+export default function SuggestionTable(props) {
+  const { handleError } = props;
   const { user } = useContext(AuthContext);
   const [rows, setRows] = useState([]);
 
@@ -37,9 +44,17 @@ export default function SuggestionTable() {
     return () => (mounted = false);
   }, []);
 
+  const handle_Error = (errorMessage) => {
+    handleError(errorMessage);
+  };
+
   const handleDelete = (suggestion) => {
     API.getAPI().deleteSuggestion(suggestion);
     setRows(rows.filter((row) => row !== suggestion));
+  };
+
+  const exportCSV = () => {
+    getCSV();
   };
 
   return (
@@ -66,7 +81,6 @@ export default function SuggestionTable() {
       <Paper
         sx={{
           mt: 2,
-          mb: 10,
           ml: 5,
           mr: 5,
           padding: 2,
@@ -121,6 +135,17 @@ export default function SuggestionTable() {
           </Table>
         </TableContainer>
       </Paper>
+      <Button
+        size="small"
+        variant="outlined"
+        color="secondary"
+        sx={{ ml: 7, mb: 1 }}
+        onClick={exportCSV}
+      >
+        <Typography fontWeight="bold" color="secondary">
+          Export CSV
+        </Typography>
+      </Button>
     </Box>
   );
 }

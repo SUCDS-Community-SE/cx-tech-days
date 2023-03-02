@@ -3,8 +3,13 @@ import { AuthContext } from "../../App";
 import SuggestionTable from "../views/SuggestionTable";
 import { Grid, Box } from "@mui/material";
 
-export default function Admin() {
+export default function Admin(props) {
+  const { handleError } = props;
   const { user } = useContext(AuthContext);
+
+  const handle_Error = (errorMessage) => {
+    handleError(errorMessage);
+  };
 
   return (
     <Grid
@@ -18,7 +23,7 @@ export default function Admin() {
         bgcolor: "secondary.lighter",
       }}
     >
-      <SuggestionTable />
+      <SuggestionTable handleError={handle_Error} />
       <Box
         sx={{
           display: "flex",

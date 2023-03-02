@@ -1,16 +1,17 @@
 import SuggestionObject from "./modules/objects/suggestionObject";
 import VoteObject from "./modules/objects/voteObject";
-
+import { auth } from "./FirebaseConfig";
 export default class API {
   static #api = null;
 
   //Cloud
-  #ServerBaseURL = process.env.REACT_APP_API_CLOUD_URL;
+  //#ServerBaseURL = process.env.REACT_APP_API_CLOUD_URL;
 
   //Local
-  //#ServerBaseURL = process.env.REACT_APP_LOCAL_API_URL;
+  #ServerBaseURL = process.env.REACT_APP_LOCAL_API_URL;
 
   #getSuggestionsURL = () => `${this.#ServerBaseURL}/suggestions`;
+  #getSuggestionsCSVURL = () => `${this.#ServerBaseURL}/suggestionsCSV`;
   #addSuggestionURL = () => `${this.#ServerBaseURL}/suggestions`;
   #updateSuggestionURL = (id) => `${this.#ServerBaseURL}/suggestions/${id}`;
   #deleteSuggestionURL = (id) => `${this.#ServerBaseURL}/suggestions/${id}`;
@@ -26,7 +27,39 @@ export default class API {
     return this.#api;
   }
 
-  #fetchAdvanced(url, init) {
+  download(filename, text) {
+    var pom = document.createElement("a");
+    pom.setAttribute(
+      "href",
+      "data:text/csv;charset=utf-8," + encodeURIComponent(text)
+    );
+    pom.setAttribute("download", filename);
+
+    if (document.createEvent) {
+      var event = document.createEvent("MouseEvents");
+      event.initEvent("click", true, true);
+      pom.dispatchEvent(event);
+    } else {
+      pom.click();
+    }
+  }
+
+  /*
+    Default cookie setting for SameSite attribute was 'None' in the past, which allowed cookies to be sent with
+    both cross-site and same-site requests. As of now the default for SameSite attribute is 'Lax', which means
+    cookies are not sent for cross-site requests. As react runs on port 3000 and flask(backend) on 5000 in this dev environment,
+    a backend fetch is considered a cross-site request (as different ports are used). So no cookie is sent.
+    For SameSite attribute to be 'None', also the attribute secure (only use https) has to be set in Chrome
+    and all other modern browsers as they reject the sending of cookies with only SameSite attribute set as 'None'.
+   
+    As a workaround we add the token of the cookie to the request headers. The backend then extracts it from there.
+   
+    Returns a Promise which resolves to a json object.
+    The Promise returned from fetch() won’t reject on HTTP error status even if the response is an HTTP 404 or 500.
+    fetchAdvanced throws an Error also an server status errors
+   */
+  async #fetchAdvanced(url, init) {
+    // If no init parameter is used, create empty init
     if (typeof init === "undefined") {
       init = { headers: {} };
     }
@@ -35,12 +68,36 @@ export default class API {
     if (typeof init.headers === "undefined") {
       init["headers"] = {};
     }
+
+    const getToken = () => {
+      try {
+        return auth.currentUser.getIdToken();
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    let token = await getToken();
+
+    if (token) {
+      // Add the token to every request, so that we can use it in the backend.
+      init.headers.Token = await token;
+      //console.log(init.headers.Token);
+    } else {
+      // Handle the case where the token cookie is not present
+      throw new Error("Token cookie not found");
+    }
+
     return fetch(url, init).then((res) => {
       // The Promise returned from fetch() won’t reject on HTTP error status even if the response is an HTTP 404 or 500.
       if (!res.ok) {
         throw Error(`${res.status} ${res.statusText}`);
       }
-      return res.json();
+      if (res.headers.get("Content-Type").indexOf("application/json") !== -1) {
+        return res.json();
+      }
+      if (res.headers.get("Content-Type").indexOf("text") !== -1) {
+        return res.text();
+      }
     });
   }
 
@@ -58,6 +115,14 @@ export default class API {
           //console.log(suggestionObjects);
           //console.log(typeof suggestionObjects);
         });
+      }
+    );
+  }
+
+  getSuggestionsCSV() {
+    return this.#fetchAdvanced(this.#getSuggestionsCSVURL()).then(
+      (response) => {
+        this.download(`suggestions.csv`, response);
       }
     );
   }
