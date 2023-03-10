@@ -59,16 +59,12 @@ function App() {
     //setUser(user);
   };
 
-  const handleAdminChange = (admin) => {
-    //setAdmin(admin);
-  };
-
   const handle_Error = (errorMessage) => {
     setErrorMessage(errorMessage);
     setOpen(true);
   };
 
-  const handleClose = (event, reason) => {
+  const handleClose = (reason) => {
     if (reason === "clickaway") {
       return;
     }
