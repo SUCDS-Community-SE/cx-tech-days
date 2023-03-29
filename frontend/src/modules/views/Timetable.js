@@ -16,23 +16,31 @@ import { rows, secondrows } from "../objects/TimeTableData";
 export default function Timetable() {
   return (
     <Container
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        mt: 5,
-        mb: 10,
-      }}
+    // sx={{
+    //   display: "flex",
+    //   flexDirection: "column",
+    //   justifyContent: "center",
+    //   alignItems: "center",
+    //   mt: 5,
+    //   mb: 10,
+    // }}
     >
-      <Typography variant="h3" marked="center" component="h2" sx={{ mb: 2 }}>
-        Timetable
-      </Typography>
-      <Typography variant="h5" marked="center" component="h2">
-        Mittwoch 26.04.2023
-      </Typography>
       <Box
-        component="section"
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          mt: 5,
+          mb: 5,
+        }}
+      >
+        <Typography variant="h3" marked="center" sx={{ mb: 2 }}>
+          Timetable
+        </Typography>
+        <Typography variant="h5">Mittwoch 26.04.2023</Typography>
+      </Box>
+      <Box
         sx={{
           display: "flex",
           flexDirection: "row",
@@ -44,80 +52,104 @@ export default function Timetable() {
           mt: 2,
         }}
       >
-        <Timeline
+        <Box
           sx={{
-            [`& .${timelineOppositeContentClasses.root}`]: {
-              flex: 0.2,
-            },
-            mr: 0,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          {rows.map((row) => (
-            <TimelineItem key={row.id}>
-              <TimelineOppositeContent variant="h5">
-                {row.time}
-              </TimelineOppositeContent>
-              <TimelineSeparator>
-                <TimelineDot color="secondary" />
-                <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
-              </TimelineSeparator>
-              <TimelineContent>
-                <Typography variant="h5" component="span">
-                  {row.title} {"("}
-                  {row.topic}
-                  {", "}
-                  {row.type}
-                  {")"}
-                </Typography>
-                <Typography fontWeight="bold">
-                  {row.speaker} {"("}
-                  {row.speakerShortInfo}
-                  {")"}
-                </Typography>
-                <Typography sx={{ color: "primary.light" }}>
-                  {row.abstract}
-                </Typography>
-              </TimelineContent>
-            </TimelineItem>
-          ))}
-        </Timeline>
-        <Timeline
+          <Typography variant="h5" fontWeight="bold">
+            Main Stage
+          </Typography>
+          <Timeline
+            sx={{
+              [`& .${timelineOppositeContentClasses.root}`]: {
+                flex: 0.2,
+              },
+              mr: 0,
+            }}
+          >
+            {rows.map((row) => (
+              <TimelineItem key={row.id}>
+                <TimelineOppositeContent variant="h5">
+                  {row.time}
+                </TimelineOppositeContent>
+                <TimelineSeparator>
+                  <TimelineDot color="secondary" />
+                  <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
+                </TimelineSeparator>
+                <TimelineContent>
+                  <Typography variant="h5" component="span">
+                    {row.title}
+                    {/* {row.topic}
+                  {row.type} */}
+                  </Typography>
+                  <Typography fontWeight="bold">
+                    {row.speaker}
+                    {/* {row.speakerShortInfo} */}
+                  </Typography>
+                  <Typography sx={{ color: "primary.light" }}>
+                    {/* {row.abstract} */}
+                  </Typography>
+                </TimelineContent>
+              </TimelineItem>
+            ))}
+          </Timeline>
+        </Box>
+        <Box
           sx={{
-            [`& .${timelineOppositeContentClasses.root}`]: {
-              flex: 0.2,
-            },
-            ml: 0,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          {secondrows.map((secondrow) => (
-            <TimelineItem key={secondrow.id}>
-              <TimelineOppositeContent variant="h5">
-                {secondrow.time}
-              </TimelineOppositeContent>
-              <TimelineSeparator>
-                <TimelineDot color="secondary" />
-                <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
-              </TimelineSeparator>
-              <TimelineContent>
-                <Typography variant="h5" component="span">
-                  {secondrow.title} {"("}
+          <Typography variant="h5" fontWeight="bold">
+            Break Out Room #1
+          </Typography>
+          <Timeline
+            sx={{
+              [`& .${timelineOppositeContentClasses.root}`]: {
+                flex: 0.2,
+              },
+              ml: 0,
+              mt: 30,
+            }}
+          >
+            {secondrows.map((secondrow) => (
+              <TimelineItem key={secondrow.id}>
+                <TimelineOppositeContent variant="h5">
+                  {secondrow.time}
+                </TimelineOppositeContent>
+                <TimelineSeparator>
+                  <TimelineDot color="secondary" />
+                  <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
+                </TimelineSeparator>
+                <TimelineContent>
+                  <Typography variant="h5" component="span">
+                    {secondrow.title}
+                    {/* {"("}
                   {secondrow.topic}
                   {", "}
                   {secondrow.type}
-                  {")"}
-                </Typography>
-                <Typography fontWeight="bold">
-                  {secondrow.speaker} {"("}
+                  {")"} */}
+                  </Typography>
+                  <Typography fontWeight="bold">
+                    {secondrow.speaker}
+                    {/* {"("}
                   {secondrow.speakerShortInfo}
-                  {")"}
-                </Typography>
-                <Typography sx={{ color: "primary.light" }}>
-                  {secondrow.abstract}
-                </Typography>
-              </TimelineContent>
-            </TimelineItem>
-          ))}
-        </Timeline>
+                  {")"} */}
+                  </Typography>
+                  <Typography sx={{ color: "primary.light" }}>
+                    {/* {secondrow.abstract} */}
+                  </Typography>
+                </TimelineContent>
+              </TimelineItem>
+            ))}
+          </Timeline>
+        </Box>
       </Box>
     </Container>
   );

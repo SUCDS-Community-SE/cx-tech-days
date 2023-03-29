@@ -34,11 +34,11 @@ function Home(props) {
     <div>
       <Hero timeRemaining={timeRemaining} />
       <Overview />
-      {/* {loginState}
+      {/* {loginState} */}
       <Divider />
       <Timetable />
       <Speaker />
-      <Divider /> */}
+      <Divider />
       <InputForm handleError={handle_Error} />
       <HowItWorks />
       <Footer />

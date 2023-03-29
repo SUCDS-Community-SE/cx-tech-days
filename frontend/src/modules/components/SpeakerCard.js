@@ -39,7 +39,9 @@ export default function SpeakerCard({ name, imageSrc, shortInfo }) {
         <Typography variant="h4" component="div" sx={{ mb: 1 }}>
           {name}
         </Typography>
-        <Typography sx={{ color: "primary.light" }}>{shortInfo}</Typography>
+        <Typography sx={{ color: "primary.light", ml: 1, mr: 1 }}>
+          {shortInfo}
+        </Typography>
       </CardContent>
     </Card>
   );
