@@ -39,7 +39,7 @@ function Home(props) {
       <Timetable />
       <Speaker />
       <Divider />
-      <InputForm handleError={handle_Error} />
+      {/* <InputForm handleError={handle_Error} /> */}
       <HowItWorks />
       <Footer />
     </div>
