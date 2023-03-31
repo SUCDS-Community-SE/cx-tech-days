@@ -60,11 +60,11 @@ export default function Footer() {
                   Kontakt
                 </Link>
               </ListItem>
-              <ListItem>
+              {/* <ListItem>
                 <Link href="/impress" underline="hover">
                   Impressum
                 </Link>
-              </ListItem>
+              </ListItem> */}
             </List>
           </Box>
         </Grid>

@@ -40,7 +40,7 @@ function Home(props) {
       <Speaker />
       <Divider />
       {/* <InputForm handleError={handle_Error} /> */}
-      <HowItWorks />
+      {/* <HowItWorks /> */}
       <Footer />
     </div>
   );

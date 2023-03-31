@@ -26,12 +26,24 @@ export default function SpeakerCard({ name, imageSrc, shortInfo }) {
       }}
     >
       <CardHeader
-        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          mt: -6,
+          mb: -3,
+        }}
         avatar={
           <Avatar
-            sx={{ mt: -6, mb: -3, width: 150, height: 150 }}
+            sx={{ width: 150, height: 150 }}
             alt={name}
             src={imageSrc}
+            imgProps={{
+              style: {
+                objectFit: "cover",
+                objectPosition: "top",
+              },
+            }}
           />
         }
       />
@@ -39,7 +51,7 @@ export default function SpeakerCard({ name, imageSrc, shortInfo }) {
         <Typography variant="h4" component="div" sx={{ mb: 1 }}>
           {name}
         </Typography>
-        <Typography sx={{ color: "primary.light", ml: 1, mr: 1 }}>
+        <Typography sx={{ color: "primary.light", ml: 1, mr: 1, mb: 2 }}>
           {shortInfo}
         </Typography>
       </CardContent>

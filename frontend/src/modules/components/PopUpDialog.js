@@ -24,7 +24,12 @@ export default function PopUpDialog(props) {
         Abstract
       </DialogTitle>
       <DialogContentText
-        sx={{ display: "flex", justifyContent: "center", mb: 2, ml: 2, mr: 2 }}
+        sx={{
+          mb: 2,
+          ml: 2,
+          mr: 2,
+          color: "primary.light",
+        }}
       >
         {abstract}
       </DialogContentText>

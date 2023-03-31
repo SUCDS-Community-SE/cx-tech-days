@@ -50,7 +50,7 @@ export default function Hero(props) {
         - Die Konferenz für Entwickler, Architekten Technologie-Interessierte
         und Software-Innovation -
       </Typography>
-      <Button
+      {/* <Button
         color="secondary"
         variant="contained"
         size="large"
@@ -73,14 +73,14 @@ export default function Hero(props) {
         }}
       >
         Anmelden
-      </Button>
-      <Typography
+      </Button> */}
+      {/* <Typography
         variant="body1"
         color="inherit"
         sx={{ mt: 2, alignSelf: "center" }}
       >
         Jetzt noch bis zum 15.03.2023 Themen einreichen!
-      </Typography>
+      </Typography> */}
     </HeroLayout>
   );
 }
