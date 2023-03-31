@@ -6,7 +6,7 @@ export const speakers = [
   createData(
     "0",
     "Stefan Blum",
-    "https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydHJhaXR8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60",
+    "https://github.com/SUCDS-Community-SE/cx-tech-days/blob/max/frontend/src/pictures/Speaker/view.jpg",
     "Stefan hat bereits während der Schulzeit seine Passion für die Software-Entwicklung mit Java entdeckt und lebt diese als Berater bei MHP im Bereich der Software-Architektur und -Entwicklung aus."
   ),
   createData(
@@ -36,7 +36,7 @@ export const speakers = [
   createData(
     "5",
     "Michael Rudolph",
-    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHBvcnRyYWl0fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
+    "",
 
     "Im a consultant working in the Porsche Vehicle Hub project."
   ),
@@ -53,5 +53,19 @@ export const speakers = [
     "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8cG9ydHJhaXR8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60",
 
     "Meet Pascal, Senior Application Architect @ MHP, a tech enthusiast and open source advocate."
+  ),
+  createData(
+    "8",
+    "Jonathan Ernst",
+    "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8cG9ydHJhaXR8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60",
+
+    "Jonathan und Roman sind Java-Cloud-Entwickler mit mehrjähriger Erfahrung. Sie sind für die Entwicklung und Wartung einer zentralen Stammdatenbank auf AWS verantwortlich."
+  ),
+  createData(
+    "9",
+    "Roman Bitz",
+    "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8cG9ydHJhaXR8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60",
+
+    "Das Hauptaugenmerk von Roman und Julian liegt auf der Backend-Entwicklung, DevOps-Praktiken und Cloud-Architektur."
   ),
 ];
