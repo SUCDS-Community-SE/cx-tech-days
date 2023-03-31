@@ -88,7 +88,6 @@ function App() {
     <AuthContext.Provider value={{ user, setUser }}>
       <Router>
         <AppAppBar handleError={handle_Error} />
-
         <Routes>
           <Route
             path={""}

@@ -4,6 +4,7 @@ import TimelineItem from "@mui/lab/TimelineItem";
 import TimelineSeparator from "@mui/lab/TimelineSeparator";
 import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineContent from "@mui/lab/TimelineContent";
+import Link from "@mui/material/Link";
 import TimelineDot from "@mui/lab/TimelineDot";
 import Box from "@mui/material/Box";
 import Typography from "../components/Typography";
@@ -12,21 +13,27 @@ import TimelineOppositeContent, {
 } from "@mui/lab/TimelineOppositeContent";
 import { Container } from "@mui/material";
 import { rows, secondrows } from "../objects/TimeTableData";
+import PopUpDialog from "../components/PopUpDialog";
+import Zoom from "@mui/material/Zoom";
 
 const secondrow = secondrows[0];
 
 export default function Timetable() {
+  const [open, setOpen] = React.useState(false);
+  const [abstract, setAbstract] = React.useState();
+
+  const handleClickOpen = (e, row) => {
+    e.preventDefault();
+    setAbstract(row.abstract);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <Container
-    // sx={{
-    //   display: "flex",
-    //   flexDirection: "column",
-    //   justifyContent: "center",
-    //   alignItems: "center",
-    //   mt: 5,
-    //   mb: 10,
-    // }}
-    >
+    <Container>
       <Box
         sx={{
           display: "flex",
@@ -87,20 +94,18 @@ export default function Timetable() {
                   <TimelineDot color="secondary" />
                   <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
                 </TimelineSeparator>
-                <TimelineContent>
-                  <Typography variant="h5" component="span">
-                    {row.title}
-                    {/* {row.topic}
-                  {row.type} */}
-                  </Typography>
-                  <Typography fontWeight="bold">
-                    {row.speaker}
-                    {/* {row.speakerShortInfo} */}
-                  </Typography>
-                  <Typography sx={{ color: "primary.light" }}>
-                    {/* {row.abstract} */}
-                  </Typography>
-                </TimelineContent>
+                {row.abstract === false ? (
+                  <TimelineContent>
+                    <Typography variant="h5">{row.title}</Typography>
+                  </TimelineContent>
+                ) : (
+                  <TimelineContent>
+                    <Link onClick={(e) => handleClickOpen(e, row)}>
+                      <Typography variant="h5">{row.title}</Typography>
+                    </Link>
+                    <Typography fontWeight="bold">{row.speaker}</Typography>
+                  </TimelineContent>
+                )}
               </TimelineItem>
             ))}
           </Timeline>
@@ -138,15 +143,18 @@ export default function Timetable() {
                 <TimelineDot color="secondary" />
                 <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
               </TimelineSeparator>
-              <TimelineContent>
-                <Typography variant="h5" component="span">
-                  {secondrow.title}
-                </Typography>
-                <Typography fontWeight="bold">
-                  {secondrow.speaker} {secondrow.type}
-                </Typography>
-                <Typography sx={{ color: "primary.light" }}></Typography>
-              </TimelineContent>
+              {secondrow.abstract === false ? (
+                <TimelineContent>
+                  <Typography variant="h5">{secondrow.title}</Typography>
+                </TimelineContent>
+              ) : (
+                <TimelineContent>
+                  <Link onClick={(e) => handleClickOpen(e, secondrow)}>
+                    <Typography variant="h5">{secondrow.title}</Typography>
+                  </Link>
+                  <Typography fontWeight="bold">{secondrow.speaker}</Typography>
+                </TimelineContent>
+              )}
             </TimelineItem>
             <TimelineItem>
               <TimelineOppositeContent variant="h5">
@@ -159,6 +167,12 @@ export default function Timetable() {
             </TimelineItem>
           </Timeline>
         </Box>
+        <PopUpDialog
+          TransitionComponent={Zoom}
+          abstract={abstract}
+          open={open}
+          onClose={handleClose}
+        />
       </Box>
     </Container>
   );

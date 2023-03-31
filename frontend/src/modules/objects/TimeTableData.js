@@ -12,7 +12,7 @@ function createData(
 }
 
 export const rows = [
-  createData(0, "12:00", "Eröffnung CX Tech Day"),
+  createData(0, "12:00", "Eröffnung CX Tech Day", "", "", "", false, ""),
   createData(
     1,
     "12:15",
@@ -20,12 +20,12 @@ export const rows = [
     "Core Programming Languages / Frameworks",
     "Session",
     "Stefan Blum",
-    "Quarkus stellt eine gute Basis für moderne Cloud-Native Anwendungen dar und bietet darüber hinaus eine ausgezeichnete Entwicklererfahrung. Leider gibt es aber noch bestehende Anwendungen, die auf älteren Software-Stacks aufbauen und - in verschiedener Hinsicht - eine weniger tolle Erfahrung bieten. Die Vorstellung, dass bestehende Java EE Anwendungen auf Basis eines Application Servers wie OpenLiberty mit relativ geringem Aufwand auf Quarkus portiert werden können, klingt daher verlockend",
+    "Quarkus stellt eine gute Basis für moderne Cloud-Native Anwendungen dar und bietet darüber hinaus eine ausgezeichnete Entwicklererfahrung. Leider gibt es aber noch bestehende Anwendungen, die auf älteren Software-Stacks aufbauen und - in verschiedener Hinsicht - eine weniger tolle Erfahrung bieten. Die Vorstellung, dass bestehende Java EE Anwendungen auf Basis eines Application Servers wie OpenLiberty mit relativ geringem Aufwand auf Quarkus portiert werden können, klingt daher verlockend.",
     "Stefan hat bereits während der Schulzeit seine Passion für die Software-Entwicklung mit Java entdeckt und lebt diese als Berater bei MHP im Bereich der Software-Architektur und -Entwicklung aus. Design, Entwicklung und Betrieb von verteilten Systemen und Microservices in einem agilen Team - sowohl Cloud Native als auch On-Premise - gehören seit seinem Berufseinstieg zum Alltag. Seit Kurzem befasst er sich außerdem intensiv mit Go."
   ),
-  createData(1, "13:00", "Pause", "", "", "", "", ""),
+  createData(2, "13:00", "Pause", "", "", "", false, ""),
   createData(
-    2,
+    3,
     "13:15",
     "Look - it's a car up in the clouds!",
     "Cloud Architecture, DevOps, Microservices",
@@ -34,9 +34,9 @@ export const rows = [
     "What do dragons and car configurators have in common? - They both live up in the clouds! Although our car configurators cannot spit fire, the outcome of it can still ignite dreams and fantasies. With resolutions of 4k, it's as sharp as a dragon's claw and with request times up to 300ms, it's even faster than they can fly! So sharpen your swords and don't miss out when we unveil the mystical tales of our immersive car configurator.",
     "Works at MHP since summer 2019. Originally comes from the visual effects industry and worked as a Technical Director on several seasons of GoT. On a rainy and cloudy day, he realized there was so much beauty up in the skies, so he decided to switch from moving points in 3D space to building up servers in the clouds."
   ),
-  createData(1, "14:00", "Pause", "", "", "", "", ""),
+  createData(4, "14:00", "Pause", "", "", "", false, ""),
   createData(
-    3,
+    5,
     "14:30",
     "How to build Tinder in 30 min",
     "#nocode #frameworks #livedemo #innovation",
@@ -45,9 +45,9 @@ export const rows = [
     "No-code solutions allow businesses to keep up with the changing demand, greatly reducing the loss of money and time. With a rising need of application, no-code reveals the future of enterprise app development. By having a live coding session, the ease of use and the immense power of innovation of no-code will be demonstrated.",
     "Marcel Boer is a senior consultant at MHP. His focus is on business innovation enabled by new technologies & methodologies. He has gained experience in software engineering with frontend technologies and Amazon Web Services. His expertise is in the manufacturing and automotive industry where he was responsible for the product ownership and software architecture. Check out the full profile: https://www.linkedin.com/in/marcel-boer"
   ),
-  createData(1, "15:15", "Pause", "", "", "", "", ""),
+  createData(6, "15:15", "Pause", "", "", "", false, ""),
   createData(
-    4,
+    7,
     "15:30",
     "REST API Design - Best Practices und Learnings",
     "REST API Design - Best Practices und Learnings aus dem Projektalltag",
@@ -56,9 +56,9 @@ export const rows = [
     "Im Projekt Finance Enabler bei der PAG werden nach dem Grundsatz API FIRST im Produktgedanken Standard REST APIs entwickelt, um generische Finanzprozesse für Billing und Accounting abzubilden. Unsere Journey nach über drei Jahren Projekt einzelnen spezifischen REST APIs bis hin zu normalisierten Standard APIs wird dargestellt. Außerdem werden unsere Learnings und Best Practices im Umgang mit heterogenen Business-Cases beleuchtet.",
     "Edwin ist im Januar 2021 bei MHP als Softwareentwickler eingestiegen. Bereits davor war er im Projekt Finance Enabler bei der Porsche AG tätig. Sein Fokus liegt in der Backend Entwicklung inklusive Konzeption und Implementierung. Außerdem betreut er mehrere Konsumentensystem in der Anbindung an das System des Finance Enablers."
   ),
-  createData(1, "16:15", "Pause", "", "", "", "", ""),
+  createData(8, "16:15", "Pause", "", "", "", false, ""),
   createData(
-    5,
+    9,
     "16:30",
     "Bildgenerierung mit Stable Diffusion & Co",
     "Future Tech & Trends",
@@ -68,7 +68,7 @@ export const rows = [
     "Das erste KI generierte Bild von DALL-E hat bei Peter ein starkes Interesse geweckt. Seit dem die Bildgenerierung durch Stable Diffusion für jeden nutzbar gemacht wurde, beschäftigt er sich intensiv damit. Beruflich ist er als Software Entwickler / Architect tätig."
   ),
   createData(
-    6,
+    10,
     "16:40",
     "Javascript - it's just the thing to make Websites annoying, right?",
     "JavaScript beyond the web. An overview of the JavaScript ecosystem beyond the web.",
@@ -78,7 +78,7 @@ export const rows = [
     "Im a consultant working in the Porsche Vehicle Hub project. Before i started at MHP i worked in some projects living in the JavaScript ecosystem and made a bachelor in informatics at the TU Munich."
   ),
   createData(
-    7,
+    11,
     "16:50",
     "http log debugging",
     "4 levels to get the right logging",
@@ -88,17 +88,17 @@ export const rows = [
     "tech lead finance enabler - dev with passion"
   ),
   createData(
-    8,
+    12,
     "17:00",
     "MHP @ Microsoft Experience Center",
     "",
     "",
     "",
-    "Abstract",
-    "SpeakerShortInfo"
+    false,
+    ""
   ),
   createData(
-    9,
+    13,
     "17:15",
     "Modernisierung der Sicherheitspraktiken durch schlüssellose Authentifizierung am Beispiel einer AWS",
     "Cloud",
@@ -108,20 +108,20 @@ export const rows = [
     "Roman und Jonathan sind Java-Cloud-Entwickler mit mehrjähriger Erfahrung. Sie sind für die Entwicklung und Wartung einer zentralen Stammdatenbank auf AWS verantwortlich, die für interne Produktionsprozesse unverzichtbar ist und als Enabler für die Entwicklung weiterer digitaler Produkte dient.Das Hauptaugenmerk von Roman und Jonathan liegt auf der Backend-Entwicklung, DevOps-Praktiken und Cloud-Architektur."
   ),
   createData(
-    10,
+    14,
     "17:30",
     "Closing und Übergang ins Networking",
     "",
     "",
     "",
-    "",
+    false,
     ""
   ),
 ];
 
 export const secondrows = [
   createData(
-    11,
+    15,
     "14:25",
     "The Power of Deep Learning in the Browser",
     "In this workshop, attendees will learn how to build a hand-written digit recognition neural network",
