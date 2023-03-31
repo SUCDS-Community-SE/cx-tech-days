@@ -6,7 +6,7 @@ export const speakers = [
   createData(
     "0",
     "Stefan Blum",
-    "https://github.com/SUCDS-Community-SE/cx-tech-days/blob/max/frontend/src/pictures/Speaker/view.jpg",
+    "https://github.com/SUCDS-Community-SE/cx-tech-days/blob/83fc7b37a483e5fa7517f2a0ff5608fcd8a6e63b/frontend/src/pictures/Speaker/view.jpg",
     "Stefan hat bereits während der Schulzeit seine Passion für die Software-Entwicklung mit Java entdeckt und lebt diese als Berater bei MHP im Bereich der Software-Architektur und -Entwicklung aus."
   ),
   createData(
