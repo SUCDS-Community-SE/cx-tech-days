@@ -24,11 +24,11 @@ function Home(props) {
     handleError(errorMessage);
   };
 
-  const loginState = user ? (
-    <VoteForm user={user} />
-  ) : (
-    <SignUp userChange={handleUserChange} handleError={handle_Error} />
-  );
+  // const loginState = user ? (
+  //   <VoteForm user={user} />
+  // ) : (
+  //   <SignUp userChange={handleUserChange} handleError={handle_Error} />
+  // );
 
   return (
     <div>
