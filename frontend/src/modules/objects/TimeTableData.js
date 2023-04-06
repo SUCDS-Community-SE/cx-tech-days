@@ -93,8 +93,8 @@ export const rows = [
     "MHP @ Microsoft Experience Center",
     "",
     "",
-    "",
-    false,
+    "Merlin Breuer",
+    "Learn more about the MHP Showcase in the new Microsoft Experience Center in Munich. What is the Experience Center anyway? What is the technical set-up on site and why does the showcase have less to do with Microsoft technologies than is claimed?",
     ""
   ),
   createData(

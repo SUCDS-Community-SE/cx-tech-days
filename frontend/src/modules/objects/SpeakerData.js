@@ -7,6 +7,7 @@ import ChristianHarms from "../../pictures/Speaker/ChristianHarms.jpg";
 import PascalBayer from "../../pictures/Speaker/PascalBayer.jpg";
 import JonathanErnst from "../../pictures/Speaker/JonathanErnst.jpg";
 import RomanBitz from "../../pictures/Speaker/RomanBitz.jpg";
+import MerlinBreuer from "../../pictures/Speaker/MerlinBreuer.jpg";
 
 function createData(id, name, imageSrc, shortInfo) {
   return { id, name, imageSrc, shortInfo };
@@ -47,14 +48,12 @@ export const speakers = [
     "5",
     "Michael Rudolph",
     "",
-
     "Im a consultant working in the Porsche Vehicle Hub project."
   ),
   createData(
     "6",
     "Christian Harms",
     ChristianHarms,
-
     "Tech Lead Finance Enabler - Dev with passion"
   ),
   createData(
@@ -73,6 +72,12 @@ export const speakers = [
     "9",
     "Roman Bitz",
     RomanBitz,
-    "Das Hauptaugenmerk von Roman und Julian liegt auf der Backend-Entwicklung, DevOps-Praktiken und Cloud-Architektur."
+    "Das Hauptaugenmerk von Roman und Jonathan liegt auf der Backend-Entwicklung, DevOps-Praktiken und Cloud-Architektur."
+  ),
+  createData(
+    "10",
+    "Merlin Breuer",
+    MerlinBreuer,
+    "Merlin has been a frontend developer at MHP since 2020 and has a total of 6 years experience. After more than 3 years at the Porsche Connect Store, he is now part of the 'Immersive Experience' team."
   ),
 ];
