@@ -69,7 +69,7 @@ export const rows = [
   ),
   createData(
     10,
-    "16:40",
+    "",
     "Javascript - it's just the thing to make Websites annoying, right?",
     "JavaScript beyond the web. An overview of the JavaScript ecosystem beyond the web.",
     "Session",
@@ -79,7 +79,7 @@ export const rows = [
   ),
   createData(
     11,
-    "16:50",
+    "",
     "http log debugging",
     "4 levels to get the right logging",
     "Pecha Kucha",
@@ -89,7 +89,7 @@ export const rows = [
   ),
   createData(
     12,
-    "17:00",
+    "",
     "MHP @ Microsoft Experience Center",
     "",
     "",
@@ -99,7 +99,7 @@ export const rows = [
   ),
   createData(
     13,
-    "17:15",
+    "",
     "Modernisierung der Sicherheitspraktiken durch schlüssellose Authentifizierung am Beispiel einer AWS",
     "Cloud",
     "Pecha Kucha",
@@ -109,6 +109,16 @@ export const rows = [
   ),
   createData(
     14,
+    "",
+    "Manipulating Files for a Living",
+    "",
+    "Pecha Kucha",
+    "Ole Maiwald",
+    "Wir Entwickler verbringen einen Großteil unserer Zeit mit dem Lesen, Bearbeiten und Vergleichen von Files. Dazu nutzen wir häufig eine IDE (Integrated Development Environment). Viele kennen dabei nur ein kleines Subset der Features ihrer IDE und setzen sich nach dem Download kaum mehr damit auseinander. Neovim bietet die Möglichkeit eine eigene Coding Umgebung 'from the ground up' selbst zu erstellen. Klingt nach Arbeit - ist es aber wert. Neovim wurde in der Stackoverflow Developer Survey 2022 erneut zur 'most loved IDE' gewählt. In diesem Talk gehe ich auf die Vorteile des Neovim Ecosystems ein und zeige, wie du deine Produktivität nicht nur beim Coden steigern kannst.",
+    "Ich schreibe seit 2018 beruflich Software und setze mich dabei vor allem mit Performance, Skalierung und verteilten Systemen auseinander. Seit 2 Jahren bin ich bei MHP angestellt und arbeite seit Oktober 2021 im Immersive Experience Team der Digital Experience Factory. Nebenbei studiere ich High Performance Computing and der University of Edinburgh und bin Gesellschafter eines kleinen Start-Ups im News Sektor."
+  ),
+  createData(
+    15,
     "17:30",
     "Closing und Übergang ins Networking",
     "",

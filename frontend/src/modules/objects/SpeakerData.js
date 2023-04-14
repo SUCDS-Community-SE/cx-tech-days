@@ -8,6 +8,7 @@ import PascalBayer from "../../pictures/Speaker/PascalBayer.jpg";
 import JonathanErnst from "../../pictures/Speaker/JonathanErnst.jpg";
 import RomanBitz from "../../pictures/Speaker/RomanBitz.jpg";
 import MerlinBreuer from "../../pictures/Speaker/MerlinBreuer.jpg";
+import OleMaiwald from "../../pictures/Speaker/OleMaiwald.jpeg";
 
 function createData(id, name, imageSrc, shortInfo) {
   return { id, name, imageSrc, shortInfo };
@@ -79,5 +80,11 @@ export const speakers = [
     "Merlin Breuer",
     MerlinBreuer,
     "Merlin has been a frontend developer at MHP since 2020 and has a total of 6 years experience. After more than 3 years at the Porsche Connect Store, he is now part of the 'Immersive Experience' team."
+  ),
+  createData(
+    "11",
+    "Ole Maiwald",
+    OleMaiwald,
+    "Ich bin seit 2 Jahren bei MHP angestellt und arbeite im Immersive Experience Team der Digital Experience Factory und setze mich dabei vor allem mit Performance, Skalierung und verteilten Systemen auseinander."
   ),
 ];
