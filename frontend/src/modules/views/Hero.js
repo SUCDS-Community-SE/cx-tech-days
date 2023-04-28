@@ -23,24 +23,29 @@ export default function Hero(props) {
         src={backgroundImage}
         alt="increase priority"
       />
-      <Typography
-        color="inherit"
-        align="center"
-        variant="h3"
-        sx={{
-          mb: 4,
-          alignSelf: "center",
-          justifySelf: "flex-end",
-          color: "secondary.main",
-          bgcolor: "white",
-          borderRadius: "12px",
-          boxShadow: 3,
-          padding: "12px",
-        }}
-      >
-        {timeRemaining.days} Days : {timeRemaining.hours} Hours :{" "}
-        {timeRemaining.minutes} Minutes : {timeRemaining.seconds} Seconds
-      </Typography>
+      {timeRemaining.total > 0 ? (
+        <Typography
+          color="inherit"
+          align="center"
+          variant="h3"
+          sx={{
+            mb: 4,
+            alignSelf: "center",
+            justifySelf: "flex-end",
+            color: "secondary.main",
+            bgcolor: "white",
+            borderRadius: "12px",
+            boxShadow: 3,
+            padding: "12px",
+          }}
+        >
+          {timeRemaining.days} Days : {timeRemaining.hours} Hours :{" "}
+          {timeRemaining.minutes} Minutes : {timeRemaining.seconds} Seconds
+        </Typography>
+      ) : (
+        <div></div>
+      )}
+
       <Typography
         color="inherit"
         align="center"
